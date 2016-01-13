@@ -1,0 +1,39 @@
+
+//
+// SPECIFIC THEMING MODULES
+// ===========================================================
+
+
+// INCLUDE GOOGLE BOOTSTRAP AND FONT-AWESOME CSS
+
+// >>> Customized Bootstrap <<<
+@import "components/customized-bootstrap/bootstrap-less-modules";
+// >>> Font Awesome <<<
+@import "../../../node_modules/font-awesome/less/font-awesome";
+
+@import "mixins";				// OWN SPECIFIC MIXINS
+@import "variables";			// OWN SPECIFIC THEME VARIABLES
+
+
+// INCLUDE OTHER LIBS AND PLUGINS
+// @import "lib/...";
+
+
+// INCLUDE ALL NEEDED THEME COMPONENTS
+@import "components/jscow/general";
+
+//
+// GLOBAL STANDARD BASE STYLES
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	color: darken(@text-color, 0%);
+	background: @base-color;
+	
+	@media (min-width: @screen-md-min) {
+		&-img {
+			width: auto !important;
+		}
+	}
+	
+}

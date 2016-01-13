@@ -1,0 +1,5 @@
+.comments
+*.rar
+/node_modules
+/bower_components
+*.sublime-*

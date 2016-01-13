@@ -1,0 +1,169 @@
+
+//
+// MIXINS
+
+
+//
+// Transitions
+.transition(@t: all, @s: 0.4s, @a:ease-in-out) {
+	-webkit-transition: @t @s @a;
+	-moz-transition: @t @s @a;
+	-o-transition: @t @s @a;
+	transition: @t @s @a;
+}
+
+
+// 
+// Layout
+
+.layout(@c) {
+	
+	@c1: lighten(@c, @color-offset-default);
+	@c2: @c;
+	@c3: darken(@c2, 5%);
+	@c4: darken(@c3, 5%);
+	
+	background: @c2;
+	background: -moz-linear-gradient(top, @c1 0%, @c2 2%, @c3 98%, @c4 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@c1), color-stop(2%,@c2), color-stop(98%,@c3), color-stop(100%,@c4));
+	background: -webkit-linear-gradient(top, @c1 0%,@c2 2%,@c3 98%,@c4 100%);
+	background: -o-linear-gradient(top, @c1 0%,@c2 2%,@c3 98%,@c4 100%);
+	background: -ms-linear-gradient(top, @c1 0%,@c2 2%,@c3 98%,@c4 100%);
+	background: linear-gradient(to bottom, @c1 0%,@c2 2%,@c3 98%,@c4 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@c2', endColorstr='@c3',GradientType=0 );
+	color: darken(@c, (@color-offset-default * 2));
+	text-shadow: 0px 1px 1px lighten(@c, @color-offset-default);
+	filter: dropshadow(color=lighten(@c, @color-offset-default), offx=0, offy=1);
+}
+
+.layout-default(@c: @layout-color-default) {
+	.layout(@c);
+}
+
+.layout-primary(@c: @color-primary) {
+	.layout(@c);
+}
+
+.layout-info(@c: @color-info) {
+	.layout(@c);
+}
+
+.layout-success(@c: @color-success) {
+	.layout(@c);
+}
+
+.layout-warning(@c: @color-warning) {
+	.layout(@c);
+}
+
+.layout-danger(@c: @color-danger) {
+	.layout(@c);
+}
+
+.layout-highlighted(@c: @color-highlighted) {
+	.layout(@c);
+}
+
+
+// 
+// Round Corners
+
+.round-corner-topLeft(@r: @round-border-radius-default, ) {
+	-moz-border-radius-topleft: @r; 
+	-webkit-border-top-left-radius: @r; 
+	border-top-left-radius: @r; 
+}
+.round-corner-topRight(@r: @round-border-radius-default) {
+	-moz-border-radius-topright: @r; 
+	-webkit-border-top-right-radius: @r; 
+	border-top-right-radius: @r; 
+}
+.round-corner-bottomLeft(@r: @round-border-radius-default) {
+	-moz-border-radius-bottomleft: @r; 
+	-webkit-border-bottom-left-radius: @r; 
+	border-bottom-left-radius: @r; 
+}
+.round-corner-bottomRight(@r: @round-border-radius-default) {
+	-moz-border-radius-bottomright: @r; 
+	-webkit-border-bottom-right-radius: @r; 
+	border-bottom-right-radius: @r;
+}
+.round-corner-left(@r: @round-border-radius-default) {
+	.round-corner-topLeft(@r);
+	.round-corner-bottomLeft(@r);
+}
+.round-corner-right(@r: @round-border-radius-default) {
+	.round-corner-topRight(@r);
+	.round-corner-bottomRight(@r);
+}
+.round-corner-top(@r: @round-border-radius-default) {
+	.round-corner-topLeft(@r);
+	.round-corner-topRight(@r);
+}
+.round-corner-bottom(@r: @round-border-radius-default) {
+	.round-corner-bottomLeft(@r);
+	.round-corner-bottomRight(@r);
+}
+.round-corner-all(@r: @round-border-radius-default) {
+	.round-corner-top(@r);
+	.round-corner-bottom(@r);
+}
+
+
+// 
+// Borders
+
+.border-top(@color: @border-color-default, @style: @border-style-default, @w: @border-width-default) {
+	border-top: @w @style @color;
+}
+.border-right(@color: @border-color-default, @style: @border-style-default, @w: @border-width-default) {
+	border-right: @w @style @color;
+}
+.border-bottom(@color: @border-color-default, @style: @border-style-default, @w: @border-width-default) {
+	border-bottom: @w @style @color;
+}
+.border-left(@color: @border-color-default, @style: @border-style-default, @w: @border-width-default) {
+	border-left: @w @style @color;
+}
+.border-all(@color: @border-color-default, @style: @border-style-default, @w: @border-width-default) {
+	.border-top(@color, @style, @w);
+	.border-right(@color, @style, @w);
+	.border-bottom(@color, @style, @w);
+	.border-left(@color, @style, @w);
+}
+.border-transparent(@w: @border-width-default) {
+	border: @w solid transparent;
+}
+
+
+// 
+// Shadow
+
+.shadow(@l: @shadow-pos-left, @t: @shadow-pos-top, @s: @shadow-size, @w: @shadow-weight, @c: @shadow-color-default) {
+	-webkit-box-shadow: @l @t @s @w @c;
+	box-shadow: @l @t @s @w @c;
+	-moz-box-shadow: @l @t @s @w @c;
+}
+
+.innerShadow(@l: @shadow-pos-left, @t: @shadow-pos-top, @s: @shadow-size, @w: @shadow-weight, @c: @shadow-color-default) {
+	-webkit-box-shadow: inset @l @t @s @w @c;
+	box-shadow: inset  @l @t @s @w @c;
+	-moz-box-shadow: inset @l @t @s @w @c;
+}
+
+
+//
+// Opacity
+
+.opacity(@o) {
+	-moz-opacity: @o;
+	opacity: @o;
+}
+
+
+//
+// Text
+
+.text(@c: @text-color-default) {
+	color: @c;
+}

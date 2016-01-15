@@ -4,11 +4,83 @@
 
 .jsc-node,
 .jsc-node-disabled {
-	.layout-default();
-	padding: (@space-default / 2);
+	.border-all();
+	padding: (@space-default / 2) (@space-default + 3);
+	.layout-default(lighten(@base-color, (@color-offset-default * 1)));
+	.text();
+	.round-corner-all();
+	width: 200px;
+	position: absolute;
 	
+	&.jsc-focus {
+		border-color: lighten(@base-color, (@color-offset-default * 3));
+
+		.jsc-node-titlebar {
+			color: lighten(@text-color-default, (@color-offset-default * 2));
+		}
+
+	}
+
+	.jsc-node-titlebar {
+		text-align: center;
+		font-size: @text-fontSize-default;
+		overflow: hidden;
+	}
+
 	.jsc-node-content {
-		
+		.layout-default(darken(@base-color, @color-offset-default));
+
+		.jsc-node-port-inputs,
+		.jsc-node-port-outputs {
+			.clearfix();
+		}
+
+		.jsc-node-port {
+			margin: (@space-default / 2) -13px (@space-default / 2) -13px;
+			color: lighten(@text-color-default, (@color-offset-default * 1));
+			font-size: @text-fontSize-default;
+			position: relative;
+			min-height: 15px;
+
+			> i {
+				.layout-default(lighten(@base-color, (@color-offset-default * 2 )));
+				.border-top(1px, solid, lighten(@base-color, (@color-offset-default * 3)));
+				.border-bottom();
+				position: absolute;
+				line-height: 10px;
+				width: 13px;
+				height: 15px;
+				cursor: pointer;
+			}
+
+			> div {
+				margin: 0 17px;
+				.clearfix();
+			}
+			
+			&.jsc-node-port-in {
+				
+				i {
+					left: 0;
+				}
+
+			}
+
+			&.jsc-node-port-out {
+				
+				i {
+					right: 0;
+				}
+
+				div {
+					text-align: right;
+				}
+				
+			}
+
+		}
+
+
 	}
 	
 }

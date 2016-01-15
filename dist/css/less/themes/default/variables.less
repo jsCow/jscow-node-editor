@@ -6,7 +6,7 @@
 //
 // Color Offsets
 
-@color-offset-default: 25%;
+@color-offset-default: 15%;
 
 
 //
@@ -34,10 +34,10 @@
 // Text
 
 @text-fontFamily: "ProximaNovaLight","Helvetica Neue",Helvetica,Arial,sans-serif;
-@text-fontSize-default: 10px;
-@text-lineHeight-default: 20px;
+@text-fontSize-default: 0.8em;
+@text-lineHeight-default: 1em;
 
-@text-color-default: darken(@color-default, (@color-offset-default * 2));
+@text-color-default: lighten(@color-default, (@color-offset-default * 3));
 
 @text-color-primary: darken(@color-primary, 0%);
 @text-color-info: darken(@color-info, 50%);

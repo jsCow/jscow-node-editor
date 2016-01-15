@@ -146,7 +146,8 @@ module.exports = function(grunt) {
 			css: {
 				files: [
 					'src/**/*.less',
-					'src/**/*.js'
+					'src/**/*.js',
+					'src/**/*.html'
 				],
 				tasks: [
 					'clean',

@@ -27,12 +27,16 @@
 //
 // GLOBAL STANDARD BASE STYLES
 
+body, html {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
 body {
 	font-family: 'Open Sans', sans-serif;
 	color: darken(@text-color, 0%);
 	background: @base-color;
-
-	padding: 50px;
 	
 	@media (min-width: @screen-md-min) {
 		&-img {

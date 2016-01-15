@@ -42,6 +42,17 @@ jsCow.res.components.node.prototype = {
 		}
 		
 		return this;
+	},
+	
+	addInPorts: function(ports) {
+		
+		if (typeof options !== 'undefined' && typeof options instanceof Array) {
+			this.trigger('addInPorts', {
+				ports: ports
+			});
+		}
+		
+		return this;
 	}
 
 };
@@ -221,6 +232,7 @@ jsCow.res.controller.node.prototype = {
 		this.on("title", this.title);
 		this.on("inputs", this.inputs);
 		this.on("outputs", this.outputs);
+		this.on("addInPorts", this.addInPorts);
 	},
 	
 	isModelReady: function() {
@@ -234,7 +246,6 @@ jsCow.res.controller.node.prototype = {
 	},
 	
 	inputs: function(e) {
-		console.log(e);
 		this.cmp().config({
 			inputs: e.data.inputs
 		});
@@ -244,6 +255,10 @@ jsCow.res.controller.node.prototype = {
 		this.cmp().config({
 			outputs: e.data.outputs
 		});
+	},
+
+	addInPorts: function(e) {
+		this.trigger("inputs", e.data.ports);
 	}
 	
 };

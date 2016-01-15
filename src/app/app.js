@@ -1,34 +1,37 @@
 $(function(){
 
+	nodeeditor = jsCow.get(jsCow.res.components.nodeeditor, { 
+		model: {
+			
+		}
+	}).run();
+
+
 	node1 = jsCow.get(jsCow.res.components.node, { 
 		model: {
 			title: 'Node 1',
 			pos: {
-				left: 20,
-				top: 100
+				left: 120,
+				top: 200
 			},
 			inputs: [
-				{
-					"type": "input",
-					"title": "Input Port 1",
-					"value": 1
-				},
-				{
-					"type": "input",
-					"title": "Input Port 2",
-					"value": 2
-				},
-				{
-					"type": "input",
-					"title": "Input Port 3",
-					"value": 3
-				}
+				
 			],
-			outputs: [
+			outputs: [	
 				{
 					"type": false,
 					"title": "Output Port 1",
-					"value": "1"
+					"value": 1
+				},
+				{
+					"type": false,
+					"title": "Output Port 2",
+					"value": 2
+				},
+				{
+					"type": false,
+					"title": "Output Port 3",
+					"value": 3
 				}
 			]
 		}
@@ -36,7 +39,7 @@ $(function(){
 
 	node2 = jsCow.get(jsCow.res.components.node, { 
 		model: {
-			title: 'Node 1',
+			title: 'Node 2',
 			pos: {
 				left: 420,
 				top: 50
@@ -73,6 +76,31 @@ $(function(){
 					"type": false,
 					"title": "Output Port 5",
 					"value": 5
+				},
+				{
+					"type": false,
+					"title": "Output Port 5",
+					"value": 5
+				},
+				{
+					"type": false,
+					"title": "Output Port 5",
+					"value": 5
+				},
+				{
+					"type": false,
+					"title": "Output Port 5",
+					"value": 5
+				},
+				{
+					"type": false,
+					"title": "Output Port 5",
+					"value": 5
+				},
+				{
+					"type": false,
+					"title": "Output Port 5",
+					"value": 5
 				}
 			]
 		}
@@ -80,7 +108,7 @@ $(function(){
 
 	node3 = jsCow.get(jsCow.res.components.node, { 
 		model: {
-			title: 'Node 1',
+			title: 'Node 3',
 			pos: {
 				left: 620,
 				top: 300
@@ -94,18 +122,6 @@ $(function(){
 				{
 					"type": "input",
 					"title": "Input Port 2",
-					"value": 2
-				}
-			],
-			outputs: [
-				{
-					"type": false,
-					"title": "Output Port 1",
-					"value": 1
-				},
-				{
-					"type": false,
-					"title": "Output Port 2",
 					"value": 2
 				}
 			]

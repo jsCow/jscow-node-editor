@@ -2,18 +2,41 @@
 // 
 // Node Editor
 
-.jscow-node-editor,
-.jscow-node-editor-disabled {
-	.layout-default();
-	padding: (@space-default / 2);
+.jsc-nodeeditor,
+.jsc-nodeeditor-disabled {
+	.innerShadow();
+	margin: 50px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 	
-	.jscow-node-editor-content {
-		
+	.jsc-nodeeditor-content {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+
+		svg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%; 
+			height: 100%;
+
+			path {
+				stroke: #ffffff;
+				stroke-width: 3px;
+				fill: none;
+			}
+		}
 	}
 	
 }
 
-.jscow-node-editor-disabled { 
+.jsc-nodeeditor-disabled { 
 	.disabled();
 }
 

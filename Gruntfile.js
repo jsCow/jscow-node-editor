@@ -85,7 +85,13 @@ module.exports = function(grunt) {
 			                	dest: "dist/css/less"
 			            	}
 			            ];
-			        })
+			        }),
+					{
+	                    expand: true,
+	                    cwd: 'node_modules/d3',
+	                    src: ['d3.min.js'],
+	                    dest: 'dist/js/d3'
+					}
 				]
 			}
 		},

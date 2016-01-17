@@ -111,6 +111,12 @@ jsCow.res.view.node = function() {
 	this.nodePosY = 0;
 	this.newNodePosX = 0;
 	this.newNodePosY = 0;
+
+	// Ports
+	this.ports = {
+		inputs: [],
+		outputs: []
+	};
 	
 };
 jsCow.res.view.node.prototype = {
@@ -189,6 +195,8 @@ jsCow.res.view.node.prototype = {
 					);
 					
 					that.dom.outputs.append(port);
+
+					//jsCow.get(jsCow.res.components.button).target(portContent[0]).run().target();
 
 				};
 			})(this));

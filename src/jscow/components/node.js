@@ -134,8 +134,9 @@ jsCow.res.view.node.prototype = {
 		
 		this.dom.main.on('mousedown', (function(self, e) {	// Start Drag
 			return function() {
-				var offsetLeft = self.dom.main.offset().left;
-				var offsetTop = self.dom.main.offset().top;
+				var offsetLeft = self.dom.main.position().left;
+				var offsetTop = self.dom.main.position().top;
+				console.log(offsetLeft, offsetTop);
 				self.mousePosX = document.all ? window.event.clientX : event.pageX;
 				self.mousePosY = document.all ? window.event.clientY : event.pageY;
 				self.nodePosX = self.mousePosX - offsetLeft;
@@ -146,6 +147,12 @@ jsCow.res.view.node.prototype = {
 			return function() {
 				self.dragstart = false;
 				self.trigger("model.update", {
+					pos: {
+						top: self.newNodePosY,
+						left: self.newNodePosX
+					}
+				});
+				self.trigger("node.position.update", {
 					pos: {
 						top: self.newNodePosY,
 						left: self.newNodePosX

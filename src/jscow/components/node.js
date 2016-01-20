@@ -146,6 +146,10 @@ jsCow.res.view.node.prototype = {
 		})(this, e)).on('mouseup', (function(self, e) {		// Stop Drag
 			return function() {
 				self.dragstart = false;
+
+				if (self.newNodePosX < 0) { self.newNodePosX = 0; }
+				if (self.newNodePosY < 0) { self.newNodePosY = 0; }
+
 				self.trigger("model.update", {
 					pos: {
 						top: self.newNodePosY,

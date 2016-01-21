@@ -29,8 +29,9 @@
     "bootstrap": "latest",
     "font-awesome": "latest",
     "jquery": "latest",
-    "jscow": "latest",
-    "d3": "latest"
+    "d3": "latest",
+    "jquery.kinetic": "latest",
+    "jscow": "latest"
   },
   "repository": {
     "type": "git",

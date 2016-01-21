@@ -10,15 +10,14 @@
 	right: 0;
 	bottom: 0;
 	left: 0;
+	overflow: hidden;
 	
 	.jsc-nodeeditor-content {
 		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		overflow: auto;
-		background: darken(@base-color, (@color-offset-default * 2)) url(http://eskipaper.com/images/black-backgrounds-6.jpg) center;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		background: darken(@base-color, (@color-offset-default * 2)) url(http://eskipaper.com/images/black-backgrounds-6.jpg);
 
 		svg {
 			position: absolute;

@@ -55,6 +55,8 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		this.on("view.nodes.render", this.viewNodesRender);
 
+		this.dom.content.kinetic();
+
 		// Create the base svg canvas element by "D3.js"
 		this.dom.svg = d3.select(this.dom.content[0])
 			.append("svg:svg")

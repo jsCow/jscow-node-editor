@@ -120,11 +120,6 @@ $(function(){
 								"type": false,
 								"title": "Output Port 1",
 								"value": 1
-							},
-							{
-								"type": false,
-								"title": "Output Port 2",
-								"value": 2
 							}
 						]
 					},
@@ -147,11 +142,72 @@ $(function(){
 								"type": false,
 								"title": "Output Port 1",
 								"value": 1
-							},
+							}
+						]
+					},
+					{
+						id: 'node3',
+						title: 'Node 3',
+						pos: {
+							left: 120,
+							top: 550
+						},
+						inputs: [
+							{
+								"type": "input",
+								"title": "Input Port 1",
+								"value": 1
+							}
+						],
+						outputs: [
 							{
 								"type": false,
-								"title": "Output Port 2",
-								"value": 2
+								"title": "Output Port 1",
+								"value": 1
+							}
+						]
+					},
+					{
+						id: 'node4',
+						title: 'Node 4',
+						pos: {
+							left: 420,
+							top: 840
+						},
+						inputs: [
+							{
+								"type": "input",
+								"title": "Input Port 1",
+								"value": 1
+							}
+						],
+						outputs: [
+							{
+								"type": false,
+								"title": "Output Port 1",
+								"value": 1
+							}
+						]
+					},
+					{
+						id: 'node5',
+						title: 'Node 5',
+						pos: {
+							left: 820,
+							top: 440
+						},
+						inputs: [
+							{
+								"type": "input",
+								"title": "Input Port 1",
+								"value": 1
+							}
+						],
+						outputs: [
+							{
+								"type": false,
+								"title": "Output Port 1",
+								"value": 1
 							}
 						]
 					}

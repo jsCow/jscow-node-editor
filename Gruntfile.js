@@ -91,6 +91,12 @@ module.exports = function(grunt) {
 	                    cwd: 'node_modules/d3',
 	                    src: ['d3.min.js'],
 	                    dest: 'dist/js/d3'
+					},
+					{
+	                    expand: true,
+	                    cwd: 'node_modules/jquery.kinetic',
+	                    src: ['jquery.kinetic.min.js'],
+	                    dest: 'dist/js/jquery.kinetic'
 					}
 				]
 			}

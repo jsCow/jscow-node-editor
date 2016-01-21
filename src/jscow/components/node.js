@@ -161,7 +161,7 @@ jsCow.res.view.node.prototype = {
 						top: self.newNodePosY,
 						left: self.newNodePosX
 					}
-				});
+				}, true);
 			};
 		})(this, e));
 		

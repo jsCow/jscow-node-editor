@@ -38,7 +38,8 @@ jsCow.res.view.nodeeditor = function() {
 	
 	this.dom = {};
 	this.dom.main = $('<div/>').addClass('jsc-nodeeditor clearfix');
-	this.dom.content = $('<div/>').addClass('jsc-nodeeditor-content clearfix').appendTo(this.dom.main);
+	this.dom.grid = $('<div/>').addClass('jsc-nodeeditor-grid clearfix').appendTo(this.dom.main);
+	this.dom.content = $('<div/>').addClass('jsc-nodeeditor-content clearfix').appendTo(this.dom.grid);
 
 	this.config = {
 		options: {
@@ -55,7 +56,7 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		this.on("view.nodes.render", this.viewNodesRender);
 
-		this.dom.content.kinetic();
+		this.dom.grid.kinetic();
 
 		// Create the base svg canvas element by "D3.js"
 		this.dom.svg = d3.select(this.dom.content[0])

@@ -6,6 +6,7 @@
 .jsc-node-disabled {
 	@bg: lighten(@base-color, (@color-offset-default * 1));
 
+	.noelect();
 	.border-all();
 	padding: (@space-default / 2) (@space-default + 3);
 	.layout-default(@bg);
@@ -30,6 +31,7 @@
 	}
 
 	.jsc-node-content {
+		.noelect();
 		
 		.jsc-node-port-inputs,
 		.jsc-node-port-outputs {

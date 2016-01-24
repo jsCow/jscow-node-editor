@@ -127,8 +127,7 @@ jsCow.res.view.node.prototype = {
 		var modelConfig = this.cmp().config();
 		this.newNodePosX = modelConfig.pos.left;
 		this.newNodePosY = modelConfig.pos.top;
-		console.log(this.nodePosX, this.nodePosY);
-
+		
 		//
 		// Drag and drop for the node element
 		
@@ -136,12 +135,20 @@ jsCow.res.view.node.prototype = {
 			return function() {
 				var offsetLeft = self.dom.main.position().left;
 				var offsetTop = self.dom.main.position().top;
-				console.log(offsetLeft, offsetTop);
+				
 				self.mousePosX = document.all ? window.event.clientX : event.pageX;
 				self.mousePosY = document.all ? window.event.clientY : event.pageY;
 				self.nodePosX = self.mousePosX - offsetLeft;
   				self.nodePosY = self.mousePosY - offsetTop;
 				self.dragstart = true;
+
+				self.trigger("drag.start", {
+					pos: {
+						top: self.newNodePosY,
+						left: self.newNodePosX
+					}
+				});
+
 			};
 		})(this, e)).on('mouseup', (function(self, e) {		// Stop Drag
 			return function() {
@@ -149,19 +156,21 @@ jsCow.res.view.node.prototype = {
 
 				if (self.newNodePosX < 0) { self.newNodePosX = 0; }
 				if (self.newNodePosY < 0) { self.newNodePosY = 0; }
-
+				
 				self.trigger("model.update", {
 					pos: {
 						top: self.newNodePosY,
 						left: self.newNodePosX
 					}
 				});
-				self.trigger("node.position.update", {
+				
+				self.trigger("drag.stop", {
 					pos: {
 						top: self.newNodePosY,
 						left: self.newNodePosX
 					}
-				}, true);
+				});
+
 			};
 		})(this, e));
 		
@@ -174,6 +183,13 @@ jsCow.res.view.node.prototype = {
 					self.newNodePosY = self.mousePosY - self.nodePosY;
 					self.dom.main.css('left', self.newNodePosX );
 					self.dom.main.css('top', self.newNodePosY );
+
+					self.trigger("drag.move", {
+						pos: {
+							top: self.newNodePosY,
+							left: self.newNodePosX
+						}
+					});
 				}
 			};
 		})(this, e));

@@ -227,15 +227,4 @@ module.exports = function(grunt) {
 		/*,'yuidoc'*/
 	]);
 	
-	// Debug task(s).
-	grunt.registerTask('debug', [
-		'clean',
-		//'jshint',
-		'copy',
-		'less',
-		'concat',
-		'uglify'
-		/*,'yuidoc'*/
-	]);
-	
 }

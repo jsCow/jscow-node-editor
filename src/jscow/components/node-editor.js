@@ -9,6 +9,18 @@ jsCow.res.components.nodeeditor.prototype = {
 		this.addView(jsCow.res.view.nodeeditor);
 		
 		return this;
+	},
+
+	options: function(options) {
+
+		if (typeof options !== 'undefined' && typeof options === 'object') {
+			this.trigger('options', {
+				options: options
+			});
+		}
+		
+		return this;
+
 	}
 
 };
@@ -19,9 +31,7 @@ jsCow.res.model.nodeeditor = function() {
 		enabled: true,
 		visible: true,
 		options: {
-			nodes: [
-
-			]
+			nodes: []
 		}
 	};
 	
@@ -43,10 +53,13 @@ jsCow.res.view.nodeeditor = function() {
 
 	this.config = {
 		options: {
-			nodes: {
-				test: 123
-			}
+			nodes: []
 		}
+	};
+
+	this.contentSize = {
+		width: 0,
+		height: 0
 	};
 
 };
@@ -54,8 +67,11 @@ jsCow.res.view.nodeeditor.prototype = {
 	
 	init: function(e) {
 
-		this.on("view.nodes.render", this.viewNodesRender);
+		// Register all event listener
+		this.on("view.update.nodes", this.updateNodes);
+		this.on('update.content.size', this.updateContentSize);
 
+		// Bind the jquery plugin 'kinetic' on the grid area
 		this.dom.grid.kinetic();
 
 		// Create the base svg canvas element by "D3.js"
@@ -63,7 +79,8 @@ jsCow.res.view.nodeeditor.prototype = {
 			.append("svg:svg")
 			.attr("width", "100%")
 			.attr("height", "100%");
-			
+		
+		// Trigger the view update event	
 		this.trigger("view.update", e.data);
 
 	},
@@ -74,12 +91,11 @@ jsCow.res.view.nodeeditor.prototype = {
 			
 			this.dom.main.removeClass('jsc-nodeeditor-disabled').addClass('jsc-nodeeditor');
 
-			// Render all nodes
-			this.trigger("view.nodes.render", e.data);
-
+			/*
 			if (this.dom.svg && this.dom.svg.append !== 'undefined') {
 				this.dom.svg.append("path").attr("d","M 0 60 L 50 110 L 90 70 L 140 100");
 			}
+			*/
 			
 			if (e.data.visible) {
 				this.dom.main.show();
@@ -94,21 +110,61 @@ jsCow.res.view.nodeeditor.prototype = {
 		}
 	},
 
-	viewNodesRender: function(e) {
+	updateNodes: function(e) {
 		
+
+		console.log(this.cmp().children());
+
+		$.each(this.cmp().children(), function(i, c) {
+			c.del();
+		});
+
 		$.each(e.data.options.nodes, (function(that) {
 			return function(i, nodeOptions) {
 
 				if (!that.config.options.nodes[nodeOptions.id]) {
+					
+					// Render all nodes
 					that.config.options.nodes[nodeOptions.id] = that.cmp().append(
 						jsCow.get(jsCow.res.components.node, {
+							id: that.cmp().id() + '-' + nodeOptions.id,
 							model: nodeOptions
+						}).on('drag.stop', function(e) {
+							
+							// Update content size
+							that.trigger(
+								'update.content.size', 
+								e.sender
+							);
+
 						})
+
 					);
+
 				}
 
 			};
 		})(this));
+
+	},
+
+	updateContentSize: function(e) {
+
+		var node = e.sender;
+		var nodePos = node.config().pos;
+		
+		if (nodePos.left > this.contentSize.width) {
+			this.contentSize.width = parseInt(nodePos.left + 0);
+		}
+		
+		if (nodePos.top > this.contentSize.height) {
+			this.contentSize.height = parseInt(nodePos.top + 0);
+		}
+
+		this.dom.content.css({
+			width: this.contentSize.width,
+			height: this.contentSize.height
+		});
 
 	}
 		
@@ -119,10 +175,25 @@ jsCow.res.controller.nodeeditor.prototype = {
 	
 	init: function() {
 		this.on("model.ready", this.isModelReady);
+		this.on("options", this.options);
 	},
 	
 	isModelReady: function() {
-		this.trigger("view.init", this.cmp().config());
+		this.trigger(
+			"view.init", 
+			this.cmp().config()
+		);
+	},
+	
+	options: function(e) {
+		
+		this.cmp().config({
+			options: e.data.options
+		});
+
+		// Render all nodes
+		this.trigger("view.update.nodes", e.data);
+
 	}
 
 };

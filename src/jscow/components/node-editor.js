@@ -112,14 +112,15 @@ jsCow.res.view.nodeeditor.prototype = {
 
 	updateNodes: function(e) {
 		
-
-		console.log(this.cmp().children());
-
-		$.each(this.cmp().children(), function(i, c) {
-			c.del();
-		});
-
-		$.each(e.data.options.nodes, (function(that) {
+		$(this.cmp().children()).each((function(that) {
+			return function(i, c) {
+				c.del();
+			};
+		})(this));
+		
+		this.config.options.nodes = [];
+		
+		$(e.data.options.nodes).each((function(that) {
 			return function(i, nodeOptions) {
 
 				if (!that.config.options.nodes[nodeOptions.id]) {
@@ -127,7 +128,7 @@ jsCow.res.view.nodeeditor.prototype = {
 					// Render all nodes
 					that.config.options.nodes[nodeOptions.id] = that.cmp().append(
 						jsCow.get(jsCow.res.components.node, {
-							id: that.cmp().id() + '-' + nodeOptions.id,
+							//id: that.cmp().id() + '-' + nodeOptions.id,
 							model: nodeOptions
 						}).on('drag.stop', function(e) {
 							

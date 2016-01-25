@@ -163,7 +163,7 @@ module.exports = function(grunt) {
 				],
 				tasks: [
 					'clean',
-					'jshint',
+					//'jshint',
 					'copy',
 					'less',
 					'concat',

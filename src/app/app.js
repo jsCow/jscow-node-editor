@@ -3,6 +3,7 @@ $(function() {
 	//jsCow.debug.events = true;
 
 	NodeEditorOptions1 = {
+		grid: 50,
 		nodes: [
 			{
 				id: 'node1',
@@ -52,6 +53,7 @@ $(function() {
 	};
 
 	NodeEditorOptions2 = {
+		grid: 20,
 		nodes: [
 			{
 				id: 'node1',

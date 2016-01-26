@@ -19,7 +19,7 @@
 	}
 
 	.jsc-nodeeditor-content {
-		background: darken(@base-color, (@color-offset-default * 2)) url(https://wallpaperscraft.com/image/cubes_grid_background_dark_texture_50364_3840x2160.jpg) repeat;
+		background: darken(@base-color, (@color-offset-default * 1));
 		position: absolute;
 		width: 9999px;
 		height: 9999px;
@@ -31,9 +31,9 @@
 			width: 100%; 
 			height: 100%;
 
-			path {
-				stroke: #ffffff;
-				stroke-width: 3px;
+			.jsc-nodeeditor-grid {
+				stroke: darken(@base-color, (@color-offset-default * 2));
+				stroke-width: 1px;
 				fill: none;
 			}
 		}

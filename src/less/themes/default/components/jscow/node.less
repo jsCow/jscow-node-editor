@@ -6,17 +6,19 @@
 .jsc-node-disabled {
 	@bg: lighten(@base-color, (@color-offset-default * 1));
 
-	.noelect();
-	.border-all();
 	padding: (@space-default / 2) (@space-default + 3);
+	width: 200px;
+	position: absolute;
 	.layout-default(@bg);
 	.text();
 	.round-corner-all();
-	width: 200px;
-	position: absolute;
-	
+	.noelect();
+	.border-all();
+	.opacity(0.8);
+
 	&.jsc-focus {
 		border-color: lighten(@bg, (@color-offset-default * 3));
+		.opacity(0.9);
 
 		.jsc-node-titlebar {
 			color: lighten(@text-color-default, (@color-offset-default * 2));

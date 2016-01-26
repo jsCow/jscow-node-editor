@@ -62,40 +62,75 @@ jsCow.res.view.nodeeditor = function() {
 		height: 0
 	};
 
+	// SVG grid options
+	this.grid = {
+		data: []
+	};
+
 };
 jsCow.res.view.nodeeditor.prototype = {
 	
 	init: function(e) {
 
 		// Register all event listener
-		this.on("view.update.nodes", this.updateNodes);
+		this.on("update.editor.options", this.updateNodes);
+		this.on("update.editor.options", this.updateGrid);
 		this.on('update.content.size', this.updateContentSize);
 
 		// Bind the jquery plugin 'kinetic' on the grid area
 		this.dom.grid.kinetic();
 
 		// Create the base svg canvas element by "D3.js"
-		this.dom.svg = d3.select(this.dom.content[0])
+		this.dom.svggrid = d3.select(this.dom.content[0])
 			.append("svg:svg")
 			.attr("width", "100%")
-			.attr("height", "100%");
+			.attr("height", "100%").
+			append("g");
 		
 		// Trigger the view update event	
 		this.trigger("view.update", e.data);
-
+		
 	},
-	
+
+	// Update and draw the grid lines
+	updateGrid: function(e) {
+
+		var width = $(this.dom.content).width();
+		var height = $(this.dom.content).height();
+
+		this.grid = {
+			data: function() {
+				var lines = [];
+				
+				for (var i=0; (i*e.data.options.grid) < width; i++) {
+					lines.push(i*e.data.options.grid);
+				}
+				
+				return lines;
+			}
+		};
+		
+		if (this.dom.svggrid && this.dom.svggrid.append !== 'undefined') {
+			this.dom.svggrid.selectAll('line')
+     			.data(this.grid.data)
+     			.enter()
+     			.append("line")
+				.attr("x1", function(d) { return d; })
+				.attr("y1", 0)
+				.attr("x2", function(d) { return d; })
+				.attr("y2", "100%")
+				.attr("class", "jsc-nodeeditor-grid");
+		}
+		
+	},
+
 	update: function(e) {
 		
 		if (e.data.enabled) {
 			
 			this.dom.main.removeClass('jsc-nodeeditor-disabled').addClass('jsc-nodeeditor');
 
-			/*
-			if (this.dom.svg && this.dom.svg.append !== 'undefined') {
-				this.dom.svg.append("path").attr("d","M 0 60 L 50 110 L 90 70 L 140 100");
-			}
-			*/
+			// ...
 			
 			if (e.data.visible) {
 				this.dom.main.show();
@@ -119,7 +154,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		})(this));
 		
 		this.config.options.nodes = [];
-		
+
 		$(e.data.options.nodes).each((function(that) {
 			return function(i, nodeOptions) {
 
@@ -193,7 +228,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 		});
 
 		// Render all nodes
-		this.trigger("view.update.nodes", e.data);
+		this.trigger("update.editor.options", e.data);
 
 	}
 

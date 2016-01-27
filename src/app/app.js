@@ -76,6 +76,50 @@ $(function() {
 						"value": 1
 					}
 				]
+			},
+			{
+				id: 'node2',
+				title: 'Node 2',
+				pos: {
+					left: 100,
+					top: 150
+				},
+				inputs: [
+					{
+						"type": false,
+						"title": "Input Port 1",
+						"value": 1
+					}
+				],
+				outputs: [
+					{
+						"type": false,
+						"title": "Output Port 1",
+						"value": 1
+					}
+				]
+			},
+			{
+				id: 'node3',
+				title: 'Node 3',
+				pos: {
+					left: 200,
+					top: 300
+				},
+				inputs: [
+					{
+						"type": false,
+						"title": "Input Port 1",
+						"value": 1
+					}
+				],
+				outputs: [
+					{
+						"type": false,
+						"title": "Output Port 1",
+						"value": 1
+					}
+				]
 			}
 		]
 	};

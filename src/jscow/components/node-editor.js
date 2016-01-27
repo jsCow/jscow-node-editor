@@ -95,31 +95,51 @@ jsCow.res.view.nodeeditor.prototype = {
 	// Update and draw the grid lines
 	updateGrid: function(e) {
 
-		var width = $(this.dom.content).width();
-		var height = $(this.dom.content).height();
-
-		this.grid = {
-			data: function() {
-				var lines = [];
-				
-				for (var i=0; (i*e.data.options.grid) < width; i++) {
-					lines.push(i*e.data.options.grid);
-				}
-				
-				return lines;
-			}
-		};
-		
 		if (this.dom.svggrid && this.dom.svggrid.append !== 'undefined') {
-			this.dom.svggrid.selectAll('line')
-     			.data(this.grid.data)
+			
+			var width = $(this.dom.content).width();
+			var height = $(this.dom.content).height();
+
+			this.grid = {
+				data: {
+					x: function() {
+						var lines = [];
+						for (var i=0; (i*e.data.options.grid) < width; i++) {
+							lines.push(i*e.data.options.grid);
+						}
+						
+						return lines;
+					},
+					y: function() {
+						var lines = [];
+						for (var i=0; (i*e.data.options.grid) < height; i++) {
+							lines.push(i*e.data.options.grid);
+						}
+						
+						return lines;
+					}
+				}
+			};
+		
+			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-x')
+     			.data(this.grid.data.x)
      			.enter()
      			.append("line")
 				.attr("x1", function(d) { return d; })
 				.attr("y1", 0)
 				.attr("x2", function(d) { return d; })
 				.attr("y2", "100%")
-				.attr("class", "jsc-nodeeditor-grid");
+				.attr("class", "jsc-nodeeditor-grid-x");
+
+			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-y')
+     			.data(this.grid.data.y)
+     			.enter()
+     			.append("line")
+				.attr("x1", 0)
+				.attr("y1", function(d) { return d; })
+				.attr("x2", "100%")
+				.attr("y2", function(d) { return d; })
+				.attr("class", "jsc-nodeeditor-grid-y");
 		}
 		
 	},
@@ -155,11 +175,13 @@ jsCow.res.view.nodeeditor.prototype = {
 		
 		this.config.options.nodes = [];
 
-		$(e.data.options.nodes).each((function(that) {
+		$(e.data.options.nodes).each((function(that, e) {
 			return function(i, nodeOptions) {
 
 				if (!that.config.options.nodes[nodeOptions.id]) {
 					
+					nodeOptions.grid = e.data.options.grid;
+
 					// Render all nodes
 					that.config.options.nodes[nodeOptions.id] = that.cmp().append(
 						jsCow.get(jsCow.res.components.node, {
@@ -180,7 +202,7 @@ jsCow.res.view.nodeeditor.prototype = {
 				}
 
 			};
-		})(this));
+		})(this, e));
 
 	},
 

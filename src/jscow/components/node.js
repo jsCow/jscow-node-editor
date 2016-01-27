@@ -135,7 +135,6 @@ jsCow.res.view.node.prototype = {
 			return function() {
 				var offsetLeft = self.dom.main.position().left;
 				var offsetTop = self.dom.main.position().top;
-				
 				self.mousePosX = document.all ? window.event.clientX : event.pageX;
 				self.mousePosY = document.all ? window.event.clientY : event.pageY;
 				self.nodePosX = self.mousePosX - offsetLeft;
@@ -181,8 +180,13 @@ jsCow.res.view.node.prototype = {
 					self.mousePosY = document.all ? window.event.clientY : event.pageY;
 					self.newNodePosX = self.mousePosX - self.nodePosX;
 					self.newNodePosY = self.mousePosY - self.nodePosY;
-					self.dom.main.css('left', self.newNodePosX );
-					self.dom.main.css('top', self.newNodePosY );
+					
+					//if ((self.newNodePosX % e.data.grid) === 1) {
+						self.dom.main.css('left', self.newNodePosX );
+					//}
+					//if ((self.newNodePosX % e.data.grid) === 1) {
+						self.dom.main.css('top', self.newNodePosY );
+					//}
 
 					self.trigger("drag.move", {
 						pos: {

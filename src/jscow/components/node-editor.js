@@ -80,9 +80,8 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.dom.svggrid = d3.select(this.dom.content[0])
 			.append("svg:svg")
 			.attr("width", "100%")
-			.attr("height", "100%").
-			append("g");
-		
+			.attr("height", "100%");
+
 		// Trigger the view update event	
 		this.trigger("view.update", e.data);
 		
@@ -222,7 +221,8 @@ jsCow.res.view.nodeeditor.prototype = {
 			};
 			
 			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-x').remove();
-			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-x')
+			this.dom.svggrid.append("g").attr('class', 'jsc-nodeeditor-grid-group-x')
+				.selectAll('line.jsc-nodeeditor-grid-x')
      			.data(this.config.grid.data.x)
      			.enter()
      			.append("line")
@@ -233,7 +233,8 @@ jsCow.res.view.nodeeditor.prototype = {
 				.attr("class", "jsc-nodeeditor-grid-x");
 			
 			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-y').remove();
-			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-y')
+			this.dom.svggrid.append("g").attr('class', 'jsc-nodeeditor-grid-group-y')
+				.selectAll('line.jsc-nodeeditor-grid-y')
      			.data(this.config.grid.data.y)
      			.enter()
      			.append("line")

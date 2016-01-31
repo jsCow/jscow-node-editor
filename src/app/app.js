@@ -135,11 +135,9 @@ $(function() {
 		id: 'node-editor-1'
 	}).target('#node-editor-1').run();
 
-	/*
 	nodeeditor2 = jsCow.get(jsCow.res.components.nodeeditor, {
 		id: 'node-editor-2'
 	}).target('#node-editor-2').run();
-	*/
 
 
 
@@ -148,10 +146,8 @@ $(function() {
 
 	$('body').append('<button>Set Options</button>');
 	$('button').click(function() {
-
 		jsCow.find('node-editor-1').options(NodeEditorOptions1);
-		//jsCow.find('node-editor-2').options(NodeEditorOptions2);
-
+		jsCow.find('node-editor-2').options(NodeEditorOptions2);
 	});
 
 });

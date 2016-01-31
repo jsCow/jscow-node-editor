@@ -46,26 +46,21 @@ jsCow.res.model.nodeeditor.prototype = {
 
 jsCow.res.view.nodeeditor = function() {
 	
+	// Represents the view configuration
+	this.config = {
+		contentSize: {
+			width: null,
+			height: null
+		},
+		grid: {
+			data: []
+		}
+	};
+	
 	this.dom = {};
 	this.dom.main = $('<div/>').addClass('jsc-nodeeditor clearfix');
 	this.dom.grid = $('<div/>').addClass('jsc-nodeeditor-grid clearfix').appendTo(this.dom.main);
 	this.dom.content = $('<div/>').addClass('jsc-nodeeditor-content clearfix').appendTo(this.dom.grid);
-
-	this.config = {
-		options: {
-			nodes: []
-		}
-	};
-
-	this.contentSize = {
-		width: 0,
-		height: 0
-	};
-
-	// SVG grid options
-	this.grid = {
-		data: []
-	};
 
 };
 jsCow.res.view.nodeeditor.prototype = {
@@ -74,8 +69,9 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		// Register all event listener
 		this.on("update.editor.options", this.updateNodes);
-		this.on("update.editor.options", this.updateGrid);
+		this.on("update.editor.grid", this.updateGrid);
 		this.on('update.content.size', this.updateContentSize);
+		this.on('update.node.options', this.updateNodeOptions);
 
 		// Bind the jquery plugin 'kinetic' on the grid area
 		this.dom.grid.kinetic();
@@ -89,58 +85,6 @@ jsCow.res.view.nodeeditor.prototype = {
 		
 		// Trigger the view update event	
 		this.trigger("view.update", e.data);
-		
-	},
-
-	// Update and draw the grid lines
-	updateGrid: function(e) {
-
-		if (this.dom.svggrid && this.dom.svggrid.append !== 'undefined') {
-			
-			var width = $(this.dom.content).width();
-			var height = $(this.dom.content).height();
-
-			this.grid = {
-				data: {
-					x: function() {
-						var lines = [];
-						for (var i=0; (i*e.data.options.grid) < width; i++) {
-							lines.push(i*e.data.options.grid);
-						}
-						
-						return lines;
-					},
-					y: function() {
-						var lines = [];
-						for (var i=0; (i*e.data.options.grid) < height; i++) {
-							lines.push(i*e.data.options.grid);
-						}
-						
-						return lines;
-					}
-				}
-			};
-		
-			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-x')
-     			.data(this.grid.data.x)
-     			.enter()
-     			.append("line")
-				.attr("x1", function(d) { return d; })
-				.attr("y1", 0)
-				.attr("x2", function(d) { return d; })
-				.attr("y2", "100%")
-				.attr("class", "jsc-nodeeditor-grid-x");
-
-			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-y')
-     			.data(this.grid.data.y)
-     			.enter()
-     			.append("line")
-				.attr("x1", 0)
-				.attr("y1", function(d) { return d; })
-				.attr("x2", "100%")
-				.attr("y2", function(d) { return d; })
-				.attr("class", "jsc-nodeeditor-grid-y");
-		}
 		
 	},
 
@@ -165,6 +109,27 @@ jsCow.res.view.nodeeditor.prototype = {
 		}
 	},
 
+	/*
+	 * Update node options
+	 */
+	updateNodeOptions: function(e) {
+
+		var config = this.cmp().config();
+		var nodes = config.options.nodes;
+		for (var  i=0; i < nodes.length; i++) {
+			if (nodes[i].id === e.data.id) {
+				$.extend(true, nodes[i], e.data);
+			}
+		}
+
+		// Update content size
+		this.trigger('update.content.size');
+
+	},
+
+	/*
+	 * Render all node components
+	 */
 	updateNodes: function(e) {
 		
 		$(this.cmp().children()).each((function(that) {
@@ -172,57 +137,113 @@ jsCow.res.view.nodeeditor.prototype = {
 				c.del();
 			};
 		})(this));
-		
-		this.config.options.nodes = [];
 
 		$(e.data.options.nodes).each((function(that, e) {
 			return function(i, nodeOptions) {
 
-				if (!that.config.options.nodes[nodeOptions.id]) {
-					
-					nodeOptions.grid = e.data.options.grid;
+				nodeOptions.grid = e.data.options.grid;
 
-					// Render all nodes
-					that.config.options.nodes[nodeOptions.id] = that.cmp().append(
-						jsCow.get(jsCow.res.components.node, {
-							//id: that.cmp().id() + '-' + nodeOptions.id,
-							model: nodeOptions
-						}).on('drag.stop', function(e) {
-							
-							// Update content size
-							that.trigger(
-								'update.content.size', 
-								e.sender
-							);
+				that.cmp().append(
+					jsCow.get(jsCow.res.components.node, {
+						model: nodeOptions
+					}).on('drag.stop', function(e) {
 
-						})
+						that.trigger('update.node.options', e.data);
 
-					);
-
-				}
+					})
+				);
 
 			};
 		})(this, e));
 
+		// Update content size
+		this.trigger('update.content.size');
+
 	},
 
 	updateContentSize: function(e) {
-
-		var node = e.sender;
-		var nodePos = node.config().pos;
 		
-		if (nodePos.left > this.contentSize.width) {
-			this.contentSize.width = parseInt(nodePos.left + 0);
-		}
+		this.config.contentSize.width = this.dom.main.outerWidth(true);
+		this.config.contentSize.height = this.dom.main.outerHeight(true);
 		
-		if (nodePos.top > this.contentSize.height) {
-			this.contentSize.height = parseInt(nodePos.top + 0);
+		var nodes = $(this.dom.content).find('.jsc-node');
+		for (var i=0; i<nodes.length; i++) {
+			
+			var node = $(nodes[i]);
+			var rightPos = node.position().left + node.outerWidth(true);
+			var bottomPos = node.position().top + node.outerHeight(true);
+
+			if (rightPos > this.config.contentSize.width) {
+				this.config.contentSize.width = rightPos;
+			}
+			if (bottomPos > this.config.contentSize.height) {
+				this.config.contentSize.height = bottomPos;
+			}
+
 		}
 
-		this.dom.content.css({
-			width: this.contentSize.width,
-			height: this.contentSize.height
-		});
+		this.dom.content.width(this.config.contentSize.width).height(this.config.contentSize.height);
+		this.trigger('update.editor.grid');
+
+	},
+
+	// Update and draw the grid lines
+	updateGrid: function(e) {
+		
+		if (this.dom.svggrid && this.dom.svggrid.append !== 'undefined') {
+			
+			if (this.config.contentSize.width && this.config.contentSize.height) {
+				var width = this.config.contentSize.width;
+				var height = this.config.contentSize.height;
+			}else{
+				var width = $(this.dom.content).outerWidth(true);
+				var height = $(this.dom.content).outerHeight(true);
+			}
+
+			this.config.grid = {
+				data: {
+					x: (function() {
+						var lines = [];
+						for (var i=0; (i*e.data.options.grid) < width; i++) {
+							lines.push(i*e.data.options.grid);
+						}
+						
+						return lines;
+					})(),
+					y: (function() {
+						var lines = [];
+						for (var i=0; (i*e.data.options.grid) < height; i++) {
+							lines.push(i*e.data.options.grid);
+						}
+						
+						return lines;
+					})()
+				}
+			};
+			
+			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-x').remove();
+			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-x')
+     			.data(this.config.grid.data.x)
+     			.enter()
+     			.append("line")
+				.attr("x1", function(d) { return d; })
+				.attr("y1", 0)
+				.attr("x2", function(d) { return d; })
+				.attr("y2", "100%")
+				.attr("class", "jsc-nodeeditor-grid-x");
+			
+			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-y').remove();
+			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-y')
+     			.data(this.config.grid.data.y)
+     			.enter()
+     			.append("line")
+				.attr("x1", 0)
+				.attr("y1", function(d) { return d; })
+				.attr("x2", "100%")
+				.attr("y2", function(d) { return d; })
+				.attr("class", "jsc-nodeeditor-grid-y");
+			
+		}
 
 	}
 		
@@ -250,7 +271,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 		});
 
 		// Render all nodes
-		this.trigger("update.editor.options", e.data);
+		this.trigger("update.editor.options");
 
 	}
 

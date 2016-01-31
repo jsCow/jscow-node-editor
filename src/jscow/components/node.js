@@ -156,19 +156,18 @@ jsCow.res.view.node.prototype = {
 				if (self.newNodePosX < 0) { self.newNodePosX = 0; }
 				if (self.newNodePosY < 0) { self.newNodePosY = 0; }
 				
-				self.trigger("model.update", {
-					pos: {
-						top: self.newNodePosY,
-						left: self.newNodePosX
-					}
+				var pos = {
+					top: self.newNodePosY,
+					left: self.newNodePosX,
+					right: self.newNodePosX + self.dom.main.outerWidth(true),
+					bottom: self.newNodePosY + self.dom.main.outerHeight(true)
+				};
+				
+				self.cmp().config({
+					pos: pos
 				});
 				
-				self.trigger("drag.stop", {
-					pos: {
-						top: self.newNodePosY,
-						left: self.newNodePosX
-					}
-				});
+				self.trigger("drag.stop", self.cmp().config());
 
 			};
 		})(this, e));
@@ -190,8 +189,10 @@ jsCow.res.view.node.prototype = {
 
 					self.trigger("drag.move", {
 						pos: {
-							top: self.newNodePosY,
-							left: self.newNodePosX
+							top: self.nodePosX,
+							left: self.nodePosY,
+							right: self.nodePosX + self.dom.main.width(),
+							bottom: self.nodePosY + self.dom.main.height()
 						}
 					});
 				}

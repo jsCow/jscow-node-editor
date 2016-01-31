@@ -9,7 +9,7 @@
 	padding: (@space-default / 2) (@space-default + 3);
 	width: 200px;
 	position: absolute;
-	.layout-default(@bg);
+	.layout-default(lighten(@bg, (@color-offset-default * 1)));
 	.text();
 	.round-corner-all();
 	.noelect();
@@ -25,7 +25,7 @@
 		}
 
 	}
-
+	
 	.jsc-node-titlebar {
 		text-align: center;
 		font-size: @text-fontSize-default;

@@ -73,6 +73,15 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.on('update.content.size', this.updateContentSize);
 		this.on('update.node.options', this.updateNodeOptions);
 
+		$(window).resize((function(self) {
+			return function() {
+				
+				// Update content size
+				self.trigger('update.content.size');
+
+			};
+		})(this));
+
 		// Bind the jquery plugin 'kinetic' on the grid area
 		this.dom.grid.kinetic();
 
@@ -191,12 +200,15 @@ jsCow.res.view.nodeeditor.prototype = {
 		
 		if (this.dom.svggrid && this.dom.svggrid.append !== 'undefined') {
 			
+			var width = 0;
+			var height = 0;
+
 			if (this.config.contentSize.width && this.config.contentSize.height) {
-				var width = this.config.contentSize.width;
-				var height = this.config.contentSize.height;
+				width = this.config.contentSize.width;
+				height = this.config.contentSize.height;
 			}else{
-				var width = $(this.dom.content).outerWidth(true);
-				var height = $(this.dom.content).outerHeight(true);
+				width = $(this.dom.content).outerWidth(true);
+				height = $(this.dom.content).outerHeight(true);
 			}
 
 			this.config.grid = {

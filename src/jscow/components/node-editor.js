@@ -150,7 +150,8 @@ jsCow.res.view.nodeeditor.prototype = {
 			return function(i, nodeOptions) {
 
 				nodeOptions.grid = e.data.options.grid;
-
+				nodeOptions.snapToGrid = e.data.options.snapToGrid;
+				
 				that.cmp().append(
 					jsCow.get(jsCow.res.components.node, {
 						model: nodeOptions

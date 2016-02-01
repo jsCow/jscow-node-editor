@@ -182,7 +182,7 @@ jsCow.res.view.node.prototype = {
 					
 					// Snap to grid
 					var grid = self.cmp().config().grid;
-					if (self.cmp().config().snapToGrid) {
+					if (self.cmp().config().snapToGrid  || !event.ctrlKey) {
 						self.newNodePosX = (Math.round(self.newNodePosX / grid) * grid);
 						self.newNodePosY = (Math.round(self.newNodePosY / grid) * grid);
 					}

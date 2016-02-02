@@ -97,6 +97,18 @@ module.exports = function(grunt) {
 	                    cwd: 'node_modules/jquery.kinetic',
 	                    src: ['jquery.kinetic.min.js'],
 	                    dest: 'dist/js/jquery.kinetic'
+					},
+					{
+	                    expand: true,
+	                    cwd: 'node_modules/jquery-contextmenu/dist',
+	                    src: ['jquery.contextMenu.min.js'],
+	                    dest: 'dist/js/jquery-contextmenu'
+					},
+					{
+	                    expand: true,
+	                    cwd: 'node_modules/jquery-contextmenu/dist/font',
+	                    src: ['*.*'],
+	                    dest: 'dist/fonts'
 					}
 				]
 			}

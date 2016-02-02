@@ -1,0 +1,128 @@
+@charset "UTF-8";
+
+.context-menu-list {
+  position: absolute; 
+  display: inline-block;
+  min-width: 180px;
+  max-width: 360px;
+  padding: @space-default / 2;
+  margin: @space-default;
+  font-family: 'Lato';
+  font-size: inherit;
+  list-style-type: none;
+  background: lighten(@base-color, @color-offset-default);
+  .border-all(3px, solid, darken(@base-color, 5%));
+  .shadow();
+  .text();
+}
+
+.context-menu-item {
+  display: block;
+  position: relative;
+  padding: @space-default / 2;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  .transition();
+  .text();
+
+  span {
+    font-family: 'Lato';
+    margin: 0 @space-default;
+    .text();
+  }
+
+}
+
+.context-menu-separator {
+  padding: 0; 
+  margin: @space-default / 2 0;
+  .border-top(1px, solid, darken(@base-color, @color-offset-default));
+  .border-bottom(1px, solid, lighten(@base-color, @color-offset-default));
+}
+
+.context-menu-item.context-menu-hover {
+  cursor: pointer; 
+  .text(lighten(@base-color, 100%));
+  background-color: lighten(@base-color, 5%);
+}
+
+.context-menu-item.context-menu-disabled {
+  .disabled();
+}
+
+.context-menu-item.context-menu-disabled {
+  .disabled();
+}
+
+.context-menu-input.context-menu-hover,
+.context-menu-item.context-menu-disabled.context-menu-hover {
+  cursor: default; 
+}
+
+.context-menu-submenu:after {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  z-index: 1; 
+  width: 0;
+  height: 0;
+  content: '';
+  border-color: transparent transparent transparent lighten(@base-color, @color-offset-default);
+  border-style: solid;
+  border-width: @space-default 0 @space-default @space-default;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+       -o-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+/**
+ * Inputs
+ */
+.context-menu-item.context-menu-input {
+  padding: @space-default @space-default * 2;
+}
+
+/* vertically align inside labels */
+.context-menu-input > label > * {
+  vertical-align: top;
+}
+
+/* position checkboxes and radios as icons */
+.context-menu-input > label > input[type="checkbox"],
+.context-menu-input > label > input[type="radio"] {
+  position: relative;
+  top: 3px;
+}
+
+.context-menu-input > label,
+.context-menu-input > label > input[type="text"],
+.context-menu-input > label > textarea,
+.context-menu-input > label > select {
+  display: block;
+  width: 100%; 
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.context-menu-input > label > textarea {
+  height: 100px;
+}
+
+.context-menu-item > .context-menu-list {
+  top: @space-default; 
+  /* re-positioned by js */
+  right: -@space-default;
+  display: none;
+}
+
+.context-menu-item.context-menu-visible > .context-menu-list {
+  display: block;
+}
+
+.context-menu-accesskey {
+  text-decoration: underline;
+}

@@ -1,5 +1,7 @@
 $(function() {
 
+	console.time('all');
+
 	//jsCow.debug.events = true;
 	/*
 	NodeEditorOptions1 = {
@@ -137,11 +139,11 @@ $(function() {
 	}
 
 	NodeEditorOptions1 = {
-		grid: 100,
+		grid: 50,
 		snapToGrid: true,
 		nodes: (function() {
 			var nodes = [];
-			for (var i=0; i < Math.floor((Math.random() * 100)); i++) {
+			for (var i=0; i < Math.floor((Math.random() * 50)); i++) {
 				nodes.push({
 					id: 'node'+i,
 					title: 'Node '+i,
@@ -162,7 +164,7 @@ $(function() {
 		snapToGrid: false,
 		nodes: (function() {
 			var nodes = [];
-			for (var i=0; i < Math.floor((Math.random() * 100)); i++) {
+			for (var i=0; i < Math.floor((Math.random() * 50)); i++) {
 				nodes.push({
 					id: 'node'+i,
 					title: 'Node '+i,
@@ -190,7 +192,11 @@ $(function() {
 
 	nodeeditor2 = jsCow.get(jsCow.res.components.nodeeditor, {
 		id: 'node-editor-2'
-	}).target('#node-editor-2').run();
+	})
+	.on('editor.options.updated', function(e) {
+		console.log("Editor geupdatet");
+	})
+	.target('#node-editor-2').run();
 
 
 
@@ -199,10 +205,13 @@ $(function() {
 
 	$('body').append('<button>Set Options</button>');
 	$('button').click(function() {
-		console.log(NodeEditorOptions1.nodes.length);
-		console.log(NodeEditorOptions2.nodes.length);
+		//console.log(NodeEditorOptions1.nodes.length);
+		//console.log(NodeEditorOptions2.nodes.length);
 		jsCow.find('node-editor-1').options(NodeEditorOptions1);
 		jsCow.find('node-editor-2').options(NodeEditorOptions2);
 	});
 
+	console.timeEnd('all');
+	console.log(jsCow.componentsObjectList.length, "components created...");
+	
 });

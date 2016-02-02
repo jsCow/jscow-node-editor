@@ -123,11 +123,37 @@ jsCow.res.view.node.prototype = {
 	
 	init: function(e) {
 
+		this.dom.main.addClass('jsc-node-'+e.data.id);
+
 		// Set default position variables for drag & drop
 		var modelConfig = this.cmp().config();
 		this.newNodePosX = modelConfig.pos.left;
 		this.newNodePosY = modelConfig.pos.top;
 		
+
+		// Register Context Menu
+		$.contextMenu({
+	        selector: '.jsc-node-'+e.data.id,
+	        callback: function(key, options) {
+	            var m = "clicked: " + key;
+	            console.log(m);
+	        },
+	        items: {
+	            "delete": {
+            		name: "Delete", 
+            		icon: function($element, key, item){ 
+	            		return 'fa fa-user'; 
+	            	}
+            	},
+	            "sep1": "---------",
+	            "quit": {
+	            	name: "Quit",
+	            	disabled: function(){ return true; }
+	            }
+	        }
+	    });
+
+
 		//
 		// Drag and drop for the node element
 		

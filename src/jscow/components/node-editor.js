@@ -132,6 +132,9 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		// Update content size
 		this.trigger('update.content.size');
+		
+		// Trigger the event 'editor.options.updated' and send the current editor options
+		this.trigger('editor.options.updated');
 
 	},
 
@@ -164,7 +167,7 @@ jsCow.res.view.nodeeditor.prototype = {
 
 			};
 		})(this, e));
-
+		
 		// Update content size
 		this.trigger('update.content.size');
 

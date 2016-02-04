@@ -13,7 +13,7 @@
 	.text();
 	.round-corner-all();
 	.noelect();
-	.border-all(3px, solid, darken(@bg, (@color-offset-default * 1)));
+	.border-all(3px, solid, darken(@bg, (@color-offset-default * 2)));
 	.opacity(0.8);
 
 	&.jsc-focus {
@@ -29,7 +29,24 @@
 	.jsc-node-titlebar {
 		text-align: center;
 		font-size: @text-fontSize-default;
-		overflow: hidden;
+		position: relative;
+		margin: 0 0 @space-default 0;
+
+		.jsc-node-remove {
+			position: absolute;
+			right: -(@space-default / 2);
+			top: 1px;
+			display: none;
+			cursor: pointer;
+		}
+
+		&:hover {
+			
+			.jsc-node-remove {
+				display: inline-block;
+			}
+
+		}
 	}
 
 	.jsc-node-content {

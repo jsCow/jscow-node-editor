@@ -159,9 +159,18 @@ jsCow.res.view.nodeeditor.prototype = {
 					jsCow.get(jsCow.res.components.node, {
 						model: nodeOptions
 					}).on('drag.stop', function(e) {
-
 						that.trigger('update.node.options', e.data);
+					}).on('node.remove', function(e) {
+						
+						var nodes = that.cmp().config().options.nodes;
+						for (var i=0; i < nodes.length; i++) {
+							if (nodes[i].id === e.data.id) {
+								nodes.splice(i,1);
+							}
+						}
 
+						that.trigger('editor.options.updated');
+		
 					})
 				);
 

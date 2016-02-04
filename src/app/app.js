@@ -143,7 +143,7 @@ $(function() {
 		snapToGrid: true,
 		nodes: (function() {
 			var nodes = [];
-			for (var i=0; i < Math.floor((Math.random() * 50)); i++) {
+			for (var i=0; i < Math.floor((Math.random() * 20)); i++) {
 				nodes.push({
 					id: 'node'+i,
 					title: 'Node '+i,
@@ -164,7 +164,7 @@ $(function() {
 		snapToGrid: false,
 		nodes: (function() {
 			var nodes = [];
-			for (var i=0; i < Math.floor((Math.random() * 50)); i++) {
+			for (var i=0; i < Math.floor((Math.random() * 20)); i++) {
 				nodes.push({
 					id: 'node'+i,
 					title: 'Node '+i,

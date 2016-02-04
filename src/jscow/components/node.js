@@ -91,6 +91,7 @@ jsCow.res.view.node = function() {
 	// Title with arrow
 	this.dom.titlebar = $('<div/>').addClass('jsc-node-titlebar');
 	this.dom.title = $('<span/>').appendTo( this.dom.titlebar );
+	this.dom.remove = $('<i/>').addClass('jsc-node-remove fa fa-times').appendTo( this.dom.titlebar );
 	this.dom.main.prepend( this.dom.titlebar );
 
 	// Out
@@ -131,27 +132,17 @@ jsCow.res.view.node.prototype = {
 		this.newNodePosY = modelConfig.pos.top;
 		
 
-		// Register Context Menu
-		$.contextMenu({
-	        selector: '.jsc-node-'+e.data.id,
-	        callback: function(key, options) {
-	            var m = "clicked: " + key;
-	            console.log(m);
-	        },
-	        items: {
-	            "delete": {
-            		name: "Delete", 
-            		icon: function($element, key, item){ 
-	            		return 'fa fa-user'; 
-	            	}
-            	},
-	            "sep1": "---------",
-	            "quit": {
-	            	name: "Quit",
-	            	disabled: function(){ return true; }
-	            }
-	        }
-	    });
+		//
+		// Trigger to remove node
+
+		this.dom.remove.on('click', (function(self, e) {	// Start Drag
+			return function() {
+				self.trigger('node.remove', {
+					id: e.data.id
+				});
+				self.cmp().del();
+			};
+		})(this, e));
 
 
 		//

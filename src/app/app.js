@@ -1,5 +1,7 @@
 $(function() {
 
+	//jsCow.debug.events = true;
+
 	console.time('all');
 
 	//jsCow.debug.events = true;
@@ -143,7 +145,7 @@ $(function() {
 		snapToGrid: true,
 		nodes: (function() {
 			var nodes = [];
-			for (var i=0; i < Math.floor((Math.random() * 20)); i++) {
+			for (var i=0; i < Math.floor((Math.random() * 10)); i++) {
 				nodes.push({
 					id: 'node'+i,
 					title: 'Node '+i,
@@ -164,7 +166,7 @@ $(function() {
 		snapToGrid: false,
 		nodes: (function() {
 			var nodes = [];
-			for (var i=0; i < Math.floor((Math.random() * 20)); i++) {
+			for (var i=0; i < Math.floor((Math.random() * 10)); i++) {
 				nodes.push({
 					id: 'node'+i,
 					title: 'Node '+i,
@@ -188,17 +190,19 @@ $(function() {
 
 	nodeeditor1 = jsCow.get(jsCow.res.components.nodeeditor, {
 		id: 'node-editor-1'
-	}).target('#node-editor-1').run();
+	})
+	.on('editor.options.updated', function(e) {
+		console.log(e.sender.id()+" geupdatet >>>", e.data.nodes[0].pos);
+	})
+	.target('#node-editor-1').run();
 
 	nodeeditor2 = jsCow.get(jsCow.res.components.nodeeditor, {
 		id: 'node-editor-2'
 	})
 	.on('editor.options.updated', function(e) {
-		console.log("Editor geupdatet");
+		console.log(e.sender.id()+" geupdatet >>>", e.data.nodes[0].pos);
 	})
 	.target('#node-editor-2').run();
-
-
 
 
 

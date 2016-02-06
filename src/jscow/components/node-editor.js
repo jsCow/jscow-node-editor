@@ -71,8 +71,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.on("update.editor.options", this.updateNodes);
 		this.on("update.editor.grid", this.updateGrid);
 		this.on('update.content.size', this.updateContentSize);
-		this.on('update.node.options', this.updateNodeOptions);
-
+		
 		$(window).resize((function(self) {
 			return function() {
 				
@@ -118,27 +117,6 @@ jsCow.res.view.nodeeditor.prototype = {
 	},
 
 	/*
-	 * Update node options
-	 */
-	updateNodeOptions: function(e) {
-
-		var config = this.cmp().config();
-		var nodes = config.options.nodes;
-		for (var  i=0; i < nodes.length; i++) {
-			if (nodes[i].id === e.data.id) {
-				$.extend(true, nodes[i], e.data);
-			}
-		}
-
-		// Update content size
-		this.trigger('update.content.size');
-		
-		// Trigger the event 'editor.options.updated' and send the current editor options
-		this.trigger('editor.options.updated');
-
-	},
-
-	/*
 	 * Render all node components
 	 */
 	updateNodes: function(e) {
@@ -157,19 +135,15 @@ jsCow.res.view.nodeeditor.prototype = {
 				
 				that.cmp().append(
 					jsCow.get(jsCow.res.components.node, {
+						id: that.cmp().id() + "-" + nodeOptions.id,
 						model: nodeOptions
-					}).on('drag.stop', function(e) {
-						that.trigger('update.node.options', e.data);
-					}).on('node.remove', function(e) {
+					}).on('updated', function(e) {
 						
-						var nodes = that.cmp().config().options.nodes;
-						for (var i=0; i < nodes.length; i++) {
-							if (nodes[i].id === e.data.id) {
-								nodes.splice(i,1);
-							}
-						}
-
-						that.trigger('editor.options.updated');
+						that.trigger('node.updated', e.data);
+						
+					}).on('removed', function(e) {
+						console.log('>>> removed <<<');
+						that.trigger('node.removed');
 		
 					})
 				);
@@ -204,6 +178,8 @@ jsCow.res.view.nodeeditor.prototype = {
 		}
 
 		this.dom.content.width(this.config.contentSize.width).height(this.config.contentSize.height);
+
+		// Trigger to update grid 
 		this.trigger('update.editor.grid');
 
 	},
@@ -245,6 +221,7 @@ jsCow.res.view.nodeeditor.prototype = {
 				}
 			};
 			
+			this.dom.svggrid.selectAll('.jsc-nodeeditor-grid-group-x').remove();
 			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-x').remove();
 			this.dom.svggrid.append("g").attr('class', 'jsc-nodeeditor-grid-group-x')
 				.selectAll('line.jsc-nodeeditor-grid-x')
@@ -257,6 +234,7 @@ jsCow.res.view.nodeeditor.prototype = {
 				.attr("y2", "100%")
 				.attr("class", "jsc-nodeeditor-grid-x");
 			
+			this.dom.svggrid.selectAll('.jsc-nodeeditor-grid-group-y').remove();
 			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-y').remove();
 			this.dom.svggrid.append("g").attr('class', 'jsc-nodeeditor-grid-group-y')
 				.selectAll('line.jsc-nodeeditor-grid-y')
@@ -281,6 +259,8 @@ jsCow.res.controller.nodeeditor.prototype = {
 	init: function() {
 		this.on("model.ready", this.isModelReady);
 		this.on("options", this.options);
+		this.on('node.updated', this.nodeUpdated);
+		this.on('node.removed', this.nodeRemoved);
 	},
 	
 	isModelReady: function() {
@@ -298,6 +278,40 @@ jsCow.res.controller.nodeeditor.prototype = {
 
 		// Render all nodes
 		this.trigger("update.editor.options");
+
+	},
+
+	/*
+	 * Update node options and trigger the event 'editor.options.updated'.
+	 * Internal the content size will updatet after update the options.
+	 */
+	nodeUpdated: function(e) {
+		
+		var nodes = this.cmp().config().options.nodes;
+		for (var  i=0; i < nodes.length; i++) {
+			if (nodes[i].id === e.data.id) {
+				$.extend(true, nodes[i], e.data);
+			}
+		}
+
+		// Update content size
+		this.trigger('update.content.size');
+		
+		// Trigger the event 'editor.options.updated' and send the current editor options
+		this.trigger('editor.options.updated', this.cmp().config().options);
+
+	},
+
+	/*
+	 * Will be triggered when a node has been removed
+	 */
+	nodeRemoved: function(e) {
+		
+		// Update content size
+		this.trigger('update.content.size');
+
+		// Trigger the event 'editor.options.updated' and send the current editor options
+		this.trigger('editor.options.updated', this.cmp().config().options);
 
 	}
 

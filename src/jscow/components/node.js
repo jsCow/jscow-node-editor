@@ -137,10 +137,10 @@ jsCow.res.view.node.prototype = {
 
 		this.dom.remove.on('click', (function(self, e) {	// Start Drag
 			return function() {
-				self.trigger('node.remove', {
+				self.cmp().del();
+				self.trigger('removed', {
 					id: e.data.id
 				});
-				self.cmp().del();
 			};
 		})(this, e));
 
@@ -167,7 +167,7 @@ jsCow.res.view.node.prototype = {
 
 			};
 		})(this, e)).on('mouseup', (function(self, e) {		// Stop Drag
-			return function() {
+			return function(ev) {
 				self.dragstart = false;
 
 				if (self.newNodePosX < 0) { self.newNodePosX = 0; }
@@ -180,10 +180,14 @@ jsCow.res.view.node.prototype = {
 					bottom: self.newNodePosY + self.dom.main.outerHeight(true)
 				};
 				
-				self.cmp().config({
-					pos: pos
-				});
-
+				var currentPosition = self.cmp().config().pos;
+				if (self.newNodePosX !== currentPosition.left || 
+					self.newNodePosY !== currentPosition.top) {
+					self.cmp().config({
+						pos: pos
+					});
+				}
+				
 				self.trigger("drag.stop", self.cmp().config());
 
 			};

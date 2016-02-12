@@ -9,7 +9,7 @@
 	padding: (@space-default / 2) (@space-default + 3);
 	width: 200px;
 	position: absolute;
-	.layout-default(lighten(@bg, (@color-offset-default * 1)));
+	background: darken(@bg, (@color-offset-default * 1));
 	.text();
 	.round-corner-all();
 	.noelect();
@@ -58,22 +58,29 @@
 		}
 
 		.jsc-node-port {
-			margin: (@space-default / 2) -13px (@space-default / 2) -13px;
+			margin: 0 -13px;
 			color: lighten(@text-color-default, (@color-offset-default * 1));
 			font-size: @text-fontSize-default;
 			position: relative;
-			min-height: 15px;
+			padding: @space-default 0px;
+
+			&:nth-child(odd) {
+				background: darken(@bg, 10%);
+			}
 
 			> i {
-				.layout-default(lighten(@bg, (@color-offset-default * 2 )));
-				.border-top(1px, solid, lighten(@bg, (@color-offset-default * 3)));
-				.border-bottom();
-				position: absolute;
-				line-height: 10px;
-				width: 13px;
+				.layout-default(lighten(@bg, 5%));
+				width: 15px;
 				height: 15px;
+				.border-top();
+				.border-bottom(1px, solid, lighten(@bg, (@color-offset-default * 3)));
 				cursor: pointer;
-				top: 1px;
+				top: 10px;
+				position: absolute;
+				
+				&:hover {
+					.layout-default(lighten(@bg, 30%));
+				};
 			}
 
 			> div {
@@ -85,8 +92,7 @@
 				
 				i {
 					left: 0;
-					.round-corner-topRight(13px);
-					.round-corner-bottomRight(13px);
+					.round-corner-right(50%);
 				}
 
 			}
@@ -95,8 +101,7 @@
 				
 				i {
 					right: 0;
-					.round-corner-topLeft(13px);
-					.round-corner-bottomLeft(13px);
+					.round-corner-left(50%);
 				}
 
 				div {

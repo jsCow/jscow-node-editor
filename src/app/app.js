@@ -4,29 +4,41 @@ $(function() {
 
 	console.time('all');
 
-	//jsCow.debug.events = true;
-	/*
 	NodeEditorOptions1 = {
-		grid: 100,
+		grid: 30,
 		nodes: [
 			{
 				id: 'node1',
 				title: 'Node 1',
 				pos: {
-					left: 20,
-					top: 50
+					left: 30,
+					top: 30
 				},
 				inputs: [
 					{
 						"type": false,
+						"id": "in1",
 						"title": "Input Port 1",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "in2",
+						"title": "Input Port 2",
 						"value": 1
 					}
 				],
 				outputs: [
 					{
 						"type": false,
+						"id": "out1",
 						"title": "Output Port 1",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "out2",
+						"title": "Output Port 2",
 						"value": 1
 					}
 				]
@@ -35,23 +47,59 @@ $(function() {
 				id: 'node2',
 				title: 'Node 2',
 				pos: {
-					left: 200,
+					left: 280,
 					top: 150
 				},
 				inputs: [
 					{
 						"type": false,
+						"id": "in1",
 						"title": "Input Port 1",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "in2",
+						"title": "Input Port 2",
 						"value": 1
 					}
 				],
 				outputs: [
 					{
 						"type": false,
+						"id": "out1",
 						"title": "Output Port 1",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "out2",
+						"title": "Input Port 2",
 						"value": 1
 					}
 				]
+			}
+		],
+		connections: [
+			{
+				from: {
+					node: 'node1',
+					out: 'out1'
+				},
+				to: {
+					node: 'node2',
+					in: 'in1'
+				}
+			},
+			{
+				from: {
+					node: 'node1',
+					out: 'out1'
+				},
+				to: {
+					node: 'node2',
+					in: 'in2'
+				}
 			}
 		]
 	};
@@ -64,19 +112,33 @@ $(function() {
 				title: 'Node 1',
 				pos: {
 					left: 20,
-					top: 50
+					top: 20
 				},
 				inputs: [
 					{
 						"type": false,
+						"id": "in1",
 						"title": "Input Port 1",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "in2",
+						"title": "Input Port 2",
 						"value": 1
 					}
 				],
 				outputs: [
 					{
 						"type": false,
+						"id": "out1",
 						"title": "Output Port 1",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "out2",
+						"title": "Output Port 2",
 						"value": 1
 					}
 				]
@@ -85,20 +147,34 @@ $(function() {
 				id: 'node2',
 				title: 'Node 2',
 				pos: {
-					left: 100,
-					top: 150
+					left: 280,
+					top: 50
 				},
 				inputs: [
 					{
 						"type": false,
+						"id": "in1",
 						"title": "Input Port 1",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "in2",
+						"title": "Input Port 2",
 						"value": 1
 					}
 				],
 				outputs: [
 					{
 						"type": false,
+						"id": "out1",
 						"title": "Output Port 1",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "out2",
+						"title": "Output Port 2",
 						"value": 1
 					}
 				]
@@ -107,28 +183,65 @@ $(function() {
 				id: 'node3',
 				title: 'Node 3',
 				pos: {
-					left: 200,
-					top: 300
+					left: 150,
+					top: 200
 				},
 				inputs: [
 					{
 						"type": false,
+						"id": "in1",
 						"title": "Input Port 1",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "in2",
+						"title": "Input Port 2",
 						"value": 1
 					}
 				],
 				outputs: [
 					{
 						"type": false,
+						"id": "out1",
 						"title": "Output Port 1",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "out2",
+						"title": "Input Port 2",
 						"value": 1
 					}
 				]
 			}
+		],
+		connections: [
+			{
+				from: {
+					node: 'node1',
+					out: 'out1'
+				},
+				to: {
+					node: 'node2',
+					in: 'in1'
+				}
+			},
+			{
+				from: {
+					node: 'node1',
+					out: 'out1'
+				},
+				to: {
+					node: 'node2',
+					in: 'in2'
+				}
+			}
 		]
 	};
-	*/
+	
 
+	/*
 	function getPorts() {
 		var ports = [];
 		for (var x=0; x < Math.floor((Math.random() * 20)); x++) {
@@ -181,7 +294,7 @@ $(function() {
 			return nodes;
 		})()
 	};
-
+	*/
 
 
 
@@ -192,18 +305,21 @@ $(function() {
 		id: 'node-editor-1'
 	})
 	.on('editor.options.updated', function(e) {
-		console.log(e.sender.id()+" geupdatet >>>", e.data.nodes[0].pos);
+		//console.log("");
+		//console.log(e.sender.id()+" geupdatet >>>", e.data.nodes[0].pos);
 	})
 	.target('#node-editor-1').run();
 
+	/*
 	nodeeditor2 = jsCow.get(jsCow.res.components.nodeeditor, {
 		id: 'node-editor-2'
 	})
 	.on('editor.options.updated', function(e) {
-		console.log(e.sender.id()+" geupdatet >>>", e.data.nodes[0].pos);
+		//console.log("");
+		//console.log(e.sender.id()+" geupdatet >>>", e.data.nodes[0].pos);
 	})
 	.target('#node-editor-2').run();
-
+	*/
 
 
 
@@ -212,7 +328,7 @@ $(function() {
 		//console.log(NodeEditorOptions1.nodes.length);
 		//console.log(NodeEditorOptions2.nodes.length);
 		jsCow.find('node-editor-1').options(NodeEditorOptions1);
-		jsCow.find('node-editor-2').options(NodeEditorOptions2);
+		//jsCow.find('node-editor-2').options(NodeEditorOptions2);
 	});
 
 	console.timeEnd('all');

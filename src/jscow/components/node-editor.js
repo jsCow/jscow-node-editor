@@ -54,7 +54,8 @@ jsCow.res.view.nodeeditor = function() {
 		},
 		grid: {
 			data: []
-		}
+		},
+		jsPlumbInstance: null
 	};
 	
 	this.dom = {};
@@ -71,6 +72,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.on("update.editor.options", this.updateNodes);
 		this.on("update.editor.grid", this.updateGrid);
 		this.on('update.content.size', this.updateContentSize);
+		this.on('update.connectors', this.updateConnectors);
 		
 		$(window).resize((function(self) {
 			return function() {
@@ -89,6 +91,15 @@ jsCow.res.view.nodeeditor.prototype = {
 			.append("svg:svg")
 			.attr("width", "100%")
 			.attr("height", "100%");
+
+		// Create jsPlumb instance
+		// Set the container
+		jsPlumb.ready((function(self) {
+			return function() {
+				self.config.jsPlumbInstance = jsPlumb.getInstance();
+				self.config.jsPlumbInstance.setContainer(self.dom.content);
+			};
+		})(this));
 
 		// Trigger the view update event	
 		this.trigger("view.update", e.data);
@@ -121,38 +132,116 @@ jsCow.res.view.nodeeditor.prototype = {
 	 */
 	updateNodes: function(e) {
 		
+		var self = this;
+
 		$(this.cmp().children()).each((function(that) {
 			return function(i, c) {
 				c.del();
 			};
 		})(this));
+		
+		var nodesCount = e.data.options.nodes.length;		
+		var renderedNodes = 0;
 
 		$(e.data.options.nodes).each((function(that, e) {
 			return function(i, nodeOptions) {
 
 				nodeOptions.grid = e.data.options.grid;
 				nodeOptions.snapToGrid = e.data.options.snapToGrid;
+				nodeOptions.jsPlumbInstance = that.config.jsPlumbInstance;
 				
+				
+
+
+
+				// ========================= TEST ========================================================
+				
+				var main = $('<div/>').attr('id', self.cmp().id()+'-'+nodeOptions.id).addClass('jsc-node clearfix').css({
+					top: nodeOptions.pos.top, 
+					left: nodeOptions.pos.left
+				});
+				var content = $('<div/>').addClass('jsc-node-content clearfix').appendTo(main);
+				
+				var titlebar = $('<div/>').addClass('jsc-node-titlebar');
+				var title = $('<span/>').html(nodeOptions.title).appendTo( titlebar );
+				var remove = $('<i/>').addClass('jsc-node-remove fa fa-times').appendTo( titlebar );
+				main.prepend( titlebar );
+
+				var outputs = $('<div/>').addClass('jsc-node-outputs').appendTo(content);
+				var preview = $('<div/>').addClass('jsc-node-preview').appendTo(content);
+				var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
+				var inputs = $('<div/>').addClass('jsc-node-inputs').appendTo(content);
+
+				$.each(nodeOptions.outputs, function(i, output) {
+
+					var port = $('<div/>').addClass('jsc-node-port jsc-node-port-out');
+					$('<i/>').attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+output.id).appendTo(port);
+					$('<div/>').appendTo(port).append(
+						$('<span/>').text(output.title)
+					);
+					
+					outputs.append(port);
+					
+				});
+				
+				$.each(nodeOptions.inputs, function(i, input) {
+
+					var port = $('<div/>').addClass('jsc-node-port jsc-node-port-in');
+					$('<i/>').attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+input.id).appendTo(port);
+					$('<div/>').appendTo(port).append(
+						$('<span/>').text(input.title)
+					);
+					
+					inputs.append(port);
+					
+				});
+				
+
+				that.dom.content.append(main);
+
+				self.config.jsPlumbInstance.draggable(self.cmp().id()+'-'+nodeOptions.id, {
+					grid:[nodeOptions.grid, nodeOptions.grid]
+				});
+				
+
+				// end ========================= TEST ========================================================
+
+
+
+
+
+				/*
 				that.cmp().append(
 					jsCow.get(jsCow.res.components.node, {
 						id: that.cmp().id() + "-" + nodeOptions.id,
 						model: nodeOptions
 					}).on('updated', function(e) {
-						
 						that.trigger('node.updated', e.data);
-						
 					}).on('removed', function(e) {
-						console.log('>>> removed <<<');
 						that.trigger('node.removed');
-		
+					}).on('view.ready', function(e) {
+						
+						renderedNodes++;
+						
+						if (renderedNodes === nodesCount) {
+							
+							
+						}
+
 					})
 				);
+				*/
 
 			};
-		})(this, e));
-		
-		// Update content size
-		this.trigger('update.content.size');
+		})(this, e)).promise().done(function() {
+			
+			// Update content size
+			self.trigger('update.content.size');
+
+			// Update visual connectors
+			self.trigger('update.connectors');
+
+		});
 
 	},
 
@@ -178,9 +267,6 @@ jsCow.res.view.nodeeditor.prototype = {
 		}
 
 		this.dom.content.width(this.config.contentSize.width).height(this.config.contentSize.height);
-
-		// Trigger to update grid 
-		this.trigger('update.editor.grid');
 
 	},
 
@@ -249,8 +335,49 @@ jsCow.res.view.nodeeditor.prototype = {
 			
 		}
 
-	}
+	},
+
+	/*
+	 * Update all connectors
+	 */
+	updateConnectors: function(e) {
 		
+		//console.log("");
+		//console.log(e.data);
+		
+		var self = this;
+
+		$(e.data.options.connections).each(function(i, c) {
+				
+			jsPlumb.ready(function() {
+
+				/** connector options */
+				var connectorOptions = {
+					connector:[ "Flowchart", {
+						cornerRadius: 5
+					}],
+					anchor: ['LeftMiddle', 'RightMiddle'],
+					endpoint: ['Dot', { radius: 5 }]
+				};
+
+				var source = self.cmp().id()+"-"+c.from.node+"-"+c.from.out;
+				var target = self.cmp().id()+"-"+c.to.node+"-"+c.to.in;
+				
+				self.config.jsPlumbInstance.connect({
+					source: source,
+					target: target
+				}, connectorOptions);
+
+			});
+
+		}).promise().done(function() {
+			
+			// Trigger to update grid 
+			self.trigger('update.editor.grid');
+
+		});
+
+	}
 };
 
 jsCow.res.controller.nodeeditor = function() {};

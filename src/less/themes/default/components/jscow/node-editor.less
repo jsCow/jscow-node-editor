@@ -20,7 +20,7 @@
 	}
 
 	.jsc-nodeeditor-content {
-		position: absolute;
+		position: relative;
 		width: 100%;
 		height: 100%;
 		
@@ -40,6 +40,34 @@
 					stroke: darken(@base-color, 20%);
 				}
 			}
+			
+			.jsc-nodeeditor-connector-group {
+				z-index: 1;
+				.jsc-nodeeditor-connector {
+					stroke: lighten(@base-color, (@color-offset-default * 3));
+					stroke-width: 5px;
+					fill: none;
+					stroke-linecap: round;
+				}
+			}
+
+		}
+
+		svg.jsplumb-connector {
+			.opacity(0.70);
+
+			path {
+				stroke: lighten(@base-color, (@color-offset-default * 3));
+				stroke-width: 5px;
+				fill: none;
+				stroke-linecap: round;
+				
+				&:hover {
+					stroke: lighten(@base-color, (@color-offset-default * 5));
+					.opacity(1);
+				};
+			}
+
 		}
 
 	}

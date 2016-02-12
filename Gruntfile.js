@@ -97,6 +97,12 @@ module.exports = function(grunt) {
 	                    cwd: 'node_modules/jquery.kinetic',
 	                    src: ['jquery.kinetic.min.js'],
 	                    dest: 'dist/js/jquery.kinetic'
+					},
+					{
+	                    expand: true,
+	                    cwd: 'node_modules/jsplumb/dist/js',
+	                    src: ['*min.js'],
+	                    dest: 'dist/js/jsplumb'
 					}
 				]
 			}
@@ -108,7 +114,11 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [
-					'node_modules/jscow/dist/jscow/jscow.min.js',
+					'node_modules/jscow/src/jscow/jscow.js',
+					'node_modules/jscow/src/jscow/jscow.events.js',
+					'node_modules/jscow/src/jscow/jscow.components.js',
+					'node_modules/jscow/src/jscow/jscow.components.view.js',
+					'node_modules/jscow/src/jscow/jscow.components.controller.js',
 					'node_modules/jscow-*/src/jscow/components/*.js',
 					'node_modules/jscow-*/dist/jscow/components/*.min.js',
 					'src/jscow/components/*.js',

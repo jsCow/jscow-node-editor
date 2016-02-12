@@ -32,7 +32,8 @@
     "d3": "latest",
     "jquery.kinetic": "latest",
     "jquery-contextmenu": "latest",
-    "jscow": "latest"
+    "jscow": "latest",
+    "jsplumb": "latest"
   },
   "repository": {
     "type": "git",

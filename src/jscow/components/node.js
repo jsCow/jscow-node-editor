@@ -64,8 +64,8 @@ jsCow.res.model.node = function() {
 		visible: true,
 		title: "",
 		pos: {
-			left: 0,
-			top: 0
+			left: null,
+			top: null
 		},
 		inputs: [],
 		outputs: [],
@@ -124,7 +124,7 @@ jsCow.res.view.node.prototype = {
 	
 	init: function(e) {
 
-		this.dom.main.addClass('jsc-node-'+e.data.id);
+		this.dom.main.attr('id', e.data.id);
 
 		// Set default position variables for drag & drop
 		var modelConfig = this.cmp().config();
@@ -147,7 +147,7 @@ jsCow.res.view.node.prototype = {
 
 		//
 		// Drag and drop for the node element
-		
+		/*
 		this.dom.main.on('mousedown', (function(self, e) {	// Start Drag
 			return function() {
 				var offsetLeft = self.dom.main.position().left;
@@ -222,9 +222,10 @@ jsCow.res.view.node.prototype = {
 				}
 			};
 		})(this, e));
+		*/
 		
 		this.trigger("view.update", e.data);
-
+		
 	},
 	
 	update: function(e) {	
@@ -245,15 +246,13 @@ jsCow.res.view.node.prototype = {
 				return function(i, output) {
 
 					var port = $('<div/>').addClass('jsc-node-port jsc-node-port-out');
-					$('<i/>').appendTo(port);
+					$('<i/>').attr("id", that.cmp().id()+'-'+output.id).appendTo(port);
 					$('<div/>').appendTo(port).append(
 						$('<span/>').text(output.title)
 					);
 					
 					that.dom.outputs.append(port);
-
-					//jsCow.get(jsCow.res.components.button).target(portContent[0]).run().target();
-
+					
 				};
 			})(this));
 			
@@ -263,7 +262,7 @@ jsCow.res.view.node.prototype = {
 				return function(i, input) {
 
 					var port = $('<div/>').addClass('jsc-node-port jsc-node-port-in');
-					$('<i/>').appendTo(port);
+					$('<i/>').attr("id", that.cmp().id()+'-'+input.id).appendTo(port);
 					$('<div/>').appendTo(port).append(
 						$('<span/>').text(input.title)
 					);

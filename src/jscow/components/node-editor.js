@@ -174,8 +174,10 @@ jsCow.res.view.nodeeditor.prototype = {
 
 				$.each(nodeOptions.outputs, function(i, output) {
 
-					var port = $('<div/>').addClass('jsc-node-port jsc-node-port-out');
-					$('<i/>').attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+output.id).appendTo(port);
+					var port = $('<div/>')
+						.addClass('jsc-node-port jsc-node-port-out')
+						.attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+output.id);
+					//$('<i/>').attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+output.id).appendTo(port);
 					$('<div/>').appendTo(port).append(
 						$('<span/>').text(output.title)
 					);
@@ -186,8 +188,10 @@ jsCow.res.view.nodeeditor.prototype = {
 				
 				$.each(nodeOptions.inputs, function(i, input) {
 
-					var port = $('<div/>').addClass('jsc-node-port jsc-node-port-in');
-					$('<i/>').attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+input.id).appendTo(port);
+					var port = $('<div/>')
+						.addClass('jsc-node-port jsc-node-port-in')
+						.attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+input.id);
+					//$('<i/>').attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+input.id).appendTo(port);
 					$('<div/>').appendTo(port).append(
 						$('<span/>').text(input.title)
 					);
@@ -353,11 +357,13 @@ jsCow.res.view.nodeeditor.prototype = {
 
 				/** connector options */
 				var connectorOptions = {
+					/*
+					connector: [ "Bezier", { curviness: 80 } ],
+					*/
 					connector:[ "Flowchart", {
 						cornerRadius: 5
 					}],
-					anchor: ['LeftMiddle', 'RightMiddle'],
-					endpoint: ['Dot', { radius: 5 }]
+					anchor: [ 'LeftMiddle', 'RightMiddle']
 				};
 
 				var source = self.cmp().id()+"-"+c.from.node+"-"+c.from.out;

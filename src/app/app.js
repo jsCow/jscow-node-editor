@@ -47,8 +47,8 @@ $(function() {
 				id: 'node2',
 				title: 'Node 2',
 				pos: {
-					left: 280,
-					top: 150
+					left: 580,
+					top: 200
 				},
 				inputs: [
 					{

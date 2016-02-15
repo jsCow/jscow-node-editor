@@ -7,13 +7,16 @@
 	@bg: lighten(@base-color, (@color-offset-default * 1));
 
 	padding: (@space-default / 2) (@space-default + 3);
-	width: 200px;
 	position: absolute;
 	background: darken(@bg, (@color-offset-default * 1));
+	min-width: 150px;
 	.text();
 	.round-corner-all();
 	.noelect();
+	/*
 	.border-all(3px, solid, darken(@bg, (@color-offset-default * 2)));
+	*/
+	.shadow();
 	.opacity(0.8);
 
 	&.jsc-focus {
@@ -41,7 +44,8 @@
 		}
 
 		&:hover {
-			
+			cursor: pointer;
+
 			.jsc-node-remove {
 				display: inline-block;
 			}
@@ -64,25 +68,6 @@
 			position: relative;
 			padding: @space-default 0px;
 
-			&:nth-child(odd) {
-				background: darken(@bg, 10%);
-			}
-
-			> i {
-				.layout-default(lighten(@bg, 5%));
-				width: 15px;
-				height: 15px;
-				.border-top();
-				.border-bottom(1px, solid, lighten(@bg, (@color-offset-default * 3)));
-				cursor: pointer;
-				top: 10px;
-				position: absolute;
-				
-				&:hover {
-					.layout-default(lighten(@bg, 30%));
-				};
-			}
-
 			> div {
 				margin: 0 20px;
 				.clearfix();
@@ -90,20 +75,10 @@
 			
 			&.jsc-node-port-in {
 				
-				i {
-					left: 0;
-					.round-corner-right(50%);
-				}
-
 			}
 
 			&.jsc-node-port-out {
 				
-				i {
-					right: 0;
-					.round-corner-left(50%);
-				}
-
 				div {
 					text-align: right;
 				}

@@ -9,13 +9,11 @@
 	padding: (@space-default / 2) (@space-default + 3);
 	position: absolute;
 	background: darken(@bg, (@color-offset-default * 1));
-	min-width: 150px;
+	width: 170px;
 	.text();
-	.round-corner-all();
+	.round-corner-all(@space-default);
 	.noelect();
-	/*
-	.border-all(3px, solid, darken(@bg, (@color-offset-default * 2)));
-	*/
+	.border-all(1px, solid, darken(@base-color, (@color-offset-default * 3)));
 	.shadow();
 	.opacity(0.8);
 
@@ -33,12 +31,15 @@
 		text-align: center;
 		font-size: @text-fontSize-default;
 		position: relative;
-		margin: 0 -(@space-default / 2) @space-default -(@space-default / 2);
+		padding: 2px 0;
+		margin: -(@space-default / 2) -13px @space-default -13px;
+		.round-corner-top(@space-default);
+		background: darken(@base-color, (@color-offset-default * 3));
 
 		.jsc-node-remove {
 			position: absolute;
-			right: 0;
-			top: 1px;
+			right: @space-default;
+			top: 4px;
 			display: none;
 			cursor: pointer;
 		}
@@ -62,23 +63,25 @@
 		}
 
 		.jsc-node-port {
-			margin: 0 -13px;
+			margin: 0 -13px @space-default / 2;
 			color: lighten(@text-color-default, (@color-offset-default * 1));
 			font-size: @text-fontSize-default;
 			position: relative;
 			padding: @space-default 0px;
 
 			> div {
-				margin: 0 20px;
+				margin: 0 @space-default * 2;
+				white-space: nowrap;
 				.clearfix();
 			}
 			
 			&.jsc-node-port-in {
-				
+				.border-left(3px, solid, darken(@base-color, (@color-offset-default * 1))); 
 			}
 
 			&.jsc-node-port-out {
-				
+				.border-right(3px, solid, darken(@base-color, (@color-offset-default * 1)));
+
 				div {
 					text-align: right;
 				}
@@ -87,6 +90,47 @@
 
 		}
 
+		.jsc-node-config {
+			.border-top(1px, solid, darken(@base-color, (@color-offset-default * 3)));
+			.border-bottom(1px, solid, darken(@base-color, (@color-offset-default * 3)));
+			padding: @space-default;
+			margin: 0 -13px;
+
+			* {
+
+				& ~ * {
+					margin-top: @space-default / 2;
+				}
+
+				& {
+					.text();
+					font-weight: 100;
+				}
+
+				input[type="text"],
+				select {
+					width: 100%;
+					background: darken(@base-color, 10%);
+					.border-all(1px, solid, darken(@base-color, 15%));
+					.round-corner-all(@space-default / 2);
+					padding: 0 @space-default / 2;
+				}
+
+				label {
+					margin: 0; 
+
+					input[type="radio"],
+					input[type="checkbox"] {
+						margin: 0 @space-default / 2;
+						top: 2px;
+						position: relative; 
+					}
+
+				}
+				
+			}
+
+		}
 
 	}
 	

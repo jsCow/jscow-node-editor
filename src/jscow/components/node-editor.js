@@ -169,7 +169,31 @@ jsCow.res.view.nodeeditor.prototype = {
 
 				var outputs = $('<div/>').addClass('jsc-node-outputs').appendTo(content);
 				var preview = $('<div/>').addClass('jsc-node-preview').appendTo(content);
+				
 				var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
+					
+					// Standard Input
+					var typeInput = $('<div/>').appendTo(config);
+						$('<input type="text" value="" />').appendTo(typeInput);
+
+					// Standard Dropdown
+					var typeSelect = $('<div/>').appendTo(config);
+						var typeSelectField = $('<select/>').appendTo(typeSelect);
+							typeSelectField.append("<option>Muh</option>");
+							typeSelectField.append("<option>Kuh</option>");
+					
+					// Standard Radio
+					var typeRadio = $('<div/>').appendTo(config);
+						var typeRadioLabel = $('<label/>').appendTo(typeRadio);
+							$('<input type="radio" name="test" value="1" />').appendTo(typeRadioLabel);
+							$('<span/>').text("Aktiv").appendTo(typeRadioLabel);
+					
+					// Standard Checkbo
+					var typeChekbox = $('<div/>').appendTo(config);
+						var typeChekboxLabel = $('<label/>').appendTo(typeChekbox);
+						$('<input type="checkbox" name="test1" value="1" />').appendTo(typeChekboxLabel);
+						$('<span/>').text("Aktiv").appendTo(typeChekboxLabel);
+
 				var inputs = $('<div/>').addClass('jsc-node-inputs').appendTo(content);
 
 				$.each(nodeOptions.outputs, function(i, output) {

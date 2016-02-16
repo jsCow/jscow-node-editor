@@ -169,6 +169,10 @@ jsCow.res.view.nodeeditor.prototype = {
 
 				var outputs = $('<div/>').addClass('jsc-node-outputs').appendTo(content);
 				var preview = $('<div/>').addClass('jsc-node-preview').appendTo(content);
+
+					// Standard Image Preview
+					var typePreviewImage = $('<div/>').appendTo(preview);
+						$('<img src="http://image.shutterstock.com/display_pic_with_logo/2904091/292004621/stock-photo--d-sphere-on-white-background-with-word-cloud-texture-imprint-this-ball-with-tag-cloud-text-are-in-292004621.jpg" alt="" />').appendTo(typePreviewImage);
 				
 				var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
 					
@@ -201,7 +205,6 @@ jsCow.res.view.nodeeditor.prototype = {
 					var port = $('<div/>')
 						.addClass('jsc-node-port jsc-node-port-out')
 						.attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+output.id);
-					//$('<i/>').attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+output.id).appendTo(port);
 					$('<div/>').appendTo(port).append(
 						$('<span/>').text(output.title)
 					);
@@ -215,7 +218,6 @@ jsCow.res.view.nodeeditor.prototype = {
 					var port = $('<div/>')
 						.addClass('jsc-node-port jsc-node-port-in')
 						.attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+input.id);
-					//$('<i/>').attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+input.id).appendTo(port);
 					$('<div/>').appendTo(port).append(
 						$('<span/>').text(input.title)
 					);
@@ -381,12 +383,10 @@ jsCow.res.view.nodeeditor.prototype = {
 
 				/** connector options */
 				var connectorOptions = {
-					/*
-					connector: [ "Bezier", { curviness: 80 } ],
-					*/
-					connector:[ "Flowchart", {
-						cornerRadius: 5
+					connector:["Bezier", { curviness: 200 }, {
+						cssClass: "jsc-connector-bezier"
 					}],
+					endpoint: ["Dot", {radius: 5}],
 					anchor: [ 'LeftMiddle', 'RightMiddle']
 				};
 

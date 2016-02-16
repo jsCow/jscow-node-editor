@@ -40,6 +40,24 @@ $(function() {
 						"id": "out2",
 						"title": "Output Port 2",
 						"value": 1
+					},
+					{
+						"type": false,
+						"id": "out3",
+						"title": "Output Port 3",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "out4",
+						"title": "Output Port 4",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "out5",
+						"title": "Output Port 5",
+						"value": 1
 					}
 				]
 			},
@@ -62,6 +80,12 @@ $(function() {
 						"id": "in2",
 						"title": "Input Port 2",
 						"value": 1
+					},
+					{
+						"type": false,
+						"id": "in3",
+						"title": "Input Port 3",
+						"value": 1
 					}
 				],
 				outputs: [
@@ -74,7 +98,31 @@ $(function() {
 					{
 						"type": false,
 						"id": "out2",
-						"title": "Input Port 2",
+						"title": "Output Port 2",
+						"value": 1
+					}
+				]
+			},
+			{
+				id: 'node3',
+				title: 'Node 3',
+				pos: {
+					left: 1000,
+					top: 150
+				},
+				inputs: [
+					{
+						"type": false,
+						"id": "in1",
+						"title": "Input Port 1",
+						"value": 1
+					}
+				],
+				outputs: [
+					{
+						"type": false,
+						"id": "out1",
+						"title": "Output Port 1",
 						"value": 1
 					}
 				]
@@ -99,6 +147,26 @@ $(function() {
 				to: {
 					node: 'node2',
 					in: 'in2'
+				}
+			},
+			{
+				from: {
+					node: 'node1',
+					out: 'out4'
+				},
+				to: {
+					node: 'node2',
+					in: 'in3'
+				}
+			},
+			{
+				from: {
+					node: 'node2',
+					out: 'out2'
+				},
+				to: {
+					node: 'node3',
+					in: 'in1'
 				}
 			}
 		]

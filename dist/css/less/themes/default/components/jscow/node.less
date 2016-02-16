@@ -4,7 +4,7 @@
 
 .jsc-node,
 .jsc-node-disabled {
-	@bg: lighten(@base-color, (@color-offset-default * 1));
+	@bg: lighten(@base-color, 20%);
 
 	padding: (@space-default / 2) (@space-default + 3);
 	position: absolute;
@@ -16,6 +16,8 @@
 	.border-all(1px, solid, darken(@base-color, (@color-offset-default * 3)));
 	.shadow();
 	.opacity(0.8);
+	font-size: 90%;
+	font-weight: 400;
 
 	&.jsc-focus {
 		border-color: lighten(@bg, (@color-offset-default * 3));
@@ -63,24 +65,35 @@
 		}
 
 		.jsc-node-port {
-			margin: 0 -13px @space-default / 2;
 			color: lighten(@text-color-default, (@color-offset-default * 1));
 			font-size: @text-fontSize-default;
 			position: relative;
-			padding: @space-default 0px;
+			padding: @space-default / 2 0;
+			margin: 0 -13px @space-default / 2 -13px;
+			.clearfix();
 
 			> div {
-				margin: 0 @space-default * 2;
+				padding: 0 @space-default;
 				white-space: nowrap;
 				.clearfix();
 			}
 			
 			&.jsc-node-port-in {
 				.border-left(3px, solid, darken(@base-color, (@color-offset-default * 1))); 
+				background: lighten(@bg, 5%);
+				background: -moz-linear-gradient(left, lighten(@bg, 5%) 0%, darken(@bg, (@color-offset-default * 1)) 100%);
+				background: -webkit-linear-gradient(left, lighten(@bg, 5%) 0%,darken(@bg, (@color-offset-default * 1)) 100%);
+				background: linear-gradient(to right, lighten(@bg, 5%) 0%,darken(@bg, (@color-offset-default * 1)) 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='lighten(@bg, 5%)', endColorstr='darken(@bg, (@color-offset-default * 1))',GradientType=1 );
 			}
 
 			&.jsc-node-port-out {
 				.border-right(3px, solid, darken(@base-color, (@color-offset-default * 1)));
+				background: lighten(@bg, 5%);
+				background: -moz-linear-gradient(left, darken(@bg, (@color-offset-default * 1)) 0%, lighten(@bg, 5%) 100%);
+				background: -webkit-linear-gradient(left, darken(@bg, (@color-offset-default * 1)) 0%,lighten(@bg, 5%) 100%);
+				background: linear-gradient(to right, darken(@bg, (@color-offset-default * 1)) 0%,lighten(@bg, 5%) 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='darken(@bg, (@color-offset-default * 1))', endColorstr='lighten(@bg, 5%)',GradientType=1 );
 
 				div {
 					text-align: right;
@@ -104,7 +117,8 @@
 
 				& {
 					.text();
-					font-weight: 100;
+					font-size: 90%;
+					font-weight: 400;
 				}
 
 				input[type="text"],
@@ -114,6 +128,8 @@
 					.border-all(1px, solid, darken(@base-color, 15%));
 					.round-corner-all(@space-default / 2);
 					padding: 0 @space-default / 2;
+					font-size: 100%;
+					font-weight: 100;
 				}
 
 				label {
@@ -123,11 +139,21 @@
 					input[type="checkbox"] {
 						margin: 0 @space-default / 2;
 						top: 2px;
-						position: relative; 
+						position: relative;
 					}
 
 				}
 				
+			}
+
+		}
+
+		.jsc-node-preview {
+			.clearfix();
+			margin: @space-default / 2 0;
+
+			img {
+				width: 100%;
 			}
 
 		}

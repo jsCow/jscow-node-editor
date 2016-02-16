@@ -55,19 +55,26 @@
 
 		svg.jsplumb-connector {
 			.opacity(0.70);
-			
 			path {
+				/*
 				stroke: lighten(@base-color, (@color-offset-default * 3));
-				stroke-width: 5px;
+				*/
+				stroke-width: 3px;
 				fill: none;
 				stroke-linecap: round;
-				
+
 				&:hover {
 					stroke: lighten(@base-color, (@color-offset-default * 7));
 					.opacity(1.0);
 				};
+				
 			}
+		}
 
+		.jsc-connector-label {
+			.text();
+			font-size: 90%;
+			font-weight: 400;
 		}
 		
 	}

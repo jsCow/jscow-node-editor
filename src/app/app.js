@@ -140,6 +140,7 @@ $(function() {
 				}
 			},
 			{
+				color: '#f00',
 				from: {
 					node: 'node1',
 					out: 'out1'

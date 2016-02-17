@@ -161,8 +161,19 @@ $(function() {
 				}
 			},
 			{
+				color: '#fc0',
 				from: {
 					node: 'node2',
+					out: 'out2'
+				},
+				to: {
+					node: 'node3',
+					in: 'in1'
+				}
+			},
+			{
+				from: {
+					node: 'node1',
 					out: 'out2'
 				},
 				to: {

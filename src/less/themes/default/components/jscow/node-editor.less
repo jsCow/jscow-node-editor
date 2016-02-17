@@ -55,10 +55,9 @@
 
 		svg.jsplumb-connector {
 			.opacity(0.70);
+			z-index: 4;
+
 			path {
-				/*
-				stroke: lighten(@base-color, (@color-offset-default * 3));
-				*/
 				stroke-width: 3px;
 				fill: none;
 				stroke-linecap: round;
@@ -75,6 +74,10 @@
 			.text();
 			font-size: 90%;
 			font-weight: 400;
+		}
+
+		.jsc-connector-path {
+			stroke: lighten(@base-color, (@color-offset-default * 3));
 		}
 		
 	}

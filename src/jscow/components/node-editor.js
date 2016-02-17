@@ -383,31 +383,35 @@ jsCow.res.view.nodeeditor.prototype = {
 
 				/** connector options */
 				var connectorOptions = {
-					connector:["Bezier", { curviness: 200 }, {
+					connector:["Bezier", { curviness: 150 }, {
 						cssClass: "jsc-connector-bezier"
 					}],
 					endpoint: ["Dot", {radius: 5}],
 					anchor: [ 'LeftMiddle', 'RightMiddle'],
 					overlays: [
-						[ "Arrow", { foldback: 0.1 }, {
+						/*[ "Arrow", { foldback: 0.1 }, {
 							cssClass: "jsc-connector-arrow",
 							width: 5,
 							height: 5,
 							length: 20,
 							location: 0.75
-						}],
+						}],*/
 						[ "Label", { 
 							cssClass: "jsc-connector-label",
 							label: c.color,
 							id: "conMuhId",
 							location: 0.25,
 						}]
-					],
-					paintStyle:{ 
-						strokeStyle: c.color, 
-						cssClass: 'jsc-connector-path'
-					}
+					]
 				};
+
+				if (c.color) {
+					connectorOptions.paintStyle = { 
+						strokeStyle: c.color
+					};
+				}else{
+					connectorOptions.cssClass = 'jsc-connector-path';
+				}
 
 				var source = self.cmp().id()+"-"+c.from.node+"-"+c.from.out;
 				var target = self.cmp().id()+"-"+c.to.node+"-"+c.to.in;

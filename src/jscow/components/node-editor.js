@@ -21,9 +21,29 @@ jsCow.res.components.nodeeditor.prototype = {
 		
 		return this;
 
+	},
+
+	addNode: function(options) {
+
+		var list = [];
+		
+		if (options instanceof Array ) {
+			list = options;
+		} else {
+			list.push(options);
+		}
+		
+		this.trigger('nodes.add', {
+			nodes: list
+		});
+		
+		return this;
+
 	}
 
 };
+
+
 
 jsCow.res.model.nodeeditor = function() {
 	
@@ -43,6 +63,8 @@ jsCow.res.model.nodeeditor.prototype = {
 	}
 	
 };
+
+
 
 jsCow.res.view.nodeeditor = function() {
 	
@@ -69,7 +91,7 @@ jsCow.res.view.nodeeditor.prototype = {
 	init: function(e) {
 
 		// Register all event listener
-		this.on("update.editor.options", this.updateNodes);
+		this.on("editor.options.updated", this.updateNodes);
 		this.on("update.editor.grid", this.updateGrid);
 		this.on('update.content.size', this.updateContentSize);
 		this.on('update.connectors', this.updateConnectors);
@@ -433,12 +455,15 @@ jsCow.res.view.nodeeditor.prototype = {
 	}
 };
 
+
+
 jsCow.res.controller.nodeeditor = function() {};
 jsCow.res.controller.nodeeditor.prototype = {
 	
 	init: function() {
 		this.on("model.ready", this.isModelReady);
 		this.on("options", this.options);
+		this.on('nodes.add', this.addNode);
 		this.on('node.updated', this.nodeUpdated);
 		this.on('node.removed', this.nodeRemoved);
 	},
@@ -457,8 +482,71 @@ jsCow.res.controller.nodeeditor.prototype = {
 		});
 
 		// Render all nodes
-		this.trigger("update.editor.options");
+		this.trigger("editor.options.updated", e.data.options);
+		
+	},
+	
+	addNode: function(e) {
+		
+		var newNodesList = e.data.nodes;
+		var nodes = this.cmp().config().options.nodes;
+		
+		// Existing node ids
+		var nodeIDs = [];
+		for (var i=0; i < nodes.length; i++) {
+			nodeIDs.push(nodes[i].id);
+		}
 
+		if (!nodes.length) {
+			
+			// No nodes available yet
+			this.cmp().config({
+				options: {
+					nodes: nodes.concat(newNodesList)
+				}
+			});
+
+			this.trigger("editor.node.add", newNodesList);
+
+		}else{
+
+			// Nodes are already available in editor
+			for (var nn=0; nn < newNodesList.length; nn++) {
+				
+				if ($.inArray(newNodesList[nn].id, nodeIDs) !== -1) {
+					
+					// If node already exists in config
+					for (var en=0; en < nodes.length; en++) {
+						
+						if (nodes[en].id === newNodesList[nn].id) {
+							nodes[en] = newNodesList[nn];
+						}
+						console.log("UPDATE", this.cmp().config().options.nodes);
+					}
+
+					this.trigger("editor.options.updated", [nodes[en]]);
+
+				}else{
+
+					// If node not exists yet
+					/*
+					this.cmp().config({
+						options: {
+							nodes: nodes.concat(newNodesList[nn])
+						}
+					});
+					*/
+
+					this.trigger("editor.options.updated");
+					
+				}
+
+			}
+
+		}
+
+		console.log(">>>>>>>", this.cmp().config().options.nodes);
+		
 	},
 
 	/*

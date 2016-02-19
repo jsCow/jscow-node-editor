@@ -390,27 +390,39 @@ $(function() {
 	})
 	.target('#node-editor-1').run();
 
-	/*
-	nodeeditor2 = jsCow.get(jsCow.res.components.nodeeditor, {
-		id: 'node-editor-2'
-	})
-	.on('editor.options.updated', function(e) {
-		//console.log("");
-		//console.log(e.sender.id()+" geupdatet >>>", e.data.nodes[0].pos);
-	})
-	.target('#node-editor-2').run();
-	*/
 
-
-
-	$('body').append('<button>Set Options</button>');
-	$('button').click(function() {
-		//console.log(NodeEditorOptions1.nodes.length);
-		//console.log(NodeEditorOptions2.nodes.length);
+	$('body').append('<button id="setOptions">Set Options</button>');
+	$('body').append('<button id="addNode">Add Node</button>');
+	$('#setOptions').click(function() {
 		jsCow.find('node-editor-1').options(NodeEditorOptions1);
-		//jsCow.find('node-editor-2').options(NodeEditorOptions2);
 	});
-
+	$('#addNode').click(function() {
+		jsCow.find('node-editor-1').addNode({
+			id: 'node100',
+			title: 'Node 100',
+			pos: {
+				left: 150,
+				top: 150
+			},
+			inputs: [
+				{
+					"type": false,
+					"id": "in1",
+					"title": "Input Port 1",
+					"value": 1
+				}
+			],
+			outputs: [
+				{
+					"type": false,
+					"id": "out1",
+					"title": "Output Port 1",
+					"value": 1
+				}
+			]
+		});
+	});
+	
 	console.timeEnd('all');
 	console.log(jsCow.componentsObjectList.length, "components created...");
 	

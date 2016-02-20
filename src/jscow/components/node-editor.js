@@ -51,8 +51,11 @@ jsCow.res.model.nodeeditor = function() {
 		enabled: true,
 		visible: true,
 		options: {
-			nodes: []
-		}
+			grid: 20,
+			snapToGrid: true
+		},
+		nodes: {},
+		connections: []
 	};
 	
 };
@@ -91,11 +94,13 @@ jsCow.res.view.nodeeditor.prototype = {
 	init: function(e) {
 
 		// Register all event listener
-		this.on("editor.options.updated", this.updateNodes);
-		this.on("update.editor.grid", this.updateGrid);
-		this.on('update.content.size', this.updateContentSize);
-		this.on('update.connectors', this.updateConnectors);
+		this.on('editor.node.added', this.editorNodeAdded);
+		//this.on("editor.options.updated", this.updateNodes);
+		//this.on("update.editor.grid", this.updateGrid);
+		//this.on('update.content.size', this.updateContentSize);
+		//this.on('update.connectors', this.updateConnectors);
 		
+
 		$(window).resize((function(self) {
 			return function() {
 				
@@ -147,6 +152,24 @@ jsCow.res.view.nodeeditor.prototype = {
 			this.dom.main.removeClass('jsc-nodeeditor').addClass('jsc-nodeeditor-disabled');
 			
 		}
+	},
+
+	/*
+	 *
+	 */
+	editorNodeAdded: function(e) {
+
+		var node = e.data;
+		var config = this.cmp().config();
+
+		node.grid = config.options.grid;
+		node.snapToGrid = config.options.snapToGrid;
+		node.jsPlumbInstance = this.config.jsPlumbInstance;
+
+		console.log(node);
+
+		
+		
 	},
 
 	/*
@@ -488,72 +511,49 @@ jsCow.res.controller.nodeeditor.prototype = {
 	
 	addNode: function(e) {
 		
+		console.clear();
+
 		var newNodesList = e.data.nodes;
-		var nodes = this.cmp().config().options.nodes;
+		var nodes = this.cmp().config().nodes;
 		
-		// Existing node ids
-		var nodeIDs = [];
-		for (var i=0; i < nodes.length; i++) {
-			nodeIDs.push(nodes[i].id);
-		}
+		if ($.isEmptyObject(nodes)) {
 
-		if (!nodes.length) {
-			
 			// No nodes available yet
-			this.cmp().config({
-				options: {
-					nodes: nodes.concat(newNodesList)
-				}
-			});
-
-			this.trigger("editor.node.add", newNodesList);
-
+			for (i=0; i < newNodesList.length; i++) {
+				nodes[newNodesList[i].id] = newNodesList[i];
+				this.trigger("editor.node.added", newNodesList[i]);
+			}
+			
 		}else{
 
 			// Nodes are already available in editor
 			for (var nn=0; nn < newNodesList.length; nn++) {
 				
-				if ($.inArray(newNodesList[nn].id, nodeIDs) !== -1) {
-					
-					// If node already exists in config
-					for (var en=0; en < nodes.length; en++) {
-						
-						if (nodes[en].id === newNodesList[nn].id) {
-							nodes[en] = newNodesList[nn];
-						}
-						console.log("UPDATE", this.cmp().config().options.nodes);
-					}
-
-					this.trigger("editor.options.updated", [nodes[en]]);
-
+				nodes = this.cmp().config().nodes;
+				
+				var updateNode = {};
+				updateNode[newNodesList[nn].id] = newNodesList[nn];
+				
+				if (typeof nodes[newNodesList[nn].id] === 'undefined') {
+					nodes[newNodesList[nn].id] == {};
+					nodes[newNodesList[nn].id] = updateNode;
 				}else{
-
-					// If node not exists yet
-					/*
-					this.cmp().config({
-						options: {
-							nodes: nodes.concat(newNodesList[nn])
-						}
-					});
-					*/
-
-					this.trigger("editor.options.updated");
-					
+					nodes[newNodesList[nn].id] = updateNode;
 				}
-
+				
+				this.trigger("editor.node.added", nodes[newNodesList[nn].id]);
+				
 			}
 
 		}
 
-		console.log(">>>>>>>", this.cmp().config().options.nodes);
-		
 	},
 
 	/*
 	 * Update node options and trigger the event 'editor.options.updated'.
 	 * Internal the content size will updatet after update the options.
 	 */
-	nodeUpdated: function(e) {
+	/*nodeUpdated: function(e) {
 		
 		var nodes = this.cmp().config().options.nodes;
 		for (var  i=0; i < nodes.length; i++) {
@@ -568,12 +568,12 @@ jsCow.res.controller.nodeeditor.prototype = {
 		// Trigger the event 'editor.options.updated' and send the current editor options
 		this.trigger('editor.options.updated', this.cmp().config().options);
 
-	},
+	},*/
 
 	/*
 	 * Will be triggered when a node has been removed
 	 */
-	nodeRemoved: function(e) {
+	/*nodeRemoved: function(e) {
 		
 		// Update content size
 		this.trigger('update.content.size');
@@ -581,6 +581,6 @@ jsCow.res.controller.nodeeditor.prototype = {
 		// Trigger the event 'editor.options.updated' and send the current editor options
 		this.trigger('editor.options.updated', this.cmp().config().options);
 
-	}
+	}*/
 
 };

@@ -397,30 +397,56 @@ $(function() {
 		jsCow.find('node-editor-1').options(NodeEditorOptions1);
 	});
 	$('#addNode').click(function() {
-		jsCow.find('node-editor-1').addNode({
-			id: 'node100',
-			title: 'Node 100',
-			pos: {
-				left: 150,
-				top: 150
+		jsCow.find('node-editor-1').addNode([
+			{
+				id: 'node100',
+				title: 'Node 100',
+				pos: {
+					left: 150,
+					top: 150
+				},
+				inputs: [
+					{
+						"type": false,
+						"id": "in1",
+						"title": "Input Port 1",
+						"value": 1
+					}
+				],
+				outputs: [
+					{
+						"type": false,
+						"id": "out1",
+						"title": "Output Port 1",
+						"value": 1
+					}
+				]
 			},
-			inputs: [
-				{
-					"type": false,
-					"id": "in1",
-					"title": "Input Port 1",
-					"value": 1
-				}
-			],
-			outputs: [
-				{
-					"type": false,
-					"id": "out1",
-					"title": "Output Port 1",
-					"value": 1
-				}
-			]
-		});
+			{
+				id: 'node2',
+				title: 'Node 2',
+				pos: {
+					left: 180,
+					top: 180
+				},
+				inputs: [
+					{
+						"type": false,
+						"id": "in1",
+						"title": "Input Port 1",
+						"value": 1
+					}
+				],
+				outputs: [
+					{
+						"type": false,
+						"id": "out1",
+						"title": "Output Port 1",
+						"value": 1
+					}
+				]
+			}
+		]);
 	});
 	
 	console.timeEnd('all');

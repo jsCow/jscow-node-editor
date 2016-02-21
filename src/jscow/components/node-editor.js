@@ -281,7 +281,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		var self = this;
 		var nodeOptions = e.data;
 
-		console.log("UPDATE", nodeOptions);
+		//console.log("UPDATE", nodeOptions);
 
 
 
@@ -338,7 +338,7 @@ jsCow.res.view.nodeeditor.prototype = {
 			}, connectorOptions);
 
 		});
-		
+
 	},
 
 	
@@ -632,6 +632,8 @@ jsCow.res.controller.nodeeditor.prototype = {
 				nodes[newNodesList[i].id] = newNodesList[i];
 				this.trigger("editor.node.added", newNodesList[i]);
 				
+				console.info("NODE ADDED", newNodesList[i]);
+
 			}
 			
 		}else{
@@ -652,12 +654,16 @@ jsCow.res.controller.nodeeditor.prototype = {
 					
 					this.trigger("editor.node.added", newNodesList[nn]);
 					
+					console.info("NODE ADDED", newNodesList[nn]);
+
 				}else{
 					
 					// UPDATE
 					nodes[newNodesList[nn].id] = updateNode;
 					
 					this.trigger("editor.node.updated", newNodesList[nn]);
+
+					console.info("NODE UPDATED", newNodesList[nn]);
 					
 				}
 				
@@ -670,40 +676,49 @@ jsCow.res.controller.nodeeditor.prototype = {
 
 	addConnection: function(e) {
 
+		var nodes = this.cmp().config().nodes;
 		var connections = this.cmp().config().connections;
 		var newConnections = e.data.connections;
 		
 		for (var i=0; i < newConnections.length; i++) {
 
-			var exists = false;
+			var nodeExists = false;
+			var connectionExists = false;
+			
+			if (nodes[newConnections[i].from.node] && nodes[newConnections[i].to.node]) {
+				
+				nodeExists = true;
+				
+				for (var c=0; c < connections.length; c++) {
 
-			for (var c=0; c < connections.length; c++) {
+					if (
+						(connections[c].from.node === newConnections[i].from.node) && 
+						(connections[c].from.out === newConnections[i].from.out) && 
+						(connections[c].to.node === newConnections[i].to.node) && 
+						(connections[c].to.in === newConnections[i].to.in)
+					) {
+						connectionExists = true;
+					}
 
-				if (
-					(connections[c].from.node === newConnections[i].from.node) && 
-					(connections[c].from.out === newConnections[i].from.out) && 
-					(connections[c].to.node === newConnections[i].to.node) && 
-					(connections[c].to.in === newConnections[i].to.in)
-				) {
-					exists = true;
 				}
 
 			}
 
-			if (!exists) {
+			if (!connectionExists && nodeExists) {
+				
+				console.info("CONNECTION ADDED", newConnections[i]);
 				
 				this.cmp().config({
 					connections: connections.concat(newConnections[i])
 				});
 				
 				this.trigger("editor.connection.added", newConnections[i]);		
-
 				connections = this.cmp().config().connections;
 
 			}
 
 		}
-		
+
 	}
 
 	/*

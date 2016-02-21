@@ -512,6 +512,16 @@ $(function() {
 					node: 'node200',
 					in: 'in2'
 				}
+			},
+			{
+				from: {
+					node: 'node100',
+					out: 'out1'
+				},
+				to: {
+					node: 'node200',
+					in: 'in1'
+				}
 			}
 		]);
 	});

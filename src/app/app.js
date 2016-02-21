@@ -490,6 +490,32 @@ $(function() {
 		});
 	});
 	
+	$('body').append('<button id="addConnections">Set Connection</button>');
+	$('#addConnections').click(function() {
+		jsCow.find('node-editor-1').addConnection([
+			{
+				from: {
+					node: 'node1',
+					out: 'out1'
+				},
+				to: {
+					node: 'node100',
+					in: 'in1'
+				}
+			},
+			{
+				from: {
+					node: 'node2',
+					out: 'out1'
+				},
+				to: {
+					node: 'node200',
+					in: 'in2'
+				}
+			}
+		]);
+	});
+	
 	console.timeEnd('all');
 	console.log(jsCow.componentsObjectList.length, "components created...");
 	

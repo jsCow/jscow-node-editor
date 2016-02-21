@@ -39,6 +39,24 @@ jsCow.res.components.nodeeditor.prototype = {
 		
 		return this;
 
+	},
+
+	addConnection: function(options) {
+
+		var list = [];
+		
+		if (options instanceof Array ) {
+			list = options;
+		} else {
+			list.push(options);
+		}
+		
+		this.trigger('connection.add', {
+			connections: list
+		});
+		
+		return this;
+
 	}
 
 };
@@ -96,12 +114,8 @@ jsCow.res.view.nodeeditor.prototype = {
 		// Register all event listener
 		this.on('editor.node.added', this.editorNodeAdded);
 		this.on('editor.node.updated', this.editorNodeUpdated);
-		//this.on("editor.options.updated", this.updateNodes);
-		//this.on("update.editor.grid", this.updateGrid);
-		//this.on('update.content.size', this.updateContentSize);
-		//this.on('update.connectors', this.updateConnectors);
+		this.on('editor.connection.added', this.editorConnectionAdded);
 		
-
 		$(window).resize((function(self) {
 			return function() {
 				
@@ -220,7 +234,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		
 		*/
 
-		
+
 		var inputs = $('<div/>').addClass('jsc-node-inputs').appendTo(content);
 
 		$.each(nodeOptions.outputs, function(i, output) {
@@ -269,9 +283,67 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		console.log("UPDATE", nodeOptions);
 
+
+
 	},
 
 	/*
+	 * Connection Added
+	 */
+	editorConnectionAdded: function(e) {
+
+		var self = this;
+		var c = e.data;
+
+		jsPlumb.ready(function() {
+
+			/** connector options */
+			var connectorOptions = {
+				connector:["Bezier", { curviness: 150 }, {
+					cssClass: "jsc-connector-bezier"
+				}],
+				endpoint: ["Dot", {radius: 5}],
+				anchor: [ 'LeftMiddle', 'RightMiddle'],
+				overlays: [
+					/*[ "Arrow", { foldback: 0.1 }, {
+						cssClass: "jsc-connector-arrow",
+						width: 5,
+						height: 5,
+						length: 20,
+						location: 0.75
+					}],*/
+					[ "Label", { 
+						cssClass: "jsc-connector-label",
+						label: c.color,
+						id: "conMuhId",
+						location: 0.25,
+					}]
+				]
+			};
+
+			if (c.color) {
+				connectorOptions.paintStyle = { 
+					strokeStyle: c.color
+				};
+			}else{
+				connectorOptions.cssClass = 'jsc-connector-path';
+			}
+
+			var source = self.cmp().id()+"-"+c.from.node+"-"+c.from.out;
+			var target = self.cmp().id()+"-"+c.to.node+"-"+c.to.in;
+			
+			self.config.jsPlumbInstance.connect({
+				source: source,
+				target: target
+			}, connectorOptions);
+
+		});
+		
+	},
+
+	
+
+	/* ================================================================================
 	 * Render all node components
 	 */
 	updateNodes: function(e) {
@@ -509,72 +581,8 @@ jsCow.res.view.nodeeditor.prototype = {
 			
 		}
 
-	},
-
-	/*
-	 * Update all connectors
-	 */
-	updateConnectors: function(e) {
-		
-		//console.log("");
-		//console.log(e.data);
-		
-		var self = this;
-
-		$(e.data.options.connections).each(function(i, c) {
-				
-			jsPlumb.ready(function() {
-
-				/** connector options */
-				var connectorOptions = {
-					connector:["Bezier", { curviness: 150 }, {
-						cssClass: "jsc-connector-bezier"
-					}],
-					endpoint: ["Dot", {radius: 5}],
-					anchor: [ 'LeftMiddle', 'RightMiddle'],
-					overlays: [
-						/*[ "Arrow", { foldback: 0.1 }, {
-							cssClass: "jsc-connector-arrow",
-							width: 5,
-							height: 5,
-							length: 20,
-							location: 0.75
-						}],*/
-						[ "Label", { 
-							cssClass: "jsc-connector-label",
-							label: c.color,
-							id: "conMuhId",
-							location: 0.25,
-						}]
-					]
-				};
-
-				if (c.color) {
-					connectorOptions.paintStyle = { 
-						strokeStyle: c.color
-					};
-				}else{
-					connectorOptions.cssClass = 'jsc-connector-path';
-				}
-
-				var source = self.cmp().id()+"-"+c.from.node+"-"+c.from.out;
-				var target = self.cmp().id()+"-"+c.to.node+"-"+c.to.in;
-				
-				self.config.jsPlumbInstance.connect({
-					source: source,
-					target: target
-				}, connectorOptions);
-
-			});
-
-		}).promise().done(function() {
-			
-			// Trigger to update grid 
-			self.trigger('update.editor.grid');
-
-		});
-
 	}
+
 };
 
 
@@ -586,8 +594,10 @@ jsCow.res.controller.nodeeditor.prototype = {
 		this.on("model.ready", this.isModelReady);
 		this.on("options", this.options);
 		this.on('nodes.add', this.addNode);
-		this.on('node.updated', this.nodeUpdated);
-		this.on('node.removed', this.nodeRemoved);
+		this.on('connection.add', this.addConnection);
+		/*this.on('node.updated', this.nodeUpdated);
+		this.on('node.removed', this.nodeRemoved);*/
+
 	},
 	
 	isModelReady: function() {
@@ -657,6 +667,44 @@ jsCow.res.controller.nodeeditor.prototype = {
 		}
 
 	},
+
+	addConnection: function(e) {
+
+		var connections = this.cmp().config().connections;
+		var newConnections = e.data.connections;
+		
+		for (var i=0; i < newConnections.length; i++) {
+
+			var exists = false;
+
+			for (var c=0; c < connections.length; c++) {
+
+				if (
+					(connections[c].from.node === newConnections[i].from.node) && 
+					(connections[c].from.out === newConnections[i].from.out) && 
+					(connections[c].to.node === newConnections[i].to.node) && 
+					(connections[c].to.in === newConnections[i].to.in)
+				) {
+					exists = true;
+				}
+
+			}
+
+			if (!exists) {
+				
+				this.cmp().config({
+					connections: connections.concat(newConnections[i])
+				});
+				
+				this.trigger("editor.connection.added", newConnections[i]);		
+
+				connections = this.cmp().config().connections;
+
+			}
+
+		}
+		
+	}
 
 	/*
 	 * Update node options and trigger the event 'editor.options.updated'.

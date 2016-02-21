@@ -392,11 +392,12 @@ $(function() {
 
 
 	$('body').append('<button id="setOptions">Set Options</button>');
-	$('body').append('<button id="addNode">Add Node</button>');
 	$('#setOptions').click(function() {
 		jsCow.find('node-editor-1').options(NodeEditorOptions1);
 	});
-	$('#addNode').click(function() {
+	
+	$('body').append('<button id="addNodes">Add Nodes</button>');
+	$('#addNodes').click(function() {
 		jsCow.find('node-editor-1').addNode([
 			{
 				id: 'node100',
@@ -447,6 +448,46 @@ $(function() {
 				]
 			}
 		]);
+	});
+	
+	$('body').append('<button id="addSingleNode">Add Single Node</button>');
+	$('#addSingleNode').click(function() {
+		jsCow.find('node-editor-1').addNode({
+			id: 'node200',
+			title: 'Node 200',
+			pos: {
+				left: 250,
+				top: 250
+			},
+			inputs: [
+				{
+					"type": false,
+					"id": "in1",
+					"title": "Input Port 1",
+					"value": 1
+				},
+				{
+					"type": false,
+					"id": "in2",
+					"title": "Input Port 2",
+					"value": 1
+				}
+			],
+			outputs: [
+				{
+					"type": false,
+					"id": "out1",
+					"title": "Output Port 1",
+					"value": 1
+				},
+				{
+					"type": false,
+					"id": "out2",
+					"title": "Output Port 2",
+					"value": 1
+				}
+			]
+		});
 	});
 	
 	console.timeEnd('all');

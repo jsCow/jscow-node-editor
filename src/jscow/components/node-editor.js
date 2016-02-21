@@ -95,6 +95,7 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		// Register all event listener
 		this.on('editor.node.added', this.editorNodeAdded);
+		this.on('editor.node.updated', this.editorNodeUpdated);
 		//this.on("editor.options.updated", this.updateNodes);
 		//this.on("update.editor.grid", this.updateGrid);
 		//this.on('update.content.size', this.updateContentSize);
@@ -159,17 +160,115 @@ jsCow.res.view.nodeeditor.prototype = {
 	 */
 	editorNodeAdded: function(e) {
 
-		var node = e.data;
-		var config = this.cmp().config();
+		var self = this;
 
-		node.grid = config.options.grid;
-		node.snapToGrid = config.options.snapToGrid;
-		node.jsPlumbInstance = this.config.jsPlumbInstance;
+		var cfg = this.cmp().config();
+		var nodeOptions = e.data;
 
-		console.log(node);
+		nodeOptions.grid = cfg.options.grid;
+		nodeOptions.snapToGrid = cfg.options.snapToGrid;
+		nodeOptions.jsPlumbInstance = this.cfg.jsPlumbInstance;
+
+		// ===== Node Structure =====
+
+		var main = $('<div/>').attr('id', this.cmp().id()+'-'+nodeOptions.id).addClass('jsc-node clearfix').css({
+			top: nodeOptions.pos.top, 
+			left: nodeOptions.pos.left
+		});
+		var content = $('<div/>').addClass('jsc-node-content clearfix').appendTo(main);
+
+		// Node Title
+		var titlebar = $('<div/>').addClass('jsc-node-titlebar').append(
+			$('<span/>').html(nodeOptions.title)
+		);
+		main.prepend( titlebar );
+		
+		// Remove button
+		var remove = $('<i/>').addClass('jsc-node-remove fa fa-times').appendTo( titlebar );
+		
+		var outputs = $('<div/>').addClass('jsc-node-outputs').appendTo(content);
+		var preview = $('<div/>').addClass('jsc-node-preview').appendTo(content);
+
+		// Standard Image Preview
+		var typePreviewImage = $('<div/>').appendTo(preview);
+			//$('<img src="http://image.shutterstock.com/display_pic_with_logo/2904091/292004621/stock-photo--d-sphere-on-white-background-with-word-cloud-texture-imprint-this-ball-with-tag-cloud-text-are-in-292004621.jpg" alt="" />').appendTo(typePreviewImage);
+
+		/*
+		var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
+			
+			// Standard Input
+			var typeInput = $('<div/>').appendTo(config);
+				$('<input type="text" value="" />').appendTo(typeInput);
+
+			// Standard Dropdown
+			var typeSelect = $('<div/>').appendTo(config);
+				var typeSelectField = $('<select/>').appendTo(typeSelect);
+					typeSelectField.append("<option>Muh</option>");
+					typeSelectField.append("<option>Kuh</option>");
+			
+			// Standard Radio
+			var typeRadio = $('<div/>').appendTo(config);
+				var typeRadioLabel = $('<label/>').appendTo(typeRadio);
+					$('<input type="radio" name="test" value="1" />').appendTo(typeRadioLabel);
+					$('<span/>').text("Aktiv").appendTo(typeRadioLabel);
+			
+			// Standard Checkbo
+			var typeChekbox = $('<div/>').appendTo(config);
+				var typeChekboxLabel = $('<label/>').appendTo(typeChekbox);
+				$('<input type="checkbox" name="test1" value="1" />').appendTo(typeChekboxLabel);
+				$('<span/>').text("Aktiv").appendTo(typeChekboxLabel);
+		
+		*/
 
 		
+		var inputs = $('<div/>').addClass('jsc-node-inputs').appendTo(content);
+
+		$.each(nodeOptions.outputs, function(i, output) {
+
+			var port = $('<div/>')
+				.addClass('jsc-node-port jsc-node-port-out')
+				.attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+output.id);
+			$('<div/>').appendTo(port).append(
+				$('<span/>').text(output.title)
+			);
+			
+			outputs.append(port);
+			
+		});
 		
+		$.each(nodeOptions.inputs, function(i, input) {
+
+			var port = $('<div/>')
+				.addClass('jsc-node-port jsc-node-port-in')
+				.attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+input.id);
+			$('<div/>').appendTo(port).append(
+				$('<span/>').text(input.title)
+			);
+			
+			inputs.append(port);
+			
+		});
+		
+		this.dom.content.append(main);
+
+		this.config.jsPlumbInstance.draggable(this.cmp().id()+'-'+nodeOptions.id, {
+			grid:[nodeOptions.grid, nodeOptions.grid]
+		});
+		
+		// end ===== Node Structure =====
+
+	},
+
+	/*
+	 * Update Node
+	 */
+	editorNodeUpdated: function(e) {
+
+		var self = this;
+		var nodeOptions = e.data;
+
+		console.log("UPDATE", nodeOptions);
+
 	},
 
 	/*
@@ -511,17 +610,18 @@ jsCow.res.controller.nodeeditor.prototype = {
 	
 	addNode: function(e) {
 		
-		console.clear();
-
 		var newNodesList = e.data.nodes;
 		var nodes = this.cmp().config().nodes;
 		
 		if ($.isEmptyObject(nodes)) {
-
+				
 			// No nodes available yet
 			for (i=0; i < newNodesList.length; i++) {
+				
+				// ADD
 				nodes[newNodesList[i].id] = newNodesList[i];
 				this.trigger("editor.node.added", newNodesList[i]);
+				
 			}
 			
 		}else{
@@ -535,13 +635,22 @@ jsCow.res.controller.nodeeditor.prototype = {
 				updateNode[newNodesList[nn].id] = newNodesList[nn];
 				
 				if (typeof nodes[newNodesList[nn].id] === 'undefined') {
-					nodes[newNodesList[nn].id] == {};
+					
+					// ADD
+					nodes[newNodesList[nn].id] = {};
 					nodes[newNodesList[nn].id] = updateNode;
+					
+					this.trigger("editor.node.added", newNodesList[nn]);
+					
 				}else{
+					
+					// UPDATE
 					nodes[newNodesList[nn].id] = updateNode;
+					
+					this.trigger("editor.node.updated", newNodesList[nn]);
+					
 				}
 				
-				this.trigger("editor.node.added", nodes[newNodesList[nn].id]);
 				
 			}
 

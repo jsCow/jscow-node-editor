@@ -9,7 +9,24 @@
 	right: 0;
 	bottom: 0;
 	left: 0;
-	
+
+	> .fa {
+		.transition();
+		.text(lighten(@text-color-default, 0%));
+		font-size: 2rem;
+		cursor: pointer;
+		position: absolute;
+		top: 20px;
+		left: 20px;
+		z-index: 100;
+
+		&:hover {
+			.text(lighten(@text-color-default, 100%));
+			font-size: 2.5rem;
+		}
+
+	}
+
 	.jsc-nodeeditor-grid {
 		position: absolute;
 		width: 100%;

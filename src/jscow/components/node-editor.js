@@ -106,6 +106,22 @@ jsCow.res.view.nodeeditor = function() {
 	this.dom.grid = $('<div/>').addClass('jsc-nodeeditor-grid clearfix').appendTo(this.dom.main);
 	this.dom.content = $('<div/>').addClass('jsc-nodeeditor-content clearfix').appendTo(this.dom.grid);
 
+	this.dom.add = $('<i/>').addClass('fa fa-plus').appendTo(this.dom.main)
+	.click((function(self) {
+		return function(ev) {
+			self.cmp().addNode({
+				id: 'node' + Math.random(),
+				title: 'Node ...',
+				pos: {
+					left: 0,
+					top: 0
+				},
+				inputs: [],
+				outputs: []
+			});
+		};
+	})(this));
+
 };
 jsCow.res.view.nodeeditor.prototype = {
 	
@@ -127,6 +143,10 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		// Bind the jquery plugin 'kinetic' on the grid area
 		this.dom.grid.kinetic();
+		/*this.dom.grid.on('click', function(ev) {
+			console.log(ev);
+			console.log( (ev.pageX - ev.offsetX) );
+		});*/
 
 		// Create the base svg canvas element by "D3.js"
 		this.dom.svggrid = d3.select(this.dom.content[0])
@@ -239,28 +259,48 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		$.each(nodeOptions.outputs, function(i, output) {
 
+			var id = self.cmp().id()+'-'+nodeOptions.id+'-'+output.id;
 			var port = $('<div/>')
 				.addClass('jsc-node-port jsc-node-port-out')
-				.attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+output.id);
+				.attr("id", id);
 			$('<div/>').appendTo(port).append(
 				$('<span/>').text(output.title)
 			);
 			
 			outputs.append(port);
-			
+
+			window.setTimeout(function() {
+
+				self.config.jsPlumbInstance.addEndpoint(id, {
+					anchor: ['RightMiddle'],
+					isSource: true
+				});
+
+			},0);
+
 		});
 		
 		$.each(nodeOptions.inputs, function(i, input) {
 
+			var id = self.cmp().id()+'-'+nodeOptions.id+'-'+input.id;
 			var port = $('<div/>')
 				.addClass('jsc-node-port jsc-node-port-in')
-				.attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+input.id);
+				.attr("id", id);
 			$('<div/>').appendTo(port).append(
 				$('<span/>').text(input.title)
 			);
 			
 			inputs.append(port);
-			
+
+			window.setTimeout(function() {
+
+				self.config.jsPlumbInstance.addEndpoint(id, {
+					anchor: ['LeftMiddle'],
+					isTarget: true
+				});
+
+			},0);
+						
 		});
 		
 		this.dom.content.append(main);
@@ -268,7 +308,29 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.config.jsPlumbInstance.draggable(this.cmp().id()+'-'+nodeOptions.id, {
 			grid:[nodeOptions.grid, nodeOptions.grid]
 		});
+
 		
+		// Set draggable connector endpoint configuration
+		/*
+		var source = self.cmp().id()+"-"+c.from.node+"-"+c.from.out;
+		var target = self.cmp().id()+"-"+c.to.node+"-"+c.to.in;
+		
+		console.log(source);
+		console.log(target);
+		*/
+
+		/*
+		self.config.jsPlumbInstance.addEndpoint(source, {
+			anchor: ['RightMiddle'],
+			isSource: true
+		}, connectorOptions);
+		
+		self.config.jsPlumbInstance.addEndpoint(target, {
+			anchor: ['LeftMiddle'],
+			isTarget: true
+		}, connectorOptions);
+		*/
+
 		// end ===== Node Structure =====
 
 	},
@@ -294,7 +356,7 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		var self = this;
 		var c = e.data;
-
+		
 		jsPlumb.ready(function() {
 
 			/** connector options */
@@ -302,16 +364,9 @@ jsCow.res.view.nodeeditor.prototype = {
 				connector:["Bezier", { curviness: 150 }, {
 					cssClass: "jsc-connector-bezier"
 				}],
+				anchor: ['RightMiddle', 'LeftMiddle'],
 				endpoint: ["Dot", {radius: 5}],
-				anchor: [ 'LeftMiddle', 'RightMiddle'],
 				overlays: [
-					/*[ "Arrow", { foldback: 0.1 }, {
-						cssClass: "jsc-connector-arrow",
-						width: 5,
-						height: 5,
-						length: 20,
-						location: 0.75
-					}],*/
 					[ "Label", { 
 						cssClass: "jsc-connector-label",
 						label: c.color,
@@ -336,7 +391,7 @@ jsCow.res.view.nodeeditor.prototype = {
 				source: source,
 				target: target
 			}, connectorOptions);
-
+			
 		});
 
 	},

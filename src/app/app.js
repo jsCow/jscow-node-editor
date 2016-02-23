@@ -412,13 +412,38 @@ $(function() {
 						"id": "in1",
 						"title": "Input Port 1",
 						"value": 1
+					},
+					{
+						"type": false,
+						"id": "in2",
+						"title": "Input Port 2",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "in3",
+						"title": "Input Port 3",
+						"value": 1
 					}
+
 				],
 				outputs: [
 					{
 						"type": false,
 						"id": "out1",
 						"title": "Output Port 1",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "out2",
+						"title": "Output Port 2",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "out3",
+						"title": "Output Port 3",
 						"value": 1
 					}
 				]
@@ -456,8 +481,8 @@ $(function() {
 			id: 'node200',
 			title: 'Node 200',
 			pos: {
-				left: 250,
-				top: 250
+				left: 400,
+				top: 350
 			},
 			inputs: [
 				{

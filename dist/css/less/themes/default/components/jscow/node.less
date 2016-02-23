@@ -12,14 +12,13 @@
 	position: absolute;
 	background: darken(@bg, (@color-offset-default * 1));
 	width: 170px;
+	font-size: 90%;
+	font-weight: 400;
 	.text();
 	.round-corner-all(@space-default);
 	.noelect();
 	.border-all(1px, solid, darken(@base-color, (@color-offset-default * 3)));
 	.shadow();
-	.opacity(0.8);
-	font-size: 90%;
-	font-weight: 400;
 
 	&.jsc-focus {
 		border-color: lighten(@bg, (@color-offset-default * 3));

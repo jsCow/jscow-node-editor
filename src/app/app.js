@@ -403,7 +403,7 @@ $(function() {
 				id: 'node100',
 				title: 'Node 100',
 				pos: {
-					left: 150,
+					left: 30,
 					top: 150
 				},
 				inputs: [
@@ -452,7 +452,7 @@ $(function() {
 				id: 'node2',
 				title: 'Node 2',
 				pos: {
-					left: 180,
+					left: 380,
 					top: 180
 				},
 				inputs: [
@@ -461,6 +461,12 @@ $(function() {
 						"id": "in1",
 						"title": "Input Port 1",
 						"value": 1
+					},
+					{
+						"type": false,
+						"id": "in2",
+						"title": "Input Port 2",
+						"value": 1
 					}
 				],
 				outputs: [
@@ -468,6 +474,12 @@ $(function() {
 						"type": false,
 						"id": "out1",
 						"title": "Output Port 1",
+						"value": 1
+					},
+					{
+						"type": false,
+						"id": "out2",
+						"title": "Output Port 2",
 						"value": 1
 					}
 				]

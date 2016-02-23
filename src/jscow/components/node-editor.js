@@ -57,6 +57,24 @@ jsCow.res.components.nodeeditor.prototype = {
 		
 		return this;
 
+	},
+
+	removeConnection: function(options) {
+
+		var list = [];
+		
+		if (options instanceof Array ) {
+			list = options;
+		} else {
+			list.push(options);
+		}
+		
+		this.trigger('connection.remove', {
+			connections: list
+		});
+		
+		return this;
+
 	}
 
 };
@@ -273,7 +291,8 @@ jsCow.res.view.nodeeditor.prototype = {
 
 				self.config.jsPlumbInstance.addEndpoint(id, {
 					anchor: ['RightMiddle'],
-					isSource: true
+					isSource: true,
+					sourceDetachable: true
 				});
 
 			},0);
@@ -296,25 +315,36 @@ jsCow.res.view.nodeeditor.prototype = {
 
 				self.config.jsPlumbInstance.addEndpoint(id, {
 					anchor: ['LeftMiddle'],
-					isTarget: true
+					isTarget: true,
+					targetReattach: true
 				});
+
+				/*self.config.jsPlumbInstance.bind('click', function (connection, e) {
+					self.config.jsPlumbInstance.detach(connection);
+				});*/
 
 				self.config.jsPlumbInstance.bind("connectionDragStop", function (connection) {
 					
-					var from = $(connection.source).attr('id').split('-');
-					var to = $(connection.target).attr('id').split('-');
+					console.log("ADDED CONNECTION", connection.id);
+
+					var from = connection.sourceId.split('-');
+					var to = connection.targetId.split('-');
 					
-					self.cmp().addConnection({
-						from: {
-							node: from[from.length - 2],
-							out: from[from.length - 1]
-						},
-						to: {
-							node: to[to.length - 2],
-							in: to[to.length - 1]
-						}
-					});
-					
+					if (connection.source && connection.target) {
+
+						self.cmp().addConnection({
+							from: {
+								node: from[from.length - 2],
+								out: from[from.length - 1]
+							},
+							to: {
+								node: to[to.length - 2],
+								in: to[to.length - 1]
+							}
+						});
+						
+					}
+
 				});
 
 			},0);
@@ -326,28 +356,6 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.config.jsPlumbInstance.draggable(this.cmp().id()+'-'+nodeOptions.id, {
 			grid:[nodeOptions.grid, nodeOptions.grid]
 		});
-
-		
-		// Set draggable connector endpoint configuration
-		/*
-		var source = self.cmp().id()+"-"+c.from.node+"-"+c.from.out;
-		var target = self.cmp().id()+"-"+c.to.node+"-"+c.to.in;
-		
-		console.log(source);
-		console.log(target);
-		*/
-
-		/*
-		self.config.jsPlumbInstance.addEndpoint(source, {
-			anchor: ['RightMiddle'],
-			isSource: true
-		}, connectorOptions);
-		
-		self.config.jsPlumbInstance.addEndpoint(target, {
-			anchor: ['LeftMiddle'],
-			isTarget: true
-		}, connectorOptions);
-		*/
 
 		// end ===== Node Structure =====
 
@@ -387,9 +395,31 @@ jsCow.res.view.nodeeditor.prototype = {
 				overlays: [
 					[ "Label", { 
 						cssClass: "jsc-connector-label",
-						label: c.color,
-						id: "conMuhId",
-						location: 0.25,
+						label: "x",
+						location: 0.5,
+						events:{ 
+							click:function(labelOverlay, originalEvent) { 
+								
+								var from = labelOverlay.component.sourceId.split('-');
+								var to = labelOverlay.component.targetId.split('-');
+					
+								var con = {
+									from: {
+										node: from[from.length - 2],
+										out: from[from.length - 1]
+									},
+									to: {
+										node: to[to.length - 2],
+										in: to[to.length - 1]
+									}
+								};
+								
+								self.config.jsPlumbInstance.detach(labelOverlay.component.id);
+								self.cmp().removeConnection(con);
+								
+								console.info('REMOVED CONNECTION', labelOverlay.component.id, con);
+							} 
+                        } 
 					}]
 				]
 			};
@@ -668,6 +698,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 		this.on("options", this.options);
 		this.on('nodes.add', this.addNode);
 		this.on('connection.add', this.addConnection);
+		this.on('connection.remove', this.removeConnection);
 		/*this.on('node.updated', this.nodeUpdated);
 		this.on('node.removed', this.nodeRemoved);*/
 
@@ -787,6 +818,35 @@ jsCow.res.controller.nodeeditor.prototype = {
 				
 				this.trigger("editor.connection.added", newConnections[i]);		
 				connections = this.cmp().config().connections;
+
+			}
+
+		}
+
+	},
+
+	removeConnection: function(e) {
+
+		var nodes = this.cmp().config().nodes;
+		var connections = this.cmp().config().connections;
+		var removeConnections = e.data.connections;
+		
+		for (var i=0; i < removeConnections.length; i++) {
+
+			if (nodes[removeConnections[i].from.node] && nodes[removeConnections[i].to.node]) {
+				
+				for (var c=0; c < connections.length; c++) {
+
+					if (
+						(connections[c].from.node === removeConnections[i].from.node) && 
+						(connections[c].from.out === removeConnections[i].from.out) && 
+						(connections[c].to.node === removeConnections[i].to.node) && 
+						(connections[c].to.in === removeConnections[i].to.in)
+					) {
+						connections.splice(c,1);
+					}
+
+				}
 
 			}
 

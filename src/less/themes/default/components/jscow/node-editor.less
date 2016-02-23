@@ -88,9 +88,19 @@
 		}
 
 		.jsc-connector-label {
-			.text();
-			font-size: 90%;
 			font-weight: 400;
+			z-index: 4;
+			background: lighten(@base-color, 20%);
+			padding: 0 @space-default / 2;
+			cursor: pointer;
+			font-size: 90%;
+			.text();
+			.transition();
+			
+			&:hover {
+				background: lighten(@color-danger, 0%);
+			}
+			
 		}
 
 		.jsc-connector-path {

@@ -299,6 +299,24 @@ jsCow.res.view.nodeeditor.prototype = {
 					isTarget: true
 				});
 
+				self.config.jsPlumbInstance.bind("connectionDragStop", function (connection) {
+					
+					var from = $(connection.source).attr('id').split('-');
+					var to = $(connection.target).attr('id').split('-');
+					
+					self.cmp().addConnection({
+						from: {
+							node: from[from.length - 2],
+							out: from[from.length - 1]
+						},
+						to: {
+							node: to[to.length - 2],
+							in: to[to.length - 1]
+						}
+					});
+					
+				});
+
 			},0);
 						
 		});

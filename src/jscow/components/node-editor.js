@@ -178,6 +178,28 @@ jsCow.res.view.nodeeditor.prototype = {
 			return function() {
 				self.config.jsPlumbInstance = jsPlumb.getInstance();
 				self.config.jsPlumbInstance.setContainer(self.dom.content);
+				self.config.jsPlumbInstance.bind("connectionDragStop", function (connection) {
+					
+					if (connection.source && connection.target) {
+						
+						var from = connection.sourceId.split('-');
+						var to = connection.targetId.split('-');
+
+						self.cmp().addConnection({
+							from: {
+								node: from[from.length - 2],
+								out: from[from.length - 1]
+							},
+							to: {
+								node: to[to.length - 2],
+								in: to[to.length - 1]
+							}
+						});
+						
+						console.info("ADD CONNECTION", connection.id);
+					}
+
+				});
 			};
 		})(this));
 
@@ -313,38 +335,10 @@ jsCow.res.view.nodeeditor.prototype = {
 
 			window.setTimeout(function() {
 
-				self.config.jsPlumbInstance.addEndpoint(id, {
+				var endpoint = self.config.jsPlumbInstance.addEndpoint(id, {
 					anchor: ['LeftMiddle'],
 					isTarget: true,
 					targetReattach: true
-				});
-
-				/*self.config.jsPlumbInstance.bind('click', function (connection, e) {
-					self.config.jsPlumbInstance.detach(connection);
-				});*/
-
-				self.config.jsPlumbInstance.bind("connectionDragStop", function (connection) {
-					
-					console.log("ADDED CONNECTION", connection.id);
-
-					var from = connection.sourceId.split('-');
-					var to = connection.targetId.split('-');
-					
-					if (connection.source && connection.target) {
-
-						self.cmp().addConnection({
-							from: {
-								node: from[from.length - 2],
-								out: from[from.length - 1]
-							},
-							to: {
-								node: to[to.length - 2],
-								in: to[to.length - 1]
-							}
-						});
-						
-					}
-
 				});
 
 			},0);
@@ -402,7 +396,7 @@ jsCow.res.view.nodeeditor.prototype = {
 								
 								var from = labelOverlay.component.sourceId.split('-');
 								var to = labelOverlay.component.targetId.split('-');
-					
+								
 								var con = {
 									from: {
 										node: from[from.length - 2],
@@ -417,7 +411,7 @@ jsCow.res.view.nodeeditor.prototype = {
 								self.config.jsPlumbInstance.detach(labelOverlay.component.id);
 								self.cmp().removeConnection(con);
 								
-								console.info('REMOVED CONNECTION', labelOverlay.component.id, con);
+								console.info('REMOVED CONNECTION', labelOverlay, labelOverlay.component.id, con);
 							} 
                         } 
 					}]

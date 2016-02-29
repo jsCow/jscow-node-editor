@@ -134,24 +134,41 @@ jsCow.res.view.nodeeditor = function() {
 	this.dom = {};
 	this.dom.main = $('<div/>').addClass('jsc-nodeeditor clearfix');
 	this.dom.grid = $('<div/>').addClass('jsc-nodeeditor-grid clearfix').appendTo(this.dom.main);
-	this.dom.content = $('<div/>').addClass('jsc-nodeeditor-content clearfix').appendTo(this.dom.grid);
+	
+	this.dom.content = $('<div/>')
+		.addClass('jsc-nodeeditor-content clearfix')
+		.on('dblclick', (function(self) {
+			return function(e) {
+				
+				var id = ('node'+Math.random()).replace('.', '');
+				self.cmp().addNode({
+						id: id,
+						title: 'Node ' + id,
+						pos: {
+							left: e.offsetX - 85,
+							top: e.offsetY - 10
+						},
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: [
+						{
+							"type": false,
+							"id": "out1",
+							"title": "Output Port 1",
+							"value": 1
+						}
+					]
+				});
 
-	this.dom.add = $('<i/>').addClass('fa fa-plus').appendTo(this.dom.main)
-	.click((function(self) {
-		return function(ev) {
-			var id = ('node'+Math.random()).replace('.', '');
-			self.cmp().addNode({
-				id: id,
-				title: 'Node ' + id + id + id + id,
-				pos: {
-					left: 0,
-					top: 0
-				},
-				inputs: [],
-				outputs: []
-			});
-		};
-	})(this));
+			};
+		})(this))
+		.appendTo(this.dom.grid);
 
 };
 jsCow.res.view.nodeeditor.prototype = {
@@ -163,6 +180,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.on('editor.node.updated', this.editorNodeUpdated);
 		this.on('editor.connection.added', this.editorConnectionAdded);
 		this.on('node.remove', this.nodeRemove);
+		this.on('editor.grid.update', this.updateGrid);
 
 		$(window).resize((function(self) {
 			return function() {
@@ -470,8 +488,6 @@ jsCow.res.view.nodeeditor.prototype = {
 		
 		// Remove the node elements from dom
 		var nodeElementId = this.cmp().id() + "-" + nodeId;
-		
-		console.log(nodeElementId, $('#' + nodeElementId).length);
 		$('#' + nodeElementId).remove();
 
 		// Remove all related node connections from jsPlumb

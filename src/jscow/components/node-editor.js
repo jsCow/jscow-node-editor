@@ -75,6 +75,18 @@ jsCow.res.components.nodeeditor.prototype = {
 		
 		return this;
 
+	},
+
+	removeNode: function(id) {
+
+		if (typeof options === "String" ) {
+			this.trigger('node.remove', {
+				id: id
+			});
+		}
+
+		return this;
+
 	}
 
 };
@@ -149,7 +161,8 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.on('editor.node.added', this.editorNodeAdded);
 		this.on('editor.node.updated', this.editorNodeUpdated);
 		this.on('editor.connection.added', this.editorConnectionAdded);
-		
+		this.on('node.remove', this.nodeRemove);
+
 		$(window).resize((function(self) {
 			return function() {
 				
@@ -161,11 +174,7 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		// Bind the jquery plugin 'kinetic' on the grid area
 		this.dom.grid.kinetic();
-		/*this.dom.grid.on('click', function(ev) {
-			console.log(ev);
-			console.log( (ev.pageX - ev.offsetX) );
-		});*/
-
+		
 		// Create the base svg canvas element by "D3.js"
 		this.dom.svggrid = d3.select(this.dom.content[0])
 			.append("svg:svg")
@@ -200,6 +209,14 @@ jsCow.res.view.nodeeditor.prototype = {
 					}
 
 				});
+
+				// Fix -> Create double connections by drag and drop a new connection
+				self.config.jsPlumbInstance.bind("beforeDrop", function(info){
+					if(info.sourceId === info.targetId){
+					    return false;
+					}
+				});
+
 			};
 		})(this));
 
@@ -258,7 +275,11 @@ jsCow.res.view.nodeeditor.prototype = {
 		main.prepend( titlebar );
 		
 		// Remove button
-		var remove = $('<i/>').addClass('jsc-node-remove fa fa-times').appendTo( titlebar );
+		var remove = $('<i/>').addClass('jsc-node-remove fa fa-times').click(function(e) {
+			self.trigger('node.remove', {
+				id: nodeOptions.id
+			});
+		}).appendTo( titlebar );
 		
 		var outputs = $('<div/>').addClass('jsc-node-outputs').appendTo(content);
 		var preview = $('<div/>').addClass('jsc-node-preview').appendTo(content);
@@ -311,7 +332,7 @@ jsCow.res.view.nodeeditor.prototype = {
 
 			window.setTimeout(function() {
 
-				self.config.jsPlumbInstance.addEndpoint(id, {
+				self.config.jsPlumbInstance.makeSource(id, {
 					anchor: ['RightMiddle'],
 					isSource: true,
 					sourceDetachable: true
@@ -335,7 +356,7 @@ jsCow.res.view.nodeeditor.prototype = {
 
 			window.setTimeout(function() {
 
-				var endpoint = self.config.jsPlumbInstance.addEndpoint(id, {
+				var endpoint = self.config.jsPlumbInstance.makeTarget(id, {
 					anchor: ['LeftMiddle'],
 					isTarget: true,
 					targetReattach: true
@@ -363,9 +384,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		var self = this;
 		var nodeOptions = e.data;
 
-		//console.log("UPDATE", nodeOptions);
-
-
+		//console.info("UPDATE", nodeOptions);
 
 	},
 
@@ -408,7 +427,7 @@ jsCow.res.view.nodeeditor.prototype = {
 									}
 								};
 								
-								self.config.jsPlumbInstance.detach(labelOverlay.component.id);
+								self.config.jsPlumbInstance.detach(labelOverlay.component);
 								self.cmp().removeConnection(con);
 								
 								console.info('REMOVED CONNECTION', labelOverlay, labelOverlay.component.id, con);
@@ -439,9 +458,46 @@ jsCow.res.view.nodeeditor.prototype = {
 	},
 
 	
+	/*
+	 * Remove a node and all node connections
+	 */
+	nodeRemove: function(e) {
+
+		var nodeId = e.data.id;
+		var nodes = this.cmp().config().nodes;
+		var connections = this.cmp().config().connections;
+		
+		// Remove the node elements from dom
+		var nodeElementId = this.cmp().id() + "-" + nodeId;
+		$('#' + nodeElementId).remove();
+
+		// Remove all related node connections from jsPlumb
+		var allJsPlumbConnections = this.config.jsPlumbInstance.getConnections();
+		var searchId = "-" + nodeId + "-";
+		for (var pc=0; pc < allJsPlumbConnections.length; pc++) {
+			console.log(searchId);
+			console.log(allJsPlumbConnections[pc].sourceId, allJsPlumbConnections[pc].sourceId.indexOf(searchId));
+			console.log(allJsPlumbConnections[pc].targetId, allJsPlumbConnections[pc].targetId.indexOf(searchId));
+			if (allJsPlumbConnections[pc].sourceId.indexOf(searchId) !== -1 || allJsPlumbConnections[pc].targetId.indexOf(searchId) !== -1) {
+				this.config.jsPlumbInstance.detach(allJsPlumbConnections[pc]);
+			}
+		}
+
+		// Remove all related connections data from node editor
+		for (var c=0; c < connections.length; c++) {
+			if (connections[c].from.node === nodeId || connections[c].to.node === nodeId) {
+				this.cmp().removeConnection(connections[c]);
+			}
+		}
+
+	},
+
+
+
 
 	/* ================================================================================
-	 * Render all node components
+	 * DEPRICATED - Render all node components
+	 * ================================================================================
 	 */
 	updateNodes: function(e) {
 		
@@ -691,10 +747,9 @@ jsCow.res.controller.nodeeditor.prototype = {
 		this.on("model.ready", this.isModelReady);
 		this.on("options", this.options);
 		this.on('nodes.add', this.addNode);
+		this.on('node.remove', this.nodeRemove);
 		this.on('connection.add', this.addConnection);
 		this.on('connection.remove', this.removeConnection);
-		/*this.on('node.updated', this.nodeUpdated);
-		this.on('node.removed', this.nodeRemoved);*/
 
 	},
 	
@@ -827,7 +882,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 		
 		for (var i=0; i < removeConnections.length; i++) {
 
-			if (nodes[removeConnections[i].from.node] && nodes[removeConnections[i].to.node]) {
+			//if (nodes[removeConnections[i].from.node] && nodes[removeConnections[i].to.node]) {
 				
 				for (var c=0; c < connections.length; c++) {
 
@@ -842,7 +897,22 @@ jsCow.res.controller.nodeeditor.prototype = {
 
 				}
 
-			}
+			//}
+
+		}
+
+	},
+
+	nodeRemove: function(e) {
+
+		var nodeId = e.data.id;
+		var nodes = this.cmp().config().nodes;
+
+		if (nodes[nodeId]) {
+
+			delete this.cmp().config().nodes[nodeId];
+			
+			console.info("NODE DELETED", nodeId);
 
 		}
 
@@ -864,19 +934,6 @@ jsCow.res.controller.nodeeditor.prototype = {
 		// Update content size
 		this.trigger('update.content.size');
 		
-		// Trigger the event 'editor.options.updated' and send the current editor options
-		this.trigger('editor.options.updated', this.cmp().config().options);
-
-	},*/
-
-	/*
-	 * Will be triggered when a node has been removed
-	 */
-	/*nodeRemoved: function(e) {
-		
-		// Update content size
-		this.trigger('update.content.size');
-
 		// Trigger the event 'editor.options.updated' and send the current editor options
 		this.trigger('editor.options.updated', this.cmp().config().options);
 

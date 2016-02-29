@@ -493,8 +493,8 @@ $(function() {
 			id: 'node200',
 			title: 'Node 200',
 			pos: {
-				left: 400,
-				top: 350
+				left: 500,
+				top: 400
 			},
 			inputs: [
 				{

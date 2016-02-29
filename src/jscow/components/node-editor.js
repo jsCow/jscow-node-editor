@@ -139,9 +139,10 @@ jsCow.res.view.nodeeditor = function() {
 	this.dom.add = $('<i/>').addClass('fa fa-plus').appendTo(this.dom.main)
 	.click((function(self) {
 		return function(ev) {
+			var id = ('node'+Math.random()).replace('.', '');
 			self.cmp().addNode({
-				id: 'node' + Math.random(),
-				title: 'Node ...',
+				id: id,
+				title: 'Node ' + id + id + id + id,
 				pos: {
 					left: 0,
 					top: 0
@@ -469,15 +470,14 @@ jsCow.res.view.nodeeditor.prototype = {
 		
 		// Remove the node elements from dom
 		var nodeElementId = this.cmp().id() + "-" + nodeId;
+		
+		console.log(nodeElementId, $('#' + nodeElementId).length);
 		$('#' + nodeElementId).remove();
 
 		// Remove all related node connections from jsPlumb
 		var allJsPlumbConnections = this.config.jsPlumbInstance.getConnections();
 		var searchId = "-" + nodeId + "-";
 		for (var pc=0; pc < allJsPlumbConnections.length; pc++) {
-			console.log(searchId);
-			console.log(allJsPlumbConnections[pc].sourceId, allJsPlumbConnections[pc].sourceId.indexOf(searchId));
-			console.log(allJsPlumbConnections[pc].targetId, allJsPlumbConnections[pc].targetId.indexOf(searchId));
 			if (allJsPlumbConnections[pc].sourceId.indexOf(searchId) !== -1 || allJsPlumbConnections[pc].targetId.indexOf(searchId) !== -1) {
 				this.config.jsPlumbInstance.detach(allJsPlumbConnections[pc]);
 			}

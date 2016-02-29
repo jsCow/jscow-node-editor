@@ -11,7 +11,8 @@
 	padding: (@space-default / 2) (@space-default + 3);
 	position: absolute;
 	background: darken(@bg, (@color-offset-default * 1));
-	width: 170px;
+	min-width: 170px;
+	max-width: 300px;
 	font-size: 90%;
 	font-weight: 400;
 	.text();
@@ -34,7 +35,7 @@
 		text-align: center;
 		font-size: @text-fontSize-default;
 		position: relative;
-		padding: 2px 0;
+		padding: 2px @space-default;
 		margin: -(@space-default / 2) -13px @space-default -13px;
 		.round-corner-top(@space-default);
 		background: darken(@base-color, (@color-offset-default * 3));

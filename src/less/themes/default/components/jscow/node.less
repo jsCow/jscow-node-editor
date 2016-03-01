@@ -92,10 +92,10 @@
 			&.jsc-node-port-out {
 				.border-right(3px, solid, darken(@base-color, (@color-offset-default * 1)));
 				background: lighten(@bg, 5%);
-				background: -moz-linear-gradient(left, darken(@bg, (@color-offset-default * 1)) 0%, lighten(@bg, 5%) 100%);
-				background: -webkit-linear-gradient(left, darken(@bg, (@color-offset-default * 1)) 0%,lighten(@bg, 5%) 100%);
-				background: linear-gradient(to right, darken(@bg, (@color-offset-default * 1)) 0%,lighten(@bg, 5%) 100%);
-				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='darken(@bg, (@color-offset-default * 1))', endColorstr='lighten(@bg, 5%)',GradientType=1 );
+				background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, lighten(@bg, 5%) 100%);
+				background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,lighten(@bg, 5%) 100%);
+				background: linear-gradient(to right, rgba(0,0,0,0) 0%,lighten(@bg, 5%) 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(0,0,0,0)', endColorstr='lighten(@bg, 5%)',GradientType=1 );
 
 				div {
 					text-align: right;

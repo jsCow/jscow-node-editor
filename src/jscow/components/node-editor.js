@@ -450,7 +450,7 @@ jsCow.res.view.nodeeditor.prototype = {
 
 			/** connector options */
 			var connectorOptions = {
-				connector:["Bezier", { curviness: 150 }, {
+				connector:["Bezier", { curviness: 100 }, {
 					cssClass: "jsc-connector-bezier"
 				}],
 				anchor: ['RightMiddle', 'LeftMiddle'],

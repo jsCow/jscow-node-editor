@@ -132,44 +132,67 @@ jsCow.res.view.nodeeditor = function() {
 	};
 	
 	this.dom = {};
-	this.dom.main = $('<div/>').addClass('jsc-nodeeditor clearfix');
-	this.dom.grid = $('<div/>').addClass('jsc-nodeeditor-grid clearfix').appendTo(this.dom.main);
+	this.dom.main = $('<div/>').addClass('jsc-nodeeditor');
+	this.dom.grid = $('<div/>').addClass('jsc-nodeeditor-grid').appendTo(this.dom.main);
 	
 	this.dom.content = $('<div/>')
-		.addClass('jsc-nodeeditor-content clearfix')
+		.addClass('jsc-nodeeditor-content')
 		.on('dblclick', (function(self) {
 			return function(e) {
+				e.preventDefault();
+				e.stopPropagation();
 				
-				var id = ('node'+Math.random()).replace('.', '');
-				self.cmp().addNode({
-						id: id,
-						title: 'Node ' + id,
-						pos: {
-							left: e.offsetX - 85,
-							top: e.offsetY - 10
-						},
-					inputs: [
-						{
-							"type": false,
-							"id": "in1",
-							"title": "Input Port 1",
-							"value": 1
-						}
-					],
-					outputs: [
-						{
-							"type": false,
-							"id": "out1",
-							"title": "Output Port 1",
-							"value": 1
-						}
-					]
-				});
+				var that = self;
+
+				self.dom.nodeselector.slideDown().find('input').focus().keyup(function(ev) {
+			        
+			        // Enter
+			        if (ev.keyCode === 13) {
+			            that.dom.nodeselector.fadeOut();
+
+						var id = ('node'+Math.random()).replace('.', '');
+						that.cmp().addNode({
+								id: id,
+								title: 'Node ' + id,
+								pos: {
+									left: e.offsetX - 85,
+									top: e.offsetY - 10
+								},
+							inputs: [
+								{
+									"type": false,
+									"id": "in1",
+									"title": "Input Port 1",
+									"value": 1
+								}
+							],
+							outputs: [
+								{
+									"type": false,
+									"id": "out1",
+									"title": "Output Port 1",
+									"value": 1
+								}
+							]
+						});
+						
+			        }
+
+			        // Escape
+			        if (ev.keyCode === 27) {
+			            that.dom.nodeselector.fadeOut();
+			        }
+
+			    });
 
 			};
 		})(this))
 		.appendTo(this.dom.grid);
 
+	this.dom.nodeselector = $('<div/>').addClass('jsc-nodeeditor-nodeselector').hide().appendTo(this.dom.main);
+	this.dom.nodeselectorinput = $('<input type="text" value="" placeholder="Search..." />').appendTo(this.dom.nodeselector);
+	this.dom.nodeselectorresults = $('<div/>').appendTo(this.dom.nodeselector);
+	
 };
 jsCow.res.view.nodeeditor.prototype = {
 	
@@ -182,14 +205,14 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.on('node.remove', this.nodeRemove);
 		this.on('editor.grid.update', this.updateGrid);
 
-		$(window).resize((function(self) {
+		/*$(window).resize((function(self) {
 			return function() {
 				
 				// Update content size
 				self.trigger('update.content.size');
 
 			};
-		})(this));
+		})(this));*/
 
 		// Bind the jquery plugin 'kinetic' on the grid area
 		this.dom.grid.kinetic();

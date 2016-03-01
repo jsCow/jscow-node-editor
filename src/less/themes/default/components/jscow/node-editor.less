@@ -27,6 +27,34 @@
 
 	}
 
+	.jsc-nodeeditor-nodeselector {
+		width: 30%;
+		height: 100%;
+		background: lighten(@base-color, 0%);
+		.text(lighten(@text-color-default, 100%));
+		.border-all();
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: @space-default;
+		z-index: 1000;
+		.opacity(0.8);
+
+		input[type="text"] {
+			width: 100%;
+			background: darken(@base-color, 10%);
+			padding: 0 @space-default / 2;
+			font-size: 1.8rem;
+			font-weight: 100;
+			cursor: text;
+			padding: @space-default / 2 @space-default;
+			.border-all(1px, solid, darken(@base-color, 15%));
+			.round-corner-all(@space-default / 2);
+			.shadow(@space-default);
+		}
+
+	}
+
 	.jsc-nodeeditor-grid {
 		position: absolute;
 		width: 100%;

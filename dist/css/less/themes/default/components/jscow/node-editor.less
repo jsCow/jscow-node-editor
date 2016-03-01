@@ -39,6 +39,7 @@
 		padding: @space-default;
 		z-index: 1000;
 		.opacity(0.8);
+		.shadow();
 
 		input[type="text"] {
 			width: 100%;
@@ -50,7 +51,6 @@
 			padding: @space-default / 2 @space-default;
 			.border-all(1px, solid, darken(@base-color, 15%));
 			.round-corner-all(@space-default / 2);
-			.shadow(@space-default);
 		}
 
 	}

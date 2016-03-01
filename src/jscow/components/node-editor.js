@@ -128,7 +128,11 @@ jsCow.res.view.nodeeditor = function() {
 		grid: {
 			data: []
 		},
-		jsPlumbInstance: null
+		jsPlumbInstance: null,
+		newNodePos: {
+			left: 0,
+			top: 0
+		}
 	};
 	
 	this.dom = {};
@@ -139,51 +143,12 @@ jsCow.res.view.nodeeditor = function() {
 		.addClass('jsc-nodeeditor-content')
 		.on('dblclick', (function(self) {
 			return function(e) {
-				e.preventDefault();
-				e.stopPropagation();
 				
-				var that = self;
-
-				self.dom.nodeselector.slideDown().find('input').focus().keyup(function(ev) {
-			        
-			        // Enter
-			        if (ev.keyCode === 13) {
-			            that.dom.nodeselector.fadeOut();
-
-						var id = ('node'+Math.random()).replace('.', '');
-						that.cmp().addNode({
-								id: id,
-								title: 'Node ' + id,
-								pos: {
-									left: e.offsetX - 85,
-									top: e.offsetY - 10
-								},
-							inputs: [
-								{
-									"type": false,
-									"id": "in1",
-									"title": "Input Port 1",
-									"value": 1
-								}
-							],
-							outputs: [
-								{
-									"type": false,
-									"id": "out1",
-									"title": "Output Port 1",
-									"value": 1
-								}
-							]
-						});
-						
-			        }
-
-			        // Escape
-			        if (ev.keyCode === 27) {
-			            that.dom.nodeselector.fadeOut();
-			        }
-
-			    });
+				self.config.newNodePos = {
+					left: e.offsetX - 85,
+					top: e.offsetY - 10
+				};
+				self.dom.nodeselector.slideDown().find('input').focus();
 
 			};
 		})(this))
@@ -260,6 +225,49 @@ jsCow.res.view.nodeeditor.prototype = {
 				});
 
 			};
+		})(this));
+
+		this.dom.nodeselectorinput.keyup((function(self) {
+			return function(e) {
+	    		
+		        // Enter
+		        if (e.keyCode === 13) {
+		            self.dom.nodeselector.fadeOut();
+
+					var id = ('node'+Math.random()).replace('.', '');
+					self.cmp().addNode({
+						id: id,
+						title: 'Node ' + id,
+						pos: {
+							left: self.config.newNodePos.left,
+							top: self.config.newNodePos.top
+						},
+						inputs: [
+							{
+								"type": false,
+								"id": "in1",
+								"title": "Input Port 1",
+								"value": 1
+							}
+						],
+						outputs: [
+							{
+								"type": false,
+								"id": "out1",
+								"title": "Output Port 1",
+								"value": 1
+							}
+						]
+					});
+					
+		        }
+
+		        // Escape
+		        if (e.keyCode === 27) {
+		            self.dom.nodeselector.fadeOut();
+		        }
+
+	    	};
 		})(this));
 
 		// Trigger the view update event	

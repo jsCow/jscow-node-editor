@@ -390,12 +390,13 @@ $(function() {
 	})
 	.target('#node-editor-1').run();
 
-
+	/*
 	$('body').append('<button id="setOptions">Set Options</button>');
 	$('#setOptions').click(function() {
 		jsCow.find('node-editor-1').options(NodeEditorOptions1);
 	});
-	
+	*/
+
 	$('body').append('<button id="addNodes">Add Nodes</button>');
 	$('#addNodes').click(function() {
 		jsCow.find('node-editor-1').addNode([
@@ -561,6 +562,60 @@ $(function() {
 				}
 			}
 		]);
+	});
+	
+	$('body').append('<button id="addRepository">Add Repository - general</button>');
+	$('#addRepository').click(function() {
+		jsCow.find('node-editor-1').addNodesRepository({
+			group: 'general',
+			title: 'General Nodes',
+			description: 'General repository of node types.',
+			types: [
+				{
+					title: 'Node 1/1',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: [
+						{
+							"type": false,
+							"id": "out1",
+							"title": "Output Port 1",
+							"value": 1
+						}
+					]
+				},
+				{
+					title: 'Muh Node',
+					inputs: [],
+					outputs: [
+						{
+							"type": false,
+							"id": "out1",
+							"title": "Output Port 1",
+							"value": 1
+						}
+					]
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				}
+			]
+		});
 	});
 	
 	console.timeEnd('all');

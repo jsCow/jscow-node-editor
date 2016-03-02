@@ -87,6 +87,20 @@ jsCow.res.components.nodeeditor.prototype = {
 
 		return this;
 
+	},
+
+	addNodesRepository: function(repo) {
+		
+		if (typeof repo === 'object') {
+			
+			this.trigger('editor.repository.add', {
+				repository: repo
+			});
+
+		}
+
+		return this;
+
 	}
 
 };
@@ -103,7 +117,8 @@ jsCow.res.model.nodeeditor = function() {
 			snapToGrid: true
 		},
 		nodes: {},
-		connections: []
+		connections: [],
+		repositories: {}
 	};
 	
 };
@@ -797,6 +812,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 		this.on('node.remove', this.nodeRemove);
 		this.on('connection.add', this.addConnection);
 		this.on('connection.remove', this.removeConnection);
+		this.on('editor.repository.add', this.addNodesRepository);
 
 	},
 	
@@ -962,6 +978,29 @@ jsCow.res.controller.nodeeditor.prototype = {
 			console.info("NODE DELETED", nodeId);
 
 		}
+
+	},
+
+	addNodesRepository: function (e) {
+		
+		var repositories = this.cmp().config().repositories;
+		var newRepo = e.data.repository;
+
+		if (repositories[newRepo.group]) {
+			console.log(this.cmp().config().repositories);
+			repositories[newRepo.group].types.push(newRepo.types);
+			this.cmp().config({
+				repositories: repositories
+			});
+
+		}else{
+			repositories[newRepo.group] = newRepo;
+			this.cmp().config({
+				repositories: repositories
+			});
+		}
+
+		console.log(this.cmp().config().repositories);
 
 	}
 

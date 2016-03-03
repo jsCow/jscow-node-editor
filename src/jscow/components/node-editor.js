@@ -171,16 +171,19 @@ jsCow.res.view.nodeeditor = function() {
 
 	this.dom.nodeselector = $('<div/>').addClass('jsc-nodeeditor-nodeselector').hide().appendTo(this.dom.main);
 	this.dom.nodeselectorinput = $('<input type="text" value="" placeholder="Search..." />').appendTo(this.dom.nodeselector);
-	this.dom.nodeselectorresults = $('<div/>').appendTo(this.dom.nodeselector);
+	this.dom.nodeselectorresults = $('<ul/>').attr('data-keyboard-focus-group', '').appendTo(this.dom.nodeselector);
 	
 };
 jsCow.res.view.nodeeditor.prototype = {
 	
 	init: function(e) {
 
+		var self = this;
+
 		// Register all event listener
 		this.on('editor.node.added', this.editorNodeAdded);
 		this.on('editor.node.updated', this.editorNodeUpdated);
+		this.on('editor.node.types.updated', this.onEditorNodeTypesUpdated);
 		this.on('editor.connection.added', this.editorConnectionAdded);
 		this.on('node.remove', this.nodeRemove);
 		this.on('editor.grid.update', this.updateGrid);
@@ -248,33 +251,11 @@ jsCow.res.view.nodeeditor.prototype = {
 		        // Enter
 		        if (e.keyCode === 13) {
 		            self.dom.nodeselector.fadeOut();
+		        }
 
-					var id = ('node'+Math.random()).replace('.', '');
-					self.cmp().addNode({
-						id: id,
-						title: 'Node ' + id,
-						pos: {
-							left: self.config.newNodePos.left,
-							top: self.config.newNodePos.top
-						},
-						inputs: [
-							{
-								"type": false,
-								"id": "in1",
-								"title": "Input Port 1",
-								"value": 1
-							}
-						],
-						outputs: [
-							{
-								"type": false,
-								"id": "out1",
-								"title": "Output Port 1",
-								"value": 1
-							}
-						]
-					});
-					
+				// Down
+		        if (e.keyCode === 40) {
+		            self.dom.nodeselectorresults.find('div').eq(0).focus();
 		        }
 
 		        // Escape
@@ -285,6 +266,37 @@ jsCow.res.view.nodeeditor.prototype = {
 	    	};
 		})(this));
 
+		// General key up/down handler for arrows
+        $(document).on('keydown', function(e){
+        	var currentFocusElement,
+        		currentFocusGroupItems,
+        		prevIndex,
+        		nextIndex;
+
+            if(e.which === 38) { // up
+                currentFocusElement = $(':focus');
+                currentFocusGroupItems = currentFocusElement.closest('[data-keyboard-focus-group]').find('[data-keyboard-focus]');
+                prevIndex = ( currentFocusGroupItems.index(currentFocusElement) - 1);
+                if (prevIndex < 0) { 
+                	prevIndex = 0; 
+                	self.dom.nodeselectorinput.focus();
+                }
+                
+                $(currentFocusGroupItems).eq(prevIndex).focus();
+            }
+            if(e.which === 40) { // down
+                currentFocusElement = $(':focus');
+                currentFocusGroupItems = currentFocusElement.closest('[data-keyboard-focus-group]').find('[data-keyboard-focus]');
+                nextIndex = ( currentFocusGroupItems.index(currentFocusElement) + 1);
+                
+                $(currentFocusGroupItems).eq(nextIndex).focus();
+            }
+        }).keyup(function(e){
+            if(e.which === 13) { // enter
+                $(':focus').click();
+            }
+        });
+        
 		// Trigger the view update event	
 		this.trigger("view.update", e.data);
 		
@@ -554,7 +566,47 @@ jsCow.res.view.nodeeditor.prototype = {
 
 	},
 
+	/*
+	 * Update list of node types
+	 */
+	onEditorNodeTypesUpdated: function(e) {
 
+		var nodeTypeGroups = e.data;
+		
+		this.dom.nodeselectorresults.find('*').remove();
+
+		var typeClickHandler = function(self, type) {
+			return function () {
+		        
+				type.id = ('node'+Math.random()).replace('.', '');
+				type.pos = {
+					left: self.config.newNodePos.left,
+					top: self.config.newNodePos.top
+				};
+
+				self.cmp().addNode(type);
+
+		    };
+		};
+
+		for (var key in nodeTypeGroups) {
+			
+			this.dom.nodeselectorresults.append('<li class="jsc-nodeeditor-nodegroup">'+nodeTypeGroups[key].title+'</li>');
+
+			var item = $('<li/>');
+
+			for(var t=0; t < nodeTypeGroups[key].types.length; t++) {
+				var type = nodeTypeGroups[key].types[t];
+				var typeButton = $('<div>'+type.title+'</div>').attr('data-keyboard-focus', '').attr('tabindex', '-1');
+				typeButton.on('click', typeClickHandler(this, type)).appendTo(item);
+			}
+			this.dom.nodeselectorresults.append(item);
+
+			this.dom.nodeselectorresults.find('div').eq(0).focus();
+				
+		}
+
+	},
 
 
 	/* ================================================================================
@@ -987,42 +1039,24 @@ jsCow.res.controller.nodeeditor.prototype = {
 		var newRepo = e.data.repository;
 
 		if (repositories[newRepo.group]) {
-			console.log(this.cmp().config().repositories);
+			
 			repositories[newRepo.group].types.push(newRepo.types);
 			this.cmp().config({
 				repositories: repositories
 			});
 
+			this.trigger('editor.node.types.updated', this.cmp().config().repositories);
+
 		}else{
+			
 			repositories[newRepo.group] = newRepo;
 			this.cmp().config({
 				repositories: repositories
 			});
-		}
 
-		console.log(this.cmp().config().repositories);
+			this.trigger('editor.node.types.updated', this.cmp().config().repositories);
+		}
 
 	}
-
-	/*
-	 * Update node options and trigger the event 'editor.options.updated'.
-	 * Internal the content size will updatet after update the options.
-	 */
-	/*nodeUpdated: function(e) {
-		
-		var nodes = this.cmp().config().options.nodes;
-		for (var  i=0; i < nodes.length; i++) {
-			if (nodes[i].id === e.data.id) {
-				$.extend(true, nodes[i], e.data);
-			}
-		}
-
-		// Update content size
-		this.trigger('update.content.size');
-		
-		// Trigger the event 'editor.options.updated' and send the current editor options
-		this.trigger('editor.options.updated', this.cmp().config().options);
-
-	}*/
 
 };

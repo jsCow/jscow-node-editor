@@ -49,10 +49,38 @@
 			font-weight: 100;
 			cursor: text;
 			padding: @space-default / 2 @space-default;
-			.border-all(1px, solid, darken(@base-color, 15%));
-			.round-corner-all(@space-default / 2);
+			.border-transparent();
+			.border-bottom();
 		}
 
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			.clearfix();
+
+			li {
+				.clearfix();
+				
+				&.jsc-nodeeditor-nodegroup {
+					.border-bottom();
+					padding: @space-default;
+				}
+
+				div {
+					.transition();
+					.border-all();
+					.round-corner-all(@space-default / 2);
+					background: lighten(@base-color, 5%);
+					padding: @space-default / 2 @space-default;
+					margin: @space-default;
+				}
+
+			}
+
+
+		}
+		
 	}
 
 	.jsc-nodeeditor-grid {

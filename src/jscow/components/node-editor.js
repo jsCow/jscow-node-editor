@@ -170,7 +170,8 @@ jsCow.res.view.nodeeditor = function() {
 		.appendTo(this.dom.grid);
 
 	this.dom.nodeselector = $('<div/>').addClass('jsc-nodeeditor-nodeselector').hide().appendTo(this.dom.main);
-	this.dom.nodeselectorinput = $('<input type="text" value="" placeholder="Search..." />').appendTo(this.dom.nodeselector);
+	this.dom.nodeselectorinputcontainer = $('<div/>').addClass('jsc-nodeeditor-nodeselectorinputcontainer').appendTo(this.dom.nodeselector);
+	this.dom.nodeselectorinput = $('<input type="text" value="" placeholder="Search..." />').appendTo(this.dom.nodeselectorinputcontainer);
 	this.dom.nodeselectorresults = $('<ul/>').attr('data-keyboard-focus-group', '').appendTo(this.dom.nodeselector);
 	
 };
@@ -253,14 +254,30 @@ jsCow.res.view.nodeeditor.prototype = {
 		            self.dom.nodeselector.fadeOut();
 		        }
 
+				// Write
+		        if (e.keyCode !== 13 && e.keyCode !== 40) {
+
+					var searchString = self.dom.nodeselectorinput.val();
+
+		        	if (searchString !== '') {
+						var foundItem = self.dom.nodeselectorresults.find('div').not(':contains("'+self.dom.nodeselectorinput.val()+'")');
+						foundItem.hide();
+
+						if (self.dom.nodeselectorresults.find('div:visible').length === 1) {
+	            			self.dom.nodeselectorresults.find('div:visible').eq(0).focus();
+						}
+						
+		        	}else{
+		        		self.dom.nodeselectorresults.find('div').show();
+		        	}
+					
+		        }
+				
 				// Down
 		        if (e.keyCode === 40) {
-		            self.dom.nodeselectorresults.find('div').eq(0).focus();
-		        }
 
-		        // Escape
-		        if (e.keyCode === 27) {
-		            self.dom.nodeselector.fadeOut();
+           			self.dom.nodeselectorresults.find('div:visible').eq(0).focus();
+					
 		        }
 
 	    	};
@@ -273,20 +290,26 @@ jsCow.res.view.nodeeditor.prototype = {
         		prevIndex,
         		nextIndex;
 
+        	// Escape
+	        if (e.keyCode === 27) {
+	            self.dom.nodeselector.fadeOut();
+	        }
+
             if(e.which === 38) { // up
                 currentFocusElement = $(':focus');
-                currentFocusGroupItems = currentFocusElement.closest('[data-keyboard-focus-group]').find('[data-keyboard-focus]');
+                currentFocusGroupItems = currentFocusElement.closest('[data-keyboard-focus-group]').find('[data-keyboard-focus]:visible');
                 prevIndex = ( currentFocusGroupItems.index(currentFocusElement) - 1);
                 if (prevIndex < 0) { 
                 	prevIndex = 0; 
                 	self.dom.nodeselectorinput.focus();
+                }else{
+                	$(currentFocusGroupItems).eq(prevIndex).focus();
                 }
                 
-                $(currentFocusGroupItems).eq(prevIndex).focus();
             }
             if(e.which === 40) { // down
                 currentFocusElement = $(':focus');
-                currentFocusGroupItems = currentFocusElement.closest('[data-keyboard-focus-group]').find('[data-keyboard-focus]');
+                currentFocusGroupItems = currentFocusElement.closest('[data-keyboard-focus-group]').find('[data-keyboard-focus]:visible');
                 nextIndex = ( currentFocusGroupItems.index(currentFocusElement) + 1);
                 
                 $(currentFocusGroupItems).eq(nextIndex).focus();

@@ -321,64 +321,6 @@ $(function() {
 	};
 	
 
-	/*
-	function getPorts() {
-		var ports = [];
-		for (var x=0; x < Math.floor((Math.random() * 20)); x++) {
-			ports.push({
-				"title": "Input Port "+x,
-				"value": 1
-			});
-		}
-		return ports;
-	}
-
-	NodeEditorOptions1 = {
-		grid: 50,
-		snapToGrid: true,
-		nodes: (function() {
-			var nodes = [];
-			for (var i=0; i < Math.floor((Math.random() * 10)); i++) {
-				nodes.push({
-					id: 'node'+i,
-					title: 'Node '+i,
-					pos: {
-						left: Math.floor((Math.random() * 500)),
-						top: Math.floor((Math.random() * 500))
-					},
-					inputs: getPorts(),
-					outputs: getPorts()
-				});
-			}
-			return nodes;
-		})()
-	};
-
-	NodeEditorOptions2 = {
-		grid: 20,
-		snapToGrid: false,
-		nodes: (function() {
-			var nodes = [];
-			for (var i=0; i < Math.floor((Math.random() * 10)); i++) {
-				nodes.push({
-					id: 'node'+i,
-					title: 'Node '+i,
-					pos: {
-						left: Math.floor((Math.random() * 500)),
-						top: Math.floor((Math.random() * 500))
-					},
-					inputs: getPorts(),
-					outputs: getPorts()
-				});
-			}
-			return nodes;
-		})()
-	};
-	*/
-
-
-
-
 
 
 	nodeeditor1 = jsCow.get(jsCow.res.components.nodeeditor, {
@@ -389,6 +331,15 @@ $(function() {
 		//console.log(e.sender.id()+" geupdatet >>>", e.data.nodes[0].pos);
 	})
 	.target('#node-editor-1').run();
+
+	nodeeditor2 = jsCow.get(jsCow.res.components.nodeeditor, {
+		id: 'node-editor-2'
+	})
+	.on('editor.options.updated', function(e) {
+		//console.log("");
+		//console.log(e.sender.id()+" geupdatet >>>", e.data.nodes[0].pos);
+	})
+	.target('#node-editor-2').run();
 
 	/*
 	$('body').append('<button id="setOptions">Set Options</button>');
@@ -618,6 +569,315 @@ $(function() {
 		});
 	});
 	
+	$('body').append('<button id="addRepositoryRules">Add Repository - Rules</button>');
+	$('#addRepositoryRules').click(function() {
+		jsCow.find('node-editor-1').addNodesRepository({
+			group: 'rules',
+			title: 'Promotion Rules',
+			description: 'Repository of node types for promotion rules',
+			types: [
+				{
+					title: 'Node 1/1',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: [
+						{
+							"type": false,
+							"id": "out1",
+							"title": "Output Port 1",
+							"value": 1
+						}
+					]
+				},
+				{
+					title: 'Muh Node',
+					inputs: [],
+					outputs: [
+						{
+							"type": false,
+							"id": "out1",
+							"title": "Output Port 1",
+							"value": 1
+						}
+					]
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				}
+			]
+		});
+	});
+	
+	$('body').append('<button id="addRepositoryTest">Add Repository - Test</button>');
+	$('#addRepositoryTest').click(function() {
+		jsCow.find('node-editor-1').addNodesRepository({
+			group: 'test',
+			title: 'Test',
+			description: 'Test Group',
+			types: [
+				{
+					title: 'Node 1/1',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: [
+						{
+							"type": false,
+							"id": "out1",
+							"title": "Output Port 1",
+							"value": 1
+						}
+					]
+				},
+				{
+					title: 'Muh Node',
+					inputs: [],
+					outputs: [
+						{
+							"type": false,
+							"id": "out1",
+							"title": "Output Port 1",
+							"value": 1
+						}
+					]
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				}
+			]
+		});
+	});
+	
+
+
+	$('body').append('<button id="addRepository2">Add Repository - general (2)</button>');
+	$('#addRepository2').click(function() {
+		jsCow.find('node-editor-2').addNodesRepository({
+			group: 'general',
+			title: 'General Nodes',
+			description: 'General repository of node types.',
+			types: [
+				{
+					title: 'Node 1/1',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: [
+						{
+							"type": false,
+							"id": "out1",
+							"title": "Output Port 1",
+							"value": 1
+						}
+					]
+				},
+				{
+					title: 'Muh Node',
+					inputs: [],
+					outputs: [
+						{
+							"type": false,
+							"id": "out1",
+							"title": "Output Port 1",
+							"value": 1
+						}
+					]
+				},
+				{
+					title: 'Test Node',
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
+							"title": "Input Port 1",
+							"value": 1
+						}
+					],
+					outputs: []
+				}
+			]
+		});
+	});
+	
+
 	console.timeEnd('all');
 	console.log(jsCow.componentsObjectList.length, "components created...");
 	

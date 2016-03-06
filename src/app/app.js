@@ -324,7 +324,61 @@ $(function() {
 
 
 	nodeeditor1 = jsCow.get(jsCow.res.components.nodeeditor, {
-		id: 'node-editor-1'
+		id: 'node-editor-1',
+		model: {
+			repositories: [
+				{
+					group: 'muh',
+					title: 'Kuh Nodes',
+					description: 'General repository of node types.',
+					types: [
+						{
+							title: 'Node 1/1',
+							inputs: [
+								{
+									"type": false,
+									"id": "in1",
+									"title": "Input Port 1",
+									"value": 1
+								}
+							],
+							outputs: [
+								{
+									"type": false,
+									"id": "out1",
+									"title": "Output Port 1",
+									"value": 1
+								}
+							]
+						},
+						{
+							title: 'Muh Node',
+							inputs: [],
+							outputs: [
+								{
+									"type": false,
+									"id": "out1",
+									"title": "Output Port 1",
+									"value": 1
+								}
+							]
+						},
+						{
+							title: 'Test Node',
+							inputs: [
+								{
+									"type": false,
+									"id": "in1",
+									"title": "Input Port 1",
+									"value": 1
+								}
+							],
+							outputs: []
+						}
+					]
+				}
+			]
+		}
 	})
 	.on('editor.options.updated', function(e) {
 		//console.log("");

@@ -114,7 +114,8 @@ jsCow.res.model.nodeeditor = function() {
 		visible: true,
 		options: {
 			grid: 20,
-			snapToGrid: true
+			snapToGrid: true,
+			autosave: true
 		},
 		nodes: {},
 		connections: [],
@@ -282,6 +283,9 @@ jsCow.res.view.nodeeditor.prototype = {
 	    	};
 		})(this));
 
+		// Prerender the node seletion
+		this.trigger('editor.node.types.updated', this.cmp().config().repositories);
+		
 		// Trigger the view update event	
 		this.trigger("view.update", e.data);
 		
@@ -644,158 +648,14 @@ jsCow.res.view.nodeeditor.prototype = {
 				
 		}
 
-	},
+	}
 
 
 	/* ================================================================================
 	 * DEPRICATED - Render all node components
 	 * ================================================================================
 	 */
-	updateNodes: function(e) {
-		
-		var self = this;
-
-		$(this.cmp().children()).each((function(that) {
-			return function(i, c) {
-				c.del();
-			};
-		})(this));
-		
-		var nodesCount = e.data.options.nodes.length;		
-		var renderedNodes = 0;
-
-		$(e.data.options.nodes).each((function(that, e) {
-			return function(i, nodeOptions) {
-
-				nodeOptions.grid = e.data.options.grid;
-				nodeOptions.snapToGrid = e.data.options.snapToGrid;
-				nodeOptions.jsPlumbInstance = that.config.jsPlumbInstance;
-				
-				
-
-
-
-				// ========================= TEST ========================================================
-				
-				var main = $('<div/>').attr('id', self.cmp().id()+'-'+nodeOptions.id).addClass('jsc-node clearfix').css({
-					top: nodeOptions.pos.top, 
-					left: nodeOptions.pos.left
-				});
-				var content = $('<div/>').addClass('jsc-node-content clearfix').appendTo(main);
-				
-				var titlebar = $('<div/>').addClass('jsc-node-titlebar');
-				var title = $('<span/>').html(nodeOptions.title).appendTo( titlebar );
-				var remove = $('<i/>').addClass('jsc-node-remove fa fa-times').appendTo( titlebar );
-				main.prepend( titlebar );
-
-				var outputs = $('<div/>').addClass('jsc-node-outputs').appendTo(content);
-				var preview = $('<div/>').addClass('jsc-node-preview').appendTo(content);
-
-					// Standard Image Preview
-					var typePreviewImage = $('<div/>').appendTo(preview);
-						$('<img src="http://image.shutterstock.com/display_pic_with_logo/2904091/292004621/stock-photo--d-sphere-on-white-background-with-word-cloud-texture-imprint-this-ball-with-tag-cloud-text-are-in-292004621.jpg" alt="" />').appendTo(typePreviewImage);
-				
-				var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
-					
-					// Standard Input
-					var typeInput = $('<div/>').appendTo(config);
-						$('<input type="text" value="" />').appendTo(typeInput);
-
-					// Standard Dropdown
-					var typeSelect = $('<div/>').appendTo(config);
-						var typeSelectField = $('<select/>').appendTo(typeSelect);
-							typeSelectField.append("<option>Muh</option>");
-							typeSelectField.append("<option>Kuh</option>");
-					
-					// Standard Radio
-					var typeRadio = $('<div/>').appendTo(config);
-						var typeRadioLabel = $('<label/>').appendTo(typeRadio);
-							$('<input type="radio" name="test" value="1" />').appendTo(typeRadioLabel);
-							$('<span/>').text("Aktiv").appendTo(typeRadioLabel);
-					
-					// Standard Checkbo
-					var typeChekbox = $('<div/>').appendTo(config);
-						var typeChekboxLabel = $('<label/>').appendTo(typeChekbox);
-						$('<input type="checkbox" name="test1" value="1" />').appendTo(typeChekboxLabel);
-						$('<span/>').text("Aktiv").appendTo(typeChekboxLabel);
-
-				var inputs = $('<div/>').addClass('jsc-node-inputs').appendTo(content);
-
-				$.each(nodeOptions.outputs, function(i, output) {
-
-					var port = $('<div/>')
-						.addClass('jsc-node-port jsc-node-port-out')
-						.attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+output.id);
-					$('<div/>').appendTo(port).append(
-						$('<span/>').text(output.title)
-					);
-					
-					outputs.append(port);
-					
-				});
-				
-				$.each(nodeOptions.inputs, function(i, input) {
-
-					var port = $('<div/>')
-						.addClass('jsc-node-port jsc-node-port-in')
-						.attr("id", self.cmp().id()+'-'+nodeOptions.id+'-'+input.id);
-					$('<div/>').appendTo(port).append(
-						$('<span/>').text(input.title)
-					);
-					
-					inputs.append(port);
-					
-				});
-				
-
-				that.dom.content.append(main);
-
-				self.config.jsPlumbInstance.draggable(self.cmp().id()+'-'+nodeOptions.id, {
-					grid:[nodeOptions.grid, nodeOptions.grid]
-				});
-				
-
-				// end ========================= TEST ========================================================
-
-
-
-
-
-				/*
-				that.cmp().append(
-					jsCow.get(jsCow.res.components.node, {
-						id: that.cmp().id() + "-" + nodeOptions.id,
-						model: nodeOptions
-					}).on('updated', function(e) {
-						that.trigger('node.updated', e.data);
-					}).on('removed', function(e) {
-						that.trigger('node.removed');
-					}).on('view.ready', function(e) {
-						
-						renderedNodes++;
-						
-						if (renderedNodes === nodesCount) {
-							
-							
-						}
-
-					})
-				);
-				*/
-
-			};
-		})(this, e)).promise().done(function() {
-			
-			// Update content size
-			self.trigger('update.content.size');
-
-			// Update visual connectors
-			self.trigger('update.connectors');
-
-		});
-
-	},
-
+	/*
 	updateContentSize: function(e) {
 		
 		this.config.contentSize.width = this.dom.main.outerWidth(true);
@@ -887,6 +747,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		}
 
 	}
+	*/
 
 };
 
@@ -903,6 +764,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 		this.on('connection.add', this.addConnection);
 		this.on('connection.remove', this.removeConnection);
 		this.on('editor.repository.add', this.addNodesRepository);
+		this.on('editor.ausosave', this.autosave);
 
 	},
 	
@@ -920,7 +782,13 @@ jsCow.res.controller.nodeeditor.prototype = {
 		});
 
 		// Render all nodes
-		this.trigger("editor.options.updated", e.data.options);
+		//this.trigger("editor.options.updated", e.data.options);
+		
+	},
+	
+	autosave: function(e) {
+		
+		this.trigger("editor.options.updated", this.cmp().config());
 		
 	},
 	

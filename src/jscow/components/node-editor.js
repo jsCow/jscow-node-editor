@@ -256,7 +256,9 @@ jsCow.res.view.nodeeditor.prototype = {
 			return function(e) {
 	    		
 		        // Enter
-		        if (e.keyCode === 13) {
+		        console.log(e.keyCode);
+
+		        if (e.keyCode === 27) {
 		            self.dom.nodeselector.fadeOut();
 		        }else if (e.keyCode === 40) {
 		        	self.dom.nodeselector.find('div[data-keyboard-focus]:visible').eq(0).focus();
@@ -558,6 +560,12 @@ jsCow.res.view.nodeeditor.prototype = {
 		
 		this.dom.nodeselectorresults.find('*').remove();
 
+		var typeHoverHandler = function(self, type) {
+			return function (e) {
+		        this.focus();
+		    };
+		};
+
 		var typeClickHandler = function(self, type) {
 			return function () {
 		        
@@ -568,6 +576,7 @@ jsCow.res.view.nodeeditor.prototype = {
 				};
 
 				self.cmp().addNode(type);
+	        	//self.dom.nodeselector.fadeOut();
 
 		    };
 		};
@@ -582,18 +591,14 @@ jsCow.res.view.nodeeditor.prototype = {
 
 	        	// Escape
 		        if (e.keyCode === 27) {
-		            self.dom.nodeselector.fadeOut();
+		        	self.dom.nodeselector.fadeOut();
 		        }
 
 	            if(e.which === 38) { // up
 					
-					console.clear();
-	                currentFocusElement = $(':focus');
-	                console.log(currentFocusElement);
+					currentFocusElement = $(':focus');
 	                currentFocusGroupItems = currentFocusElement.closest('[data-keyboard-focus-group]').find('[data-keyboard-focus]:visible');
-	                console.log(currentFocusGroupItems);
 	                prevIndex = ( currentFocusGroupItems.index(currentFocusElement) - 1 );
-	                console.log(prevIndex);
 	                
 	                if (prevIndex < 0) { 
 	                	self.dom.nodeselectorinput.focus();
@@ -604,16 +609,9 @@ jsCow.res.view.nodeeditor.prototype = {
 	            }
 	            if(e.which === 40) { // down
 					
-					console.clear();
-	                
-	                currentFocusElement = $(':focus');
-	                console.log("Current Focus", Math.floor((1 + Math.random()) * 0x10000), currentFocusElement[0]);
+					currentFocusElement = $(':focus');
 	                currentFocusGroupItems = currentFocusElement.closest('[data-keyboard-focus-group]').find('[data-keyboard-focus]:visible');
-	                console.log("Items", currentFocusGroupItems);
-	                
 	                nextIndex = ( currentFocusGroupItems.index(currentFocusElement) + 1 );
-	                console.log("Next", nextIndex, $(currentFocusGroupItems).eq(nextIndex)[0] );
-
 	                $(currentFocusGroupItems).eq(nextIndex).focus();
 
 	            }
@@ -637,6 +635,7 @@ jsCow.res.view.nodeeditor.prototype = {
 				typeButton
 					.on('click', typeClickHandler(this, type))
 					.on('keyup', typeKeyHandler(this, type))
+					.on('mouseover', typeHoverHandler(this, type))
 					.appendTo(item);
 			}
 			this.dom.nodeselectorresults.append(item);

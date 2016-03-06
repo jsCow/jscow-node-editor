@@ -169,10 +169,16 @@ jsCow.res.view.nodeeditor = function() {
 		})(this))
 		.appendTo(this.dom.grid);
 
-	this.dom.nodeselector = $('<div/>').addClass('jsc-nodeeditor-nodeselector').hide().appendTo(this.dom.main);
+	this.dom.nodeselector = $('<div/>')
+		.addClass('jsc-nodeeditor-nodeselector')
+		.attr('data-keyboard-focus-group', '')
+		.hide()
+		.appendTo(this.dom.main);
 	this.dom.nodeselectorinputcontainer = $('<div/>').addClass('jsc-nodeeditor-nodeselectorinputcontainer').appendTo(this.dom.nodeselector);
-	this.dom.nodeselectorinput = $('<input type="text" value="" placeholder="Search..." />').appendTo(this.dom.nodeselectorinputcontainer);
-	this.dom.nodeselectorresults = $('<ul/>').attr('data-keyboard-focus-group', '').appendTo(this.dom.nodeselector);
+	this.dom.nodeselectorinput = $('<input type="text" value="" placeholder="Search..." />')
+		.attr('data-keyboard-focus', '')
+		.appendTo(this.dom.nodeselectorinputcontainer);
+	this.dom.nodeselectorresults = $('<ul/>').appendTo(this.dom.nodeselector);
 	
 };
 jsCow.res.view.nodeeditor.prototype = {
@@ -252,11 +258,9 @@ jsCow.res.view.nodeeditor.prototype = {
 		        // Enter
 		        if (e.keyCode === 13) {
 		            self.dom.nodeselector.fadeOut();
-		        }
-
-				// Write
-		        if (e.keyCode !== 13 && e.keyCode !== 40) {
-
+		        }else if (e.keyCode === 40) {
+		        	self.dom.nodeselector.find('div[data-keyboard-focus]:visible').eq(0).focus();
+		        }else{
 					var searchString = self.dom.nodeselectorinput.val();
 
 		        	if (searchString !== '') {
@@ -270,56 +274,12 @@ jsCow.res.view.nodeeditor.prototype = {
 		        	}else{
 		        		self.dom.nodeselectorresults.find('div').show();
 		        	}
-					
+						
 		        }
 				
-				// Down
-		        if (e.keyCode === 40) {
-
-           			self.dom.nodeselectorresults.find('div:visible').eq(0).focus();
-					
-		        }
-
 	    	};
 		})(this));
 
-		// General key up/down handler for arrows
-        $(document).on('keydown', function(e){
-        	var currentFocusElement,
-        		currentFocusGroupItems,
-        		prevIndex,
-        		nextIndex;
-
-        	// Escape
-	        if (e.keyCode === 27) {
-	            self.dom.nodeselector.fadeOut();
-	        }
-
-            if(e.which === 38) { // up
-                currentFocusElement = $(':focus');
-                currentFocusGroupItems = currentFocusElement.closest('[data-keyboard-focus-group]').find('[data-keyboard-focus]:visible');
-                prevIndex = ( currentFocusGroupItems.index(currentFocusElement) - 1);
-                if (prevIndex < 0) { 
-                	prevIndex = 0; 
-                	self.dom.nodeselectorinput.focus();
-                }else{
-                	$(currentFocusGroupItems).eq(prevIndex).focus();
-                }
-                
-            }
-            if(e.which === 40) { // down
-                currentFocusElement = $(':focus');
-                currentFocusGroupItems = currentFocusElement.closest('[data-keyboard-focus-group]').find('[data-keyboard-focus]:visible');
-                nextIndex = ( currentFocusGroupItems.index(currentFocusElement) + 1);
-                
-                $(currentFocusGroupItems).eq(nextIndex).focus();
-            }
-        }).keyup(function(e){
-            if(e.which === 13) { // enter
-                $(':focus').click();
-            }
-        });
-        
 		// Trigger the view update event	
 		this.trigger("view.update", e.data);
 		
@@ -612,6 +572,59 @@ jsCow.res.view.nodeeditor.prototype = {
 		    };
 		};
 
+		var typeKeyHandler = function(self, type) {
+			return function (e) {
+
+	        	var currentFocusElement,
+	        		currentFocusGroupItems,
+	        		prevIndex,
+	        		nextIndex;
+
+	        	// Escape
+		        if (e.keyCode === 27) {
+		            self.dom.nodeselector.fadeOut();
+		        }
+
+	            if(e.which === 38) { // up
+					
+					console.clear();
+	                currentFocusElement = $(':focus');
+	                console.log(currentFocusElement);
+	                currentFocusGroupItems = currentFocusElement.closest('[data-keyboard-focus-group]').find('[data-keyboard-focus]:visible');
+	                console.log(currentFocusGroupItems);
+	                prevIndex = ( currentFocusGroupItems.index(currentFocusElement) - 1 );
+	                console.log(prevIndex);
+	                
+	                if (prevIndex < 0) { 
+	                	self.dom.nodeselectorinput.focus();
+	                }else{
+	                	$(currentFocusGroupItems).eq(prevIndex).focus();
+	                }
+					
+	            }
+	            if(e.which === 40) { // down
+					
+					console.clear();
+	                
+	                currentFocusElement = $(':focus');
+	                console.log("Current Focus", Math.floor((1 + Math.random()) * 0x10000), currentFocusElement[0]);
+	                currentFocusGroupItems = currentFocusElement.closest('[data-keyboard-focus-group]').find('[data-keyboard-focus]:visible');
+	                console.log("Items", currentFocusGroupItems);
+	                
+	                nextIndex = ( currentFocusGroupItems.index(currentFocusElement) + 1 );
+	                console.log("Next", nextIndex, $(currentFocusGroupItems).eq(nextIndex)[0] );
+
+	                $(currentFocusGroupItems).eq(nextIndex).focus();
+
+	            }
+	        
+	            if(e.which === 13) { // enter
+	                $(':focus').click();
+	            }
+	        	
+		    };
+		};
+
 		for (var key in nodeTypeGroups) {
 			
 			this.dom.nodeselectorresults.append('<li class="jsc-nodeeditor-nodegroup">'+nodeTypeGroups[key].title+'</li>');
@@ -621,7 +634,10 @@ jsCow.res.view.nodeeditor.prototype = {
 			for(var t=0; t < nodeTypeGroups[key].types.length; t++) {
 				var type = nodeTypeGroups[key].types[t];
 				var typeButton = $('<div>'+type.title+'</div>').attr('data-keyboard-focus', '').attr('tabindex', '-1');
-				typeButton.on('click', typeClickHandler(this, type)).appendTo(item);
+				typeButton
+					.on('click', typeClickHandler(this, type))
+					.on('keyup', typeKeyHandler(this, type))
+					.appendTo(item);
 			}
 			this.dom.nodeselectorresults.append(item);
 

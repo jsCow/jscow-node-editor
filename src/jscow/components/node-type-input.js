@@ -32,15 +32,34 @@ jsCow.res.model.nodetypeinput.prototype = {
 jsCow.res.view.nodetypeinput = function() {
 	
 	this.dom = {};
-	this.dom.main = $('<input type="text" value="" />').addClass('jsc-node-type-input clearfix');
-	this.dom.content = $('<input type="text" value="" />').addClass('jsc-node-type-input-content clearfix').appendTo(this.dom.main);
+	this.dom.main = $('<div/>')
+		.addClass('jsc-node-type-input clearfix');
+	this.dom.content = $('<input type="text" value="" />')
+		.addClass('jsc-node-type-input-content clearfix')
+		.appendTo(this.dom.main);
 	
 };
 jsCow.res.view.nodetypeinput.prototype = {
 	
 	init: function(e) {
+		var self = this;
 
-		// ...
+		this.dom.content
+			.on('click', function(e) {
+				
+				e.stopPropagation();
+				e.preventDefault();
+
+			}).on('change', function(e) {
+
+				var value = {
+					value: self.dom.content.val()
+				};
+
+				self.cmp().config(value);
+				self.trigger('node.port.changed', value);
+
+			});
 
 		this.trigger("view.update", e.data);
 		

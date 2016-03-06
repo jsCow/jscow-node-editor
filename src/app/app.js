@@ -469,21 +469,18 @@ $(function() {
 						"value": 1
 					},
 					{
-						"type": {
-							component: 'jsCow.res.components.nodetypeinput'
-						},
+						"type": "jsCow.res.components.nodetypeinput",
 						"id": "in2",
 						"value": 1
 					}
 				],
 				outputs: [
 					{
-						"type": {
-							component: 'jsCow.res.components.nodetypeinput'
-						},
+						"type": "jsCow.res.components.nodetypeinput",
 						"id": "out1",
 						"title": "Output Port 1",
-						"value": 1
+						"value": 1,
+						"placeholder": "321"
 					},
 					{
 						"type": false,

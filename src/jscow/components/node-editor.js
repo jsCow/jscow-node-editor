@@ -399,7 +399,20 @@ jsCow.res.view.nodeeditor.prototype = {
 			
 			// Create all configuration components
 			if (output.type) {
-				jsCow.get(jsCow.res.components.nodetypeinput).target(portContent).run();
+				console.log(output.type, window[output.type]);
+				jsCow.get(jsCow.res.components.nodetypeinput)
+					.on('node.port.changed', function(e) {
+						
+						var ports = self.cmp().config().nodes[nodeOptions.id].outputs;
+						for (var p=0; p < ports.length; p++) {
+							if (output.id === ports[p].id) {
+								self.cmp().config().nodes[nodeOptions.id].outputs[p].value = e.data.value;
+							}
+						}
+
+					})
+					.target(portContent)
+					.run();
 			}
 
 			outputs.append(port);
@@ -431,7 +444,19 @@ jsCow.res.view.nodeeditor.prototype = {
 			
 			// Create all configuration components
 			if (input.type) {
-				jsCow.get(jsCow.res.components.nodetypeinput).target(portContent).run();
+				jsCow.get(jsCow.res.components.nodetypeinput)
+					.on('node.port.changed', function(e) {
+						
+						var ports = self.cmp().config().nodes[nodeOptions.id].inputs;
+						for (var p=0; p < ports.length; p++) {
+							if (input.id === ports[p].id) {
+								self.cmp().config().nodes[nodeOptions.id].inputs[p].value = e.data.value;
+							}
+						}
+
+					})
+					.target(portContent)
+					.run();
 			}
 
 			inputs.append(port);

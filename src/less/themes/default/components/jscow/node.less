@@ -79,10 +79,43 @@
 				padding: 0 @space-default;
 				white-space: nowrap;
 				.clearfix();
+
+				span {
+					display: block;
+				}
+
+				* ~ * {
+					margin-top: @space-default / 2;
+				}
+
+				input[type="text"],
+				select {
+					width: 100%;
+					background: darken(@base-color, 10%);
+					.border-all(1px, solid, darken(@base-color, 15%));
+					.round-corner-all(@space-default / 2);
+					padding: @space-default / 2;
+					font-size: 1.1em;
+					font-weight: 400;
+				}
+
+				label {
+					margin: 0; 
+
+					input[type="radio"],
+					input[type="checkbox"] {
+						margin: 0 @space-default / 2;
+						top: 2px;
+						position: relative;
+					}
+
+				}
+				
 			}
 			
 			&.jsc-node-port-in {
 				.border-left(3px, solid, darken(@base-color, (@color-offset-default * 1))); 
+				padding-right: 3px;
 
 				&:hover {
 					background: lighten(@bg, 5%);
@@ -96,7 +129,8 @@
 
 			&.jsc-node-port-out {
 				.border-right(3px, solid, darken(@base-color, (@color-offset-default * 1)));
-				
+				padding-left: 3px;
+
 				&:hover {
 					background: lighten(@bg, 5%);
 					background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, lighten(@bg, 5%) 100%);

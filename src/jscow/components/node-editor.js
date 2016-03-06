@@ -285,7 +285,7 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		// Prerender the node seletion
 		this.trigger('editor.node.types.updated', this.cmp().config().repositories);
-		
+
 		// Trigger the view update event	
 		this.trigger("view.update", e.data);
 		
@@ -351,7 +351,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		var preview = $('<div/>').addClass('jsc-node-preview').appendTo(content);
 
 		// Standard Image Preview
-		var typePreviewImage = $('<div/>').appendTo(preview);
+		//var typePreviewImage = $('<div/>').appendTo(preview);
 			//$('<img src="http://image.shutterstock.com/display_pic_with_logo/2904091/292004621/stock-photo--d-sphere-on-white-background-with-word-cloud-texture-imprint-this-ball-with-tag-cloud-text-are-in-292004621.jpg" alt="" />').appendTo(typePreviewImage);
 
 		/*
@@ -390,10 +390,18 @@ jsCow.res.view.nodeeditor.prototype = {
 			var port = $('<div/>')
 				.addClass('jsc-node-port jsc-node-port-out')
 				.attr("id", id);
-			$('<div/>').appendTo(port).append(
-				$('<span/>').text(output.title)
-			);
+			var portContent = $('<div/>').appendTo(port);
+			if (output.title) {
+				portContent.append(
+					$('<span/>').text(output.title)
+				);
+			}
 			
+			// Create all configuration components
+			if (output.type) {
+				jsCow.get(jsCow.res.components.nodetypeinput).target(portContent).run();
+			}
+
 			outputs.append(port);
 
 			window.setTimeout(function() {
@@ -414,10 +422,18 @@ jsCow.res.view.nodeeditor.prototype = {
 			var port = $('<div/>')
 				.addClass('jsc-node-port jsc-node-port-in')
 				.attr("id", id);
-			$('<div/>').appendTo(port).append(
-				$('<span/>').text(input.title)
-			);
+			var portContent = $('<div/>').appendTo(port);
+			if (input.title) {
+				portContent.append(
+					$('<span/>').text(input.title)
+				);
+			}
 			
+			// Create all configuration components
+			if (input.type) {
+				jsCow.get(jsCow.res.components.nodetypeinput).target(portContent).run();
+			}
+
 			inputs.append(port);
 
 			window.setTimeout(function() {

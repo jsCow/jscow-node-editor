@@ -469,15 +469,18 @@ $(function() {
 						"value": 1
 					},
 					{
-						"type": false,
+						"type": {
+							component: 'jsCow.res.components.nodetypeinput'
+						},
 						"id": "in2",
-						"title": "Input Port 2",
 						"value": 1
 					}
 				],
 				outputs: [
 					{
-						"type": false,
+						"type": {
+							component: 'jsCow.res.components.nodetypeinput'
+						},
 						"id": "out1",
 						"title": "Output Port 1",
 						"value": 1

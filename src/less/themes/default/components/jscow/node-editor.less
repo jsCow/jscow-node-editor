@@ -116,45 +116,13 @@
 		height: 100%;
 		overflow: hidden;
 		.layout-default();
-		/*
-		background: darken(@base-color, (@color-offset-default * 1)) url(http://www.pixeden.com/media/k2/galleries/220/006-wood-melamine-	*/
-		background: darken(@base-color, (@color-offset-default * 1)) url(http://www.designbolts.com/wp-content/uploads/2012/11/Dark-textured-pattern-for-backgrounds.jpg);
+		background: darken(@base-color, (@color-offset-default * 1)) url(less/themes/default/img/node-editor-background.jpg);
 	}
 
 	.jsc-nodeeditor-content {
 		position: relative;
 		width: 100%;
 		height: 100%;
-		/*
-		svg {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%; 
-			height: 100%;
-
-			.jsc-nodeeditor-grid-x,
-			.jsc-nodeeditor-grid-y {
-				stroke: darken(@base-color, 13%);
-				stroke-width: 1px;
-
-				&:nth-child(5n+0) {
-					stroke: darken(@base-color, 20%);
-				}
-			}
-			
-			.jsc-nodeeditor-connector-group {
-				z-index: 1;
-				.jsc-nodeeditor-connector {
-					stroke: lighten(@base-color, (@color-offset-default * 3));
-					stroke-width: 5px;
-					fill: none;
-					stroke-linecap: round;
-				}
-			}
-
-		}
-		*/
 		
 		svg.jsplumb-connector {
 			.opacity(0.70);

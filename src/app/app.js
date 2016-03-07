@@ -380,21 +380,22 @@ $(function() {
 			]
 		}
 	})
-	.on('editor.options.updated', function(e) {
-		//console.log("");
-		//console.log(e.sender.id()+" geupdatet >>>", e.data.nodes[0].pos);
-	})
-	.target('#node-editor-1').run();
+	.on('editor.options.changed', function(e) {
+		console.log("");
+		console.log(e.sender.id()+" >>> changed >>>", e.data);
+	}).target('#node-editor-1').run();
 
 	nodeeditor2 = jsCow.get(jsCow.res.components.nodeeditor, {
 		id: 'node-editor-2'
 	})
-	.on('editor.options.updated', function(e) {
-		//console.log("");
-		//console.log(e.sender.id()+" geupdatet >>>", e.data.nodes[0].pos);
-	})
-	.target('#node-editor-2').run();
+	.on('editor.options.changed', function(e) {
+		console.log("");
+		console.log(e.sender.id()+" >>> changed >>>", e.data);
+	}).target('#node-editor-2').run();
 
+
+
+	
 	/*
 	$('body').append('<button id="setOptions">Set Options</button>');
 	$('#setOptions').click(function() {

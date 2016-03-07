@@ -10,7 +10,7 @@ jsCow.res.components.nodeeditor.prototype = {
 		
 		return this;
 	},
-
+	/*
 	options: function(options) {
 
 		if (typeof options !== 'undefined' && typeof options === 'object') {
@@ -22,7 +22,7 @@ jsCow.res.components.nodeeditor.prototype = {
 		return this;
 
 	},
-
+	*/
 	addNode: function(options) {
 
 		var list = [];
@@ -357,10 +357,6 @@ jsCow.res.view.nodeeditor.prototype = {
 		/*
 		var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
 			
-			// Standard Input
-			var typeInput = $('<div/>').appendTo(config);
-				$('<input type="text" value="" />').appendTo(typeInput);
-
 			// Standard Dropdown
 			var typeSelect = $('<div/>').appendTo(config);
 				var typeSelectField = $('<select/>').appendTo(typeSelect);
@@ -399,7 +395,6 @@ jsCow.res.view.nodeeditor.prototype = {
 			
 			// Create all configuration components
 			if (output.type) {
-				console.log(output.type, window[output.type]);
 				jsCow.get(jsCow.res.components.nodetypeinput)
 					.on('node.port.changed', function(e) {
 						
@@ -407,6 +402,7 @@ jsCow.res.view.nodeeditor.prototype = {
 						for (var p=0; p < ports.length; p++) {
 							if (output.id === ports[p].id) {
 								self.cmp().config().nodes[nodeOptions.id].outputs[p].value = e.data.value;
+								self.trigger('editor.save');
 							}
 						}
 
@@ -444,6 +440,23 @@ jsCow.res.view.nodeeditor.prototype = {
 			
 			// Create all configuration components
 			if (input.type) {
+				console.log(input);
+
+				var getCmp = function(type, level) {
+					
+					if (!level) { level = 0; }
+					var variable = type.split('.');
+					
+					console.log(variable[level]);
+
+					if (typeof window[variable[level]]) {
+						console.log( window[variable[level]] );
+						//return getCmp(type, level++);
+					}
+
+				};
+				console.log(">>>", getCmp(input.type));
+
 				jsCow.get(jsCow.res.components.nodetypeinput)
 					.on('node.port.changed', function(e) {
 						
@@ -451,6 +464,7 @@ jsCow.res.view.nodeeditor.prototype = {
 						for (var p=0; p < ports.length; p++) {
 							if (input.id === ports[p].id) {
 								self.cmp().config().nodes[nodeOptions.id].inputs[p].value = e.data.value;
+								self.trigger('editor.save');
 							}
 						}
 
@@ -799,13 +813,13 @@ jsCow.res.controller.nodeeditor.prototype = {
 	
 	init: function() {
 		this.on("model.ready", this.isModelReady);
-		this.on("options", this.options);
+		//this.on("options", this.options);
 		this.on('nodes.add', this.addNode);
 		this.on('node.remove', this.nodeRemove);
 		this.on('connection.add', this.addConnection);
 		this.on('connection.remove', this.removeConnection);
 		this.on('editor.repository.add', this.addNodesRepository);
-		this.on('editor.ausosave', this.autosave);
+		this.on('editor.save', this.editorOptionsChanged);
 
 	},
 	
@@ -815,7 +829,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 			this.cmp().config()
 		);
 	},
-	
+	/*
 	options: function(e) {
 		
 		this.cmp().config({
@@ -823,13 +837,13 @@ jsCow.res.controller.nodeeditor.prototype = {
 		});
 
 		// Render all nodes
-		//this.trigger("editor.options.updated", e.data.options);
+		//this.trigger("editor.options.changed", e.data.options);
 		
 	},
-	
-	autosave: function(e) {
+	*/
+	editorOptionsChanged: function(e) {
 		
-		this.trigger("editor.options.updated", this.cmp().config());
+		this.trigger("editor.options.changed", this.cmp().config());
 		
 	},
 	

@@ -440,24 +440,7 @@ jsCow.res.view.nodeeditor.prototype = {
 			
 			// Create all configuration components
 			if (input.type) {
-				console.log(input);
-
-				var getCmp = function(type, level) {
-					
-					if (!level) { level = 0; }
-					var variable = type.split('.');
-					
-					console.log(variable[level]);
-
-					if (typeof window[variable[level]]) {
-						console.log( window[variable[level]] );
-						//return getCmp(type, level++);
-					}
-
-				};
-				console.log(">>>", getCmp(input.type));
-
-				jsCow.get(jsCow.res.components.nodetypeinput)
+				jsCow.get(input.type)
 					.on('node.port.changed', function(e) {
 						
 						var ports = self.cmp().config().nodes[nodeOptions.id].inputs;
@@ -490,7 +473,14 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.dom.content.append(main);
 
 		this.config.jsPlumbInstance.draggable(this.cmp().id()+'-'+nodeOptions.id, {
-			grid:[nodeOptions.grid, nodeOptions.grid]
+			grid:[nodeOptions.grid, nodeOptions.grid],
+			stop: function(e) {
+				self.cmp().config().nodes[nodeOptions.id].pos = {
+					left: e.pos[0],
+					top: e.pos[1]
+				};
+				self.trigger('editor.save');
+			}
 		});
 
 		// end ===== Node Structure =====

@@ -36,7 +36,8 @@ jsCow.res.view.nodetypeinput = function() {
 	this.dom.main = $('<label/>')
 		.addClass('jsc-node-type-input');
 	this.dom.title = $('<div/>')
-		.addClass('jsc-node-type-input-title');
+		.addClass('jsc-node-type-input-title')
+		.appendTo(this.dom.main);
 	this.dom.content = $('<input type="text" value="" />')
 		.addClass('jsc-node-type-input-content')
 		.appendTo(this.dom.main);
@@ -74,6 +75,7 @@ jsCow.res.view.nodetypeinput.prototype = {
 			
 			this.dom.main.removeClass('jsc-node-type-input-disabled').addClass('jsc-node-type-input');
 			
+			console.log(e.data);
 			if (e.data.title) {
 				this.dom.title.html(e.data.title);
 			}

@@ -359,10 +359,11 @@ jsCow.res.view.nodeeditor.prototype = {
 			var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
 
 			for (var c=0; c < nodeOptions.config.length; c++) {
-				
+				console.log(nodeOptions.config[c]);
 				jsCow.get(nodeOptions.config[c].type, {
 					model: {
-						value: nodeOptions.config[c].value
+						value: nodeOptions.config[c].value,
+						title: nodeOptions.config[c].title
 					}
 				}).on('node.config.changed', function(e) {
 			

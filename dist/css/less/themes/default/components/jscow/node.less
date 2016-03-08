@@ -94,7 +94,7 @@
 
 				input[type="text"],
 				select {
-					width: 100%;
+					width: 80%;
 					background: darken(@base-color, 10%);
 					.border-all(1px, solid, darken(@base-color, 15%));
 					.round-corner-all(@space-default / 2 / 2);
@@ -120,8 +120,7 @@
 			
 			&.jsc-node-port-in {
 				.border-left(3px, solid, darken(@base-color, (@color-offset-default * 1))); 
-				padding-right: 3px;
-
+				
 				&:hover {
 					background: lighten(@bg, 5%);
 					background: -moz-linear-gradient(left, lighten(@bg, 5%) 0%, darken(@bg, (@color-offset-default * 1)) 100%);
@@ -134,8 +133,7 @@
 
 			&.jsc-node-port-out {
 				.border-right(3px, solid, darken(@base-color, (@color-offset-default * 1)));
-				padding-left: 3px;
-
+				
 				&:hover {
 					background: lighten(@bg, 5%);
 					background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, lighten(@bg, 5%) 100%);

@@ -358,19 +358,20 @@ jsCow.res.view.nodeeditor.prototype = {
 		if (nodeOptions.config) {
 			var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
 
+			var onNodeConfigChanged = function() {
+				console.log(e.data);
+				//self.cmp().config().nodes[nodeOptions.id].outputs[p].value = e.data.value;
+				//self.trigger('editor.save');
+			};
+
 			for (var c=0; c < nodeOptions.config.length; c++) {
-				console.log(nodeOptions.config[c]);
+				//console.log(nodeOptions.config[c]);
 				jsCow.get(nodeOptions.config[c].type, {
 					model: {
 						value: nodeOptions.config[c].value,
 						title: nodeOptions.config[c].title
 					}
-				}).on('node.config.changed', function(e) {
-			
-					//self.cmp().config().nodes[nodeOptions.id].outputs[p].value = e.data.value;
-					//self.trigger('editor.save');
-
-				}).target(config).run();
+				}).on('node.config.changed', onNodeConfigChanged).target(config).run();
 				
 			}
 			

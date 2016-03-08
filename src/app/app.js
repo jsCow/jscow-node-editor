@@ -480,6 +480,7 @@ $(function() {
 					{
 						"type": "jsCow.res.components.nodetypeinput",
 						"id": "in2",
+						"title": "Input Port 2",
 						"value": 1
 					}
 				],

@@ -17,7 +17,8 @@ jsCow.res.model.nodetypeinput = function() {
 	
 	this.data = {
 		enabled: true,
-		visible: true
+		visible: true,
+		value: null
 	};
 	
 };
@@ -32,10 +33,12 @@ jsCow.res.model.nodetypeinput.prototype = {
 jsCow.res.view.nodetypeinput = function() {
 	
 	this.dom = {};
-	this.dom.main = $('<div/>')
-		.addClass('jsc-node-type-input clearfix');
+	this.dom.main = $('<label/>')
+		.addClass('jsc-node-type-input');
+	this.dom.title = $('<div/>')
+		.addClass('jsc-node-type-input-title');
 	this.dom.content = $('<input type="text" value="" />')
-		.addClass('jsc-node-type-input-content clearfix')
+		.addClass('jsc-node-type-input-content')
 		.appendTo(this.dom.main);
 	
 };
@@ -57,7 +60,7 @@ jsCow.res.view.nodetypeinput.prototype = {
 				};
 
 				self.cmp().config(value);
-				self.trigger('node.port.changed', value);
+				self.trigger('node.config.changed', value);
 
 			});
 
@@ -71,6 +74,10 @@ jsCow.res.view.nodetypeinput.prototype = {
 			
 			this.dom.main.removeClass('jsc-node-type-input-disabled').addClass('jsc-node-type-input');
 			
+			if (e.data.title) {
+				this.dom.title.html(e.data.title);
+			}
+
 			if (e.data.visible) {
 				this.dom.main.show();
 			}else{

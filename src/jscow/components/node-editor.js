@@ -354,28 +354,48 @@ jsCow.res.view.nodeeditor.prototype = {
 		//var typePreviewImage = $('<div/>').appendTo(preview);
 			//$('<img src="http://image.shutterstock.com/display_pic_with_logo/2904091/292004621/stock-photo--d-sphere-on-white-background-with-word-cloud-texture-imprint-this-ball-with-tag-cloud-text-are-in-292004621.jpg" alt="" />').appendTo(typePreviewImage);
 
-		/*
-		var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
+		// Create all node configuration components
+		if (nodeOptions.config) {
+			var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
+
+			for (var c=0; c < nodeOptions.config.length; c++) {
+				
+				jsCow.get(nodeOptions.config[c].type, {
+					model: {
+						value: nodeOptions.config[c].value
+					}
+				}).on('node.config.changed', function(e) {
 			
-			// Standard Dropdown
-			var typeSelect = $('<div/>').appendTo(config);
-				var typeSelectField = $('<select/>').appendTo(typeSelect);
-					typeSelectField.append("<option>Muh</option>");
-					typeSelectField.append("<option>Kuh</option>");
+					//self.cmp().config().nodes[nodeOptions.id].outputs[p].value = e.data.value;
+					//self.trigger('editor.save');
+
+				}).target(config).run();
+				
+			}
 			
-			// Standard Radio
-			var typeRadio = $('<div/>').appendTo(config);
-				var typeRadioLabel = $('<label/>').appendTo(typeRadio);
-					$('<input type="radio" name="test" value="1" />').appendTo(typeRadioLabel);
-					$('<span/>').text("Aktiv").appendTo(typeRadioLabel);
+			/*
+				
+				// Standard Dropdown
+				var typeSelect = $('<div/>').appendTo(config);
+					var typeSelectField = $('<select/>').appendTo(typeSelect);
+						typeSelectField.append("<option>Muh</option>");
+						typeSelectField.append("<option>Kuh</option>");
+				
+				// Standard Radio
+				var typeRadio = $('<div/>').appendTo(config);
+					var typeRadioLabel = $('<label/>').appendTo(typeRadio);
+						$('<input type="radio" name="test" value="1" />').appendTo(typeRadioLabel);
+						$('<span/>').text("Aktiv").appendTo(typeRadioLabel);
+				
+				// Standard Checkbo
+				var typeChekbox = $('<div/>').appendTo(config);
+					var typeChekboxLabel = $('<label/>').appendTo(typeChekbox);
+					$('<input type="checkbox" name="test1" value="1" />').appendTo(typeChekboxLabel);
+					$('<span/>').text("Aktiv").appendTo(typeChekboxLabel);
 			
-			// Standard Checkbo
-			var typeChekbox = $('<div/>').appendTo(config);
-				var typeChekboxLabel = $('<label/>').appendTo(typeChekbox);
-				$('<input type="checkbox" name="test1" value="1" />').appendTo(typeChekboxLabel);
-				$('<span/>').text("Aktiv").appendTo(typeChekboxLabel);
-		
-		*/
+			*/
+
+		}
 
 
 		var inputs = $('<div/>').addClass('jsc-node-inputs').appendTo(content);
@@ -395,7 +415,11 @@ jsCow.res.view.nodeeditor.prototype = {
 			
 			// Create all configuration components
 			if (output.type) {
-				jsCow.get(jsCow.res.components.nodetypeinput)
+				jsCow.get(output.type, {
+					model: {
+						value: output.value
+					}
+				})
 					.on('node.port.changed', function(e) {
 						
 						var ports = self.cmp().config().nodes[nodeOptions.id].outputs;
@@ -440,7 +464,11 @@ jsCow.res.view.nodeeditor.prototype = {
 			
 			// Create all configuration components
 			if (input.type) {
-				jsCow.get(input.type)
+				jsCow.get(input.type, {
+					model: {
+						value: input.value
+					}
+				})
 					.on('node.port.changed', function(e) {
 						
 						var ports = self.cmp().config().nodes[nodeOptions.id].inputs;

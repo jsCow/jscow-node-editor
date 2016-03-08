@@ -413,6 +413,14 @@ $(function() {
 					left: 30,
 					top: 150
 				},
+				config: [
+					{
+						"type": "jsCow.res.components.nodetypeinput",
+						"id": "cfg1",
+						"title": "Config Input 1",
+						"value": 1
+					}
+				],
 				inputs: [
 					{
 						"type": false,

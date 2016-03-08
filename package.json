@@ -12,7 +12,14 @@
     }
   ],
   "dependencies": {
-    "jscow": "latest"
+    "bootstrap": "latest",
+    "font-awesome": "latest",
+    "jquery": "latest",
+    "d3": "latest",
+    "jquery.kinetic": "latest",
+    "jquery-contextmenu": "latest",
+    "jscow": "latest",
+    "jsplumb": "latest"
   },
   "devDependencies": {
     "grunt": "latest",
@@ -25,15 +32,7 @@
     "grunt-contrib-concat": "latest",
     "grunt-contrib-yuidoc": "latest",
     "grunt-contrib-jshint": "latest",
-    "grunt-contrib-watch": "latest",
-    "bootstrap": "latest",
-    "font-awesome": "latest",
-    "jquery": "latest",
-    "d3": "latest",
-    "jquery.kinetic": "latest",
-    "jquery-contextmenu": "latest",
-    "jscow": "latest",
-    "jsplumb": "latest"
+    "grunt-contrib-watch": "latest"
   },
   "repository": {
     "type": "git",

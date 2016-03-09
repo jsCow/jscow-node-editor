@@ -1,0 +1,217 @@
+
+// 
+// Nodes
+
+.jsc-node,
+.jsc-node-disabled {
+
+	@bg: lighten(@base-color, 30%);
+
+	z-index: 5;
+	padding: (@space-default / 2) (@space-default + 3);
+	position: absolute;
+	background: darken(@bg, (@color-offset-default * 1));
+	min-width: 170px;
+	max-width: 300px;
+	font-size: 90%;
+	font-weight: 400;
+	.text();
+	.round-corner-all(@space-default);
+	.noelect();
+	.border-all(1px, solid, darken(@base-color, (@color-offset-default * 3)));
+	.shadow();
+	.opacity(0.8);
+
+	&.jsc-focus {
+		border-color: lighten(@bg, (@color-offset-default * 3));
+		.opacity(0.9);
+
+		.jsc-node-titlebar {
+			color: lighten(@text-color-default, (@color-offset-default * 2));
+		}
+
+	}
+	
+	.jsc-node-titlebar {
+		text-align: center;
+		font-size: @text-fontSize-default;
+		position: relative;
+		padding: 2px @space-default;
+		margin: -(@space-default / 2) -13px @space-default -13px;
+		.round-corner-top(@space-default);
+		background: darken(@base-color, (@color-offset-default * 3));
+
+		.jsc-node-remove {
+			position: absolute;
+			right: @space-default;
+			top: 4px;
+			display: none;
+			cursor: pointer;
+		}
+
+		&:hover {
+			cursor: pointer;
+
+			.jsc-node-remove {
+				display: inline-block;
+			}
+
+		}
+	}
+
+	.jsc-node-content {
+		.noelect();
+		
+		.jsc-node-port-inputs,
+		.jsc-node-port-outputs {
+			.clearfix();
+		}
+
+		.jsc-node-port {
+			color: darken(@text-color-default, 0%);
+			font-size: @text-fontSize-default;
+			font-weight: 400;
+			position: relative;
+			padding: @space-default / 2 / 2 0;
+			margin: 0 -13px @space-default / 2 -13px;
+			.clearfix();
+
+			> div {
+				padding: 0 @space-default;
+				white-space: nowrap;
+				.clearfix();
+
+				span {
+					display: block;
+
+					& ~ label {
+						margin-top: @space-default / 2 / 2;
+					}
+				}
+
+				* ~ * {
+					margin-top: @space-default / 2;
+				}
+
+				input[type="text"],
+				select {
+					width: 80%;
+					background: darken(@base-color, 10%);
+					.border-all(1px, solid, darken(@base-color, 15%));
+					.round-corner-all(@space-default / 2 / 2);
+					padding: 0 @space-default / 2;
+					font-size: 1.1em;
+					font-weight: 400;
+					margin-top: 0;
+				}
+
+				label {
+					margin: 0;
+					display: block;
+
+					input[type="radio"],
+					input[type="checkbox"] {
+						margin: 0 @space-default / 2;
+						top: 2px;
+						position: relative;
+					}
+
+				}
+				
+			}
+			
+			&.jsc-node-port-in {
+				.border-left(3px, solid, darken(@base-color, (@color-offset-default * 1))); 
+				
+				&:hover {
+					background: lighten(@bg, 5%);
+					background: -moz-linear-gradient(left, lighten(@bg, 5%) 0%, darken(@bg, (@color-offset-default * 1)) 100%);
+					background: -webkit-linear-gradient(left, lighten(@bg, 5%) 0%,darken(@bg, (@color-offset-default * 1)) 100%);
+					background: linear-gradient(to right, lighten(@bg, 5%) 0%,darken(@bg, (@color-offset-default * 1)) 100%);
+					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='lighten(@bg, 5%)', endColorstr='darken(@bg, (@color-offset-default * 1))',GradientType=1 );
+				}
+
+			}
+
+			&.jsc-node-port-out {
+				.border-right(3px, solid, darken(@base-color, (@color-offset-default * 1)));
+				
+				&:hover {
+					background: lighten(@bg, 5%);
+					background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, lighten(@bg, 5%) 100%);
+					background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,lighten(@bg, 5%) 100%);
+					background: linear-gradient(to right, rgba(0,0,0,0) 0%,lighten(@bg, 5%) 100%);
+					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(0,0,0,0)', endColorstr='lighten(@bg, 5%)',GradientType=1 );
+				}
+
+				div {
+					text-align: right;
+				}
+				
+			}
+
+		}
+
+		.jsc-node-config {
+			.border-top(1px, solid, darken(@base-color, (@color-offset-default * 3)));
+			.border-bottom(1px, solid, darken(@base-color, (@color-offset-default * 3)));
+			padding: @space-default / 2 @space-default;
+			margin: 0 -13px @space-default;
+
+			* {
+				display: block;
+
+				& ~ * {
+					margin-top: @space-default / 2;
+				}
+
+				& {
+					.text();
+					font-size: 1.0rem;
+					font-weight: 400;
+				}
+
+				input[type="text"],
+				select {
+					width: 100%;
+					background: darken(@base-color, 10%);
+					.border-all(1px, solid, darken(@base-color, 15%));
+					.round-corner-all(@space-default / 2 / 2);
+					padding: 2px @space-default / 2;
+					font-size: 1.1rem;
+					font-weight: 400;
+				}
+
+				label {
+					margin: 0;
+
+					input[type="radio"],
+					input[type="checkbox"] {
+						margin: 0 @space-default / 2;
+						top: 2px;
+						position: relative;
+					}
+
+				}
+				
+			}
+
+		}
+
+		.jsc-node-preview {
+			.clearfix();
+			margin: @space-default / 2 0;
+
+			img {
+				width: 100%;
+			}
+
+		}
+
+	}
+	
+}
+
+.jsc-node-disabled { 
+	.disabled();
+}

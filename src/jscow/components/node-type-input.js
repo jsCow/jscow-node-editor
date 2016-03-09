@@ -55,13 +55,11 @@ jsCow.res.view.nodetypeinput.prototype = {
 				e.preventDefault();
 
 			}).on('change', function(e) {
-
-				var value = {
+				
+				self.cmp().config({
 					value: self.dom.content.val()
-				};
-
-				self.cmp().config(value);
-				self.trigger('node.config.changed', value);
+				});
+				self.trigger('node.config.changed');
 
 			});
 
@@ -75,7 +73,9 @@ jsCow.res.view.nodetypeinput.prototype = {
 			
 			this.dom.main.removeClass('jsc-node-type-input-disabled').addClass('jsc-node-type-input');
 			
-			console.log(e.data);
+			if (e.data.value) {
+				this.dom.content.val(e.data.value);
+			}
 			if (e.data.title) {
 				this.dom.title.html(e.data.title);
 			}

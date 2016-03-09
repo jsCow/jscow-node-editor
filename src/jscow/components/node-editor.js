@@ -358,21 +358,28 @@ jsCow.res.view.nodeeditor.prototype = {
 		if (nodeOptions.config) {
 			var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
 
-			var onNodeConfigChanged = function() {
-				console.log(e.data);
-				//self.cmp().config().nodes[nodeOptions.id].outputs[p].value = e.data.value;
-				//self.trigger('editor.save');
+			var onNodeConfigChanged = function(e) {
+				
+				var configs = self.cmp().config().nodes[nodeOptions.id].config;
+				for (var c=0; c < configs.length; c++) {
+					if (configs[c].id === e.data.id) {
+						self.cmp().config().nodes[nodeOptions.id].config[c] = e.data;
+						self.trigger('editor.save');
+					}
+				}
+
 			};
 
 			for (var c=0; c < nodeOptions.config.length; c++) {
-				//console.log(nodeOptions.config[c]);
-				jsCow.get(nodeOptions.config[c].type, {
-					model: {
-						value: nodeOptions.config[c].value,
-						title: nodeOptions.config[c].title
-					}
-				}).on('node.config.changed', onNodeConfigChanged).target(config).run();
 				
+				if (typeof nodeOptions.config[c].id === 'undefined') {
+					nodeOptions.config[c].id = "c_" + Math.random().toString(16).slice(2);
+				}
+				
+				jsCow.get(nodeOptions.config[c].type, {
+					model: nodeOptions.config[c]
+				}).on('node.config.changed', onNodeConfigChanged).target(config).run();
+
 			}
 			
 			/*
@@ -409,7 +416,7 @@ jsCow.res.view.nodeeditor.prototype = {
 				.addClass('jsc-node-port jsc-node-port-out')
 				.attr("id", id);
 			var portContent = $('<div/>').appendTo(port);
-			if (output.title) {
+			if (output.title && !output.type) {
 				portContent.append(
 					$('<span/>').text(output.title)
 				);
@@ -417,24 +424,26 @@ jsCow.res.view.nodeeditor.prototype = {
 			
 			// Create all configuration components
 			if (output.type) {
-				jsCow.get(output.type, {
-					model: {
-						value: output.value
-					}
-				})
-					.on('node.port.changed', function(e) {
-						
-						var ports = self.cmp().config().nodes[nodeOptions.id].outputs;
-						for (var p=0; p < ports.length; p++) {
-							if (output.id === ports[p].id) {
-								self.cmp().config().nodes[nodeOptions.id].outputs[p].value = e.data.value;
-								self.trigger('editor.save');
-							}
-						}
 
-					})
-					.target(portContent)
-					.run();
+				if (typeof output.id === 'undefined') {
+					output.id = "c_" + Math.random().toString(16).slice(2);
+				}
+				
+				jsCow.get(output.type, {
+					model: output
+				}).on('node.config.changed', function(e) {
+					
+					var ports = self.cmp().config().nodes[nodeOptions.id].outputs;
+					for (var p=0; p < ports.length; p++) {
+						if (output.id === ports[p].id) {
+							self.cmp().config().nodes[nodeOptions.id].outputs[p] = e.data;
+							self.trigger('editor.save');
+						}
+					}
+
+				})
+				.target(portContent)
+				.run();
 			}
 
 			outputs.append(port);
@@ -458,7 +467,7 @@ jsCow.res.view.nodeeditor.prototype = {
 				.addClass('jsc-node-port jsc-node-port-in')
 				.attr("id", id);
 			var portContent = $('<div/>').appendTo(port);
-			if (input.title) {
+			if (input.title && !input.type) {
 				portContent.append(
 					$('<span/>').text(input.title)
 				);
@@ -466,24 +475,26 @@ jsCow.res.view.nodeeditor.prototype = {
 			
 			// Create all configuration components
 			if (input.type) {
-				jsCow.get(input.type, {
-					model: {
-						value: input.value
-					}
-				})
-					.on('node.port.changed', function(e) {
-						
-						var ports = self.cmp().config().nodes[nodeOptions.id].inputs;
-						for (var p=0; p < ports.length; p++) {
-							if (input.id === ports[p].id) {
-								self.cmp().config().nodes[nodeOptions.id].inputs[p].value = e.data.value;
-								self.trigger('editor.save');
-							}
-						}
 
-					})
-					.target(portContent)
-					.run();
+				if (typeof input.id === 'undefined') {
+					input.id = "c_" + Math.random().toString(16).slice(2);
+				}
+				
+				jsCow.get(input.type, {
+					model: input
+				}).on('node.config.changed', function(e) {
+					
+					var ports = self.cmp().config().nodes[nodeOptions.id].inputs;
+					for (var p=0; p < ports.length; p++) {
+						if (input.id === ports[p].id) {
+							self.cmp().config().nodes[nodeOptions.id].inputs[p] = e.data;
+							self.trigger('editor.save');
+						}
+					}
+
+				})
+				.target(portContent)
+				.run();
 			}
 
 			inputs.append(port);

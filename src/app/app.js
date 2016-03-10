@@ -501,6 +501,7 @@ $(function() {
 				outputs: [
 					{
 						"type": "jsCow.res.components.nodetypeinput",
+						"id": "out1",
 						"title": "Output Port 1",
 						"value": 1,
 						"placeholder": "321"
@@ -571,6 +572,7 @@ $(function() {
 				}
 			},
 			{
+				color: '#A52A2A',
 				from: {
 					node: 'node2',
 					out: 'out1'

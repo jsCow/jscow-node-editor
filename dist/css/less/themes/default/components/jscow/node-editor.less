@@ -161,6 +161,22 @@
 			
 		}
 
+		.jsc-connector-color {
+			z-index: 4;
+			background: lighten(@base-color, 20%);
+			padding: 0 @space-default / 2;
+			cursor: pointer;
+			width: @space-default;
+			height: @space-default;
+			.transition(background-color 200ms linear);
+			.round-corner-all(50%);
+			
+			&:hover {
+				background: lighten(@color-default, 0%);
+			}
+			
+		}
+
 		.jsc-connector-path {
 			stroke: lighten(@base-color, (@color-offset-default * 3));
 		}

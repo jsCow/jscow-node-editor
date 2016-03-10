@@ -610,10 +610,12 @@ jsCow.res.view.nodeeditor.prototype = {
 			var source = self.cmp().id()+"-"+c.from.node+"-"+c.from.out;
 			var target = self.cmp().id()+"-"+c.to.node+"-"+c.to.in;
 			
-			self.config.jsPlumbInstance.connect({
+			var con = self.config.jsPlumbInstance.connect({
 				source: source,
 				target: target
 			}, connectorOptions);
+			
+			//console.log(con);
 			
 		});
 

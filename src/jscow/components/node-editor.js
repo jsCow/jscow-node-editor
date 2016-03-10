@@ -373,7 +373,7 @@ jsCow.res.view.nodeeditor.prototype = {
 			for (var c=0; c < nodeOptions.config.length; c++) {
 				
 				if (typeof nodeOptions.config[c].id === 'undefined') {
-					nodeOptions.config[c].id = "c_" + Math.random().toString(16).slice(2);
+					nodeOptions.config[c].id = "c" + Math.random().toString(16).slice(2);
 				}
 				
 				jsCow.get(nodeOptions.config[c].type, {
@@ -411,7 +411,12 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		$.each(nodeOptions.outputs, function(i, output) {
 
+			if (typeof output.id === 'undefined') {
+				output.id = "port" + Math.random().toString(16).slice(2);
+			}
+			
 			var id = self.cmp().id()+'-'+nodeOptions.id+'-'+output.id;
+			
 			var port = $('<div/>')
 				.addClass('jsc-node-port jsc-node-port-out')
 				.attr("id", id);
@@ -425,10 +430,6 @@ jsCow.res.view.nodeeditor.prototype = {
 			// Create all configuration components
 			if (output.type) {
 
-				if (typeof output.id === 'undefined') {
-					output.id = "c_" + Math.random().toString(16).slice(2);
-				}
-				
 				jsCow.get(output.type, {
 					model: output
 				}).on('node.config.changed', function(e) {
@@ -462,7 +463,12 @@ jsCow.res.view.nodeeditor.prototype = {
 		
 		$.each(nodeOptions.inputs, function(i, input) {
 
+			if (typeof input.id === 'undefined') {
+				input.id = "port" + Math.random().toString(16).slice(2);
+			}
+
 			var id = self.cmp().id()+'-'+nodeOptions.id+'-'+input.id;
+			
 			var port = $('<div/>')
 				.addClass('jsc-node-port jsc-node-port-in')
 				.attr("id", id);
@@ -476,10 +482,6 @@ jsCow.res.view.nodeeditor.prototype = {
 			// Create all configuration components
 			if (input.type) {
 
-				if (typeof input.id === 'undefined') {
-					input.id = "c_" + Math.random().toString(16).slice(2);
-				}
-				
 				jsCow.get(input.type, {
 					model: input
 				}).on('node.config.changed', function(e) {
@@ -902,7 +904,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 			for (var nn=0; nn < newNodesList.length; nn++) {
 				
 				nodes = this.cmp().config().nodes;
-				
+
 				var updateNode = {};
 				updateNode[newNodesList[nn].id] = newNodesList[nn];
 				
@@ -910,7 +912,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 					
 					// ADD
 					nodes[newNodesList[nn].id] = {};
-					nodes[newNodesList[nn].id] = updateNode;
+					nodes[newNodesList[nn].id] = updateNode[newNodesList[nn].id];
 					
 					this.trigger("editor.node.added", newNodesList[nn]);
 					
@@ -919,7 +921,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 				}else{
 					
 					// UPDATE
-					nodes[newNodesList[nn].id] = updateNode;
+					nodes[newNodesList[nn].id] = $.extend(true, nodes[newNodesList[nn].id], updateNode[newNodesList[nn].id]);
 					
 					this.trigger("editor.node.updated", newNodesList[nn]);
 

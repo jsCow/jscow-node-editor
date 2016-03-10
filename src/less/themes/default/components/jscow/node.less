@@ -67,6 +67,14 @@
 			.clearfix();
 		}
 
+		.jsc-node-description {
+			margin-bottom: @space-default;
+			font-size: 1.2rem;
+			font-weight: 100;
+			padding-bottom: @space-default;
+			.border-bottom();
+		}
+
 		.jsc-node-port {
 			color: darken(@text-color-default, 0%);
 			font-size: @text-fontSize-default;
@@ -95,7 +103,7 @@
 
 				input[type="text"],
 				select {
-					width: 80%;
+					width: 40%;
 					background: darken(@base-color, 10%);
 					.border-all(1px, solid, darken(@base-color, 15%));
 					.round-corner-all(@space-default / 2 / 2);
@@ -166,7 +174,6 @@
 				}
 
 				& {
-					.text();
 					font-size: 1.0rem;
 					font-weight: 400;
 				}

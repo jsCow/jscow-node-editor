@@ -332,13 +332,21 @@ jsCow.res.view.nodeeditor.prototype = {
 			top: nodeOptions.pos.top, 
 			left: nodeOptions.pos.left
 		});
-		var content = $('<div/>').addClass('jsc-node-content clearfix').appendTo(main);
+		var content = $('<div/>').addClass('jsc-node-content').appendTo(main);
 
 		// Node Title
 		var titlebar = $('<div/>').addClass('jsc-node-titlebar').append(
 			$('<span/>').html(nodeOptions.title)
 		);
 		main.prepend( titlebar );
+		
+		// Node Description
+		if (nodeOptions.description) {
+			var description = $('<div/>').addClass('jsc-node-description').append(
+				$('<span/>').html(nodeOptions.description)
+			);
+			description.appendTo( content );
+		}
 		
 		// Remove button
 		var remove = $('<i/>').addClass('jsc-node-remove fa fa-times').click(function(e) {

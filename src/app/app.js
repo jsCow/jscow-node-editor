@@ -409,6 +409,7 @@ $(function() {
 			{
 				id: 'node100',
 				title: 'Node 100',
+				description: 'This is a typical cool short node description.',
 				pos: {
 					left: 30,
 					top: 150
@@ -471,6 +472,7 @@ $(function() {
 			{
 				id: 'node2',
 				title: 'Node 2',
+				description: 'Another short node description for these node. Cool what?',
 				pos: {
 					left: 380,
 					top: 180
@@ -519,6 +521,7 @@ $(function() {
 		jsCow.find('node-editor-1').addNode({
 			id: 'node200',
 			title: 'Node 200',
+			description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
 			pos: {
 				left: 500,
 				top: 400

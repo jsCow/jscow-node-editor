@@ -580,7 +580,7 @@ $(function() {
 			{
 				from: {
 					node: 'node100',
-					out: 'out1'
+					out: 'out2'
 				},
 				to: {
 					node: 'node200',

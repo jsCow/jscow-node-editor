@@ -412,7 +412,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		$.each(nodeOptions.outputs, function(i, output) {
 
 			if (typeof output.id === 'undefined') {
-				output.id = "port" + Math.random().toString(16).slice(2);
+				output.id = "out" + Math.random().toString(16).slice(2);
 			}
 			
 			var id = self.cmp().id()+'-'+nodeOptions.id+'-'+output.id;
@@ -464,7 +464,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		$.each(nodeOptions.inputs, function(i, input) {
 
 			if (typeof input.id === 'undefined') {
-				input.id = "port" + Math.random().toString(16).slice(2);
+				input.id = "in" + Math.random().toString(16).slice(2);
 			}
 
 			var id = self.cmp().id()+'-'+nodeOptions.id+'-'+input.id;
@@ -946,9 +946,43 @@ jsCow.res.controller.nodeeditor.prototype = {
 
 			var nodeExists = false;
 			var connectionExists = false;
+			var portsInNodeExists = false;
 			
-			if (nodes[newConnections[i].from.node] && nodes[newConnections[i].to.node]) {
+			// If the port is exists in exists nodes
+			if (nodes[newConnections[i].from.node]) {
 				
+				// Outputs
+				var outputPortExists = false;
+				if (nodes[newConnections[i].from.node].outputs) {
+					for (var op=0; op < nodes[newConnections[i].from.node].outputs.length; op++) {
+						
+						if ( nodes[newConnections[i].from.node].outputs[op].id === newConnections[i].from.out ) {
+							outputPortExists = true;
+						}
+
+					}
+				}
+				
+				// Input
+				var inputPortExists = false;
+				if (nodes[newConnections[i].to.node].inputs) {
+					for (var ip=0; ip < nodes[newConnections[i].to.node].inputs.length; ip++) {
+						
+						if ( nodes[newConnections[i].to.node].inputs[ip].id === newConnections[i].to.in ) {
+							inputPortExists = true;
+						}
+
+					}
+				}
+
+				if (outputPortExists && inputPortExists) {
+					portsInNodeExists = true;
+				}
+
+			}
+			
+			if (portsInNodeExists && nodes[newConnections[i].from.node] && nodes[newConnections[i].to.node]) {
+
 				nodeExists = true;
 				
 				for (var c=0; c < connections.length; c++) {

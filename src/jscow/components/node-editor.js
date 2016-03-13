@@ -78,7 +78,7 @@ jsCow.res.components.nodeeditor.prototype = {
 	},
 
 	removeNode: function(id) {
-
+		
 		if (typeof options === "String" ) {
 			this.trigger('node.remove', {
 				id: id
@@ -98,6 +98,24 @@ jsCow.res.components.nodeeditor.prototype = {
 			});
 
 		}
+
+		return this;
+
+	},
+
+	reset: function() {
+		
+		this.trigger('editor.reset.all');
+
+		return this;
+
+	},
+
+	save: function() {
+		
+		this.trigger('editor.save', {
+			save: true
+		});
 
 		return this;
 
@@ -863,6 +881,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 		this.on('connection.remove', this.removeConnection);
 		this.on('editor.repository.add', this.addNodesRepository);
 		this.on('editor.save', this.editorOptionsChanged);
+		this.on('editor.reset.all', this.onEditorResetAll);
 
 	},
 	
@@ -886,7 +905,10 @@ jsCow.res.controller.nodeeditor.prototype = {
 	*/
 	editorOptionsChanged: function(e) {
 		
-		this.trigger("editor.options.changed", this.cmp().config());
+		var options = this.cmp().config().options;
+		if (options.autosave || e.data.save) {
+			this.trigger("editor.options.changed", this.cmp().config());
+		}
 		
 	},
 	
@@ -939,11 +961,13 @@ jsCow.res.controller.nodeeditor.prototype = {
 					
 				}
 				
-				
 			}
+
 
 		}
 
+		this.trigger('editor.save');
+		
 	},
 
 	addConnection: function(e) {
@@ -1012,14 +1036,16 @@ jsCow.res.controller.nodeeditor.prototype = {
 
 			if (!connectionExists && nodeExists) {
 				
-				console.info("CONNECTION ADDED", newConnections[i]);
-				
 				this.cmp().config({
 					connections: connections.concat(newConnections[i])
 				});
 				
 				this.trigger("editor.connection.added", newConnections[i]);		
 				connections = this.cmp().config().connections;
+
+				console.info("CONNECTION ADDED", newConnections[i]);
+
+				this.trigger('editor.save');
 
 			}
 
@@ -1046,6 +1072,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 						(connections[c].to.in === removeConnections[i].to.in)
 					) {
 						connections.splice(c,1);
+						this.trigger('editor.save');
 					}
 
 				}
@@ -1057,7 +1084,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 	},
 
 	nodeRemove: function(e) {
-
+		
 		var nodeId = e.data.id;
 		var nodes = this.cmp().config().nodes;
 
@@ -1066,6 +1093,8 @@ jsCow.res.controller.nodeeditor.prototype = {
 			delete this.cmp().config().nodes[nodeId];
 			
 			console.info("NODE DELETED", nodeId);
+			
+			this.trigger('editor.save');
 
 		}
 
@@ -1094,6 +1123,19 @@ jsCow.res.controller.nodeeditor.prototype = {
 
 			this.trigger('editor.node.types.updated', this.cmp().config().repositories);
 		}
+
+	},
+
+	onEditorResetAll: function(e) {
+
+		var nodes = this.cmp().config().nodes;
+		for (var key in nodes) {
+			this.trigger('node.remove', {
+				id: nodes[key].id
+			});
+		}
+
+		this.trigger('editor.save');
 
 	}
 

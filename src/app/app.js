@@ -326,6 +326,9 @@ $(function() {
 	nodeeditor1 = jsCow.get(jsCow.res.components.nodeeditor, {
 		id: 'node-editor-1',
 		model: {
+			options: {
+				autosave: true
+			},
 			repositories: [
 				{
 					group: 'muh',
@@ -381,7 +384,6 @@ $(function() {
 		}
 	})
 	.on('editor.options.changed', function(e) {
-		console.log("");
 		console.log(e.sender.id()+" >>> changed >>>", e.data);
 	}).target('#node-editor-1').run();
 
@@ -389,7 +391,6 @@ $(function() {
 		id: 'node-editor-2'
 	})
 	.on('editor.options.changed', function(e) {
-		console.log("");
 		console.log(e.sender.id()+" >>> changed >>>", e.data);
 	}).target('#node-editor-2').run();
 
@@ -956,6 +957,11 @@ $(function() {
 			]
 		});
 	});
+
+
+	$('<button>Reset (Editor 1)</button>').click(function() {
+		jsCow.find('node-editor-1').reset();
+	}).appendTo('body');
 	
 
 	console.timeEnd('all');

@@ -348,6 +348,11 @@ jsCow.res.view.nodeeditor.prototype = {
 			top: nodeOptions.pos.top, 
 			left: nodeOptions.pos.left
 		});
+
+		if (nodeOptions.class) {
+			main.addClass(nodeOptions.class);
+		}
+
 		var content = $('<div/>').addClass('jsc-node-content').appendTo(main);
 
 		// Node Title
@@ -371,13 +376,13 @@ jsCow.res.view.nodeeditor.prototype = {
 			});
 		}).appendTo( titlebar );
 		
-		var outputs = $('<div/>').addClass('jsc-node-outputs').appendTo(content);
-		var preview = $('<div/>').addClass('jsc-node-preview').appendTo(content);
-
+		//var preview = $('<div/>').addClass('jsc-node-preview').appendTo(content);
 		// Standard Image Preview
 		//var typePreviewImage = $('<div/>').appendTo(preview);
 			//$('<img src="http://image.shutterstock.com/display_pic_with_logo/2904091/292004621/stock-photo--d-sphere-on-white-background-with-word-cloud-texture-imprint-this-ball-with-tag-cloud-text-are-in-292004621.jpg" alt="" />').appendTo(typePreviewImage);
-
+		
+		var outputs = $('<div/>').addClass('jsc-node-outputs').appendTo(content);
+		
 		// Create all node configuration components
 		if (nodeOptions.config) {
 			var config = $('<div/>').addClass('jsc-node-config').appendTo(content);

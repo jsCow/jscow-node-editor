@@ -208,6 +208,7 @@ $(function() {
 			id: 'node200',
 			title: 'Node 200',
 			description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+			class: 'jsc-node-custom-style',
 			pos: {
 				left: 500,
 				top: 400

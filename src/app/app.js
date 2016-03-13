@@ -4,323 +4,6 @@ $(function() {
 
 	console.time('all');
 
-	NodeEditorOptions1 = {
-		grid: 30,
-		nodes: [
-			{
-				id: 'node1',
-				title: 'Node 1',
-				pos: {
-					left: 30,
-					top: 30
-				},
-				inputs: [
-					{
-						"type": false,
-						"id": "in1",
-						"title": "Input Port 1",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "in2",
-						"title": "Input Port 2",
-						"value": 1
-					}
-				],
-				outputs: [
-					{
-						"type": false,
-						"id": "out1",
-						"title": "Output Port 1",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "out2",
-						"title": "Output Port 2",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "out3",
-						"title": "Output Port 3",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "out4",
-						"title": "Output Port 4",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "out5",
-						"title": "Output Port 5",
-						"value": 1
-					}
-				]
-			},
-			{
-				id: 'node2',
-				title: 'Node 2',
-				pos: {
-					left: 580,
-					top: 200
-				},
-				inputs: [
-					{
-						"type": false,
-						"id": "in1",
-						"title": "Input Port 1",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "in2",
-						"title": "Input Port 2",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "in3",
-						"title": "Input Port 3",
-						"value": 1
-					}
-				],
-				outputs: [
-					{
-						"type": false,
-						"id": "out1",
-						"title": "Output Port 1",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "out2",
-						"title": "Output Port 2",
-						"value": 1
-					}
-				]
-			},
-			{
-				id: 'node3',
-				title: 'Node 3',
-				pos: {
-					left: 1000,
-					top: 150
-				},
-				inputs: [
-					{
-						"type": false,
-						"id": "in1",
-						"title": "Input Port 1",
-						"value": 1
-					}
-				],
-				outputs: [
-					{
-						"type": false,
-						"id": "out1",
-						"title": "Output Port 1",
-						"value": 1
-					}
-				]
-			}
-		],
-		connections: [
-			{
-				from: {
-					node: 'node1',
-					out: 'out1'
-				},
-				to: {
-					node: 'node2',
-					in: 'in1'
-				}
-			},
-			{
-				color: '#f00',
-				from: {
-					node: 'node1',
-					out: 'out1'
-				},
-				to: {
-					node: 'node2',
-					in: 'in2'
-				}
-			},
-			{
-				from: {
-					node: 'node1',
-					out: 'out4'
-				},
-				to: {
-					node: 'node2',
-					in: 'in3'
-				}
-			},
-			{
-				color: '#fc0',
-				from: {
-					node: 'node2',
-					out: 'out2'
-				},
-				to: {
-					node: 'node3',
-					in: 'in1'
-				}
-			},
-			{
-				from: {
-					node: 'node1',
-					out: 'out2'
-				},
-				to: {
-					node: 'node3',
-					in: 'in1'
-				}
-			}
-		]
-	};
-	
-	NodeEditorOptions2 = {
-		grid: 20,
-		nodes: [
-			{
-				id: 'node1',
-				title: 'Node 1',
-				pos: {
-					left: 20,
-					top: 20
-				},
-				inputs: [
-					{
-						"type": false,
-						"id": "in1",
-						"title": "Input Port 1",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "in2",
-						"title": "Input Port 2",
-						"value": 1
-					}
-				],
-				outputs: [
-					{
-						"type": false,
-						"id": "out1",
-						"title": "Output Port 1",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "out2",
-						"title": "Output Port 2",
-						"value": 1
-					}
-				]
-			},
-			{
-				id: 'node2',
-				title: 'Node 2',
-				pos: {
-					left: 280,
-					top: 50
-				},
-				inputs: [
-					{
-						"type": false,
-						"id": "in1",
-						"title": "Input Port 1",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "in2",
-						"title": "Input Port 2",
-						"value": 1
-					}
-				],
-				outputs: [
-					{
-						"type": false,
-						"id": "out1",
-						"title": "Output Port 1",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "out2",
-						"title": "Output Port 2",
-						"value": 1
-					}
-				]
-			},
-			{
-				id: 'node3',
-				title: 'Node 3',
-				pos: {
-					left: 150,
-					top: 200
-				},
-				inputs: [
-					{
-						"type": false,
-						"id": "in1",
-						"title": "Input Port 1",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "in2",
-						"title": "Input Port 2",
-						"value": 1
-					}
-				],
-				outputs: [
-					{
-						"type": false,
-						"id": "out1",
-						"title": "Output Port 1",
-						"value": 1
-					},
-					{
-						"type": false,
-						"id": "out2",
-						"title": "Input Port 2",
-						"value": 1
-					}
-				]
-			}
-		],
-		connections: [
-			{
-				from: {
-					node: 'node1',
-					out: 'out1'
-				},
-				to: {
-					node: 'node2',
-					in: 'in1'
-				}
-			},
-			{
-				from: {
-					node: 'node1',
-					out: 'out1'
-				},
-				to: {
-					node: 'node2',
-					in: 'in2'
-				}
-			}
-		]
-	};
-	
-
 
 
 	nodeeditor1 = jsCow.get(jsCow.res.components.nodeeditor, {
@@ -382,27 +65,28 @@ $(function() {
 				}
 			]
 		}
-	})
-	.on('editor.options.changed', function(e) {
+	}).on('editor.options.changed', function(e) {
 		console.log(e.sender.id()+" >>> changed >>>", e.data);
 	}).target('#node-editor-1').run();
 
 	nodeeditor2 = jsCow.get(jsCow.res.components.nodeeditor, {
 		id: 'node-editor-2'
-	})
-	.on('editor.options.changed', function(e) {
+	}).on('editor.options.changed', function(e) {
 		console.log(e.sender.id()+" >>> changed >>>", e.data);
 	}).target('#node-editor-2').run();
 
 
 
 	
-	/*
-	$('body').append('<button id="setOptions">Set Options</button>');
-	$('#setOptions').click(function() {
+	$('<button>Set Options 1</button>').click(function() {
 		jsCow.find('node-editor-1').options(NodeEditorOptions1);
-	});
-	*/
+	}).appendTo('body');
+	$('<button>Set Options 2</button>').click(function() {
+		jsCow.find('node-editor-2').options(NodeEditorOptions2);
+	}).appendTo('body');
+
+
+
 
 	$('body').append('<button id="addNodes">Add Nodes</button>');
 	$('#addNodes').click(function() {
@@ -961,6 +645,10 @@ $(function() {
 
 	$('<button>Reset (Editor 1)</button>').click(function() {
 		jsCow.find('node-editor-1').reset();
+	}).appendTo('body');
+
+	$('<button>Reset (Editor 2)</button>').click(function() {
+		jsCow.find('node-editor-2').reset();
 	}).appendTo('body');
 	
 

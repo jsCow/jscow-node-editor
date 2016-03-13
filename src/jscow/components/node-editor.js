@@ -10,11 +10,11 @@ jsCow.res.components.nodeeditor.prototype = {
 		
 		return this;
 	},
-	/*
+	
 	options: function(options) {
 
 		if (typeof options !== 'undefined' && typeof options === 'object') {
-			this.trigger('options', {
+			this.trigger('editor.options', {
 				options: options
 			});
 		}
@@ -22,7 +22,7 @@ jsCow.res.components.nodeeditor.prototype = {
 		return this;
 
 	},
-	*/
+	
 	addNode: function(options) {
 
 		var list = [];
@@ -275,8 +275,6 @@ jsCow.res.view.nodeeditor.prototype = {
 			return function(e) {
 	    		
 		        // Enter
-		        console.log(e.keyCode);
-
 		        if (e.keyCode === 27) {
 		            self.dom.nodeselector.fadeOut();
 		        }else if (e.keyCode === 40) {
@@ -874,7 +872,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 	
 	init: function() {
 		this.on("model.ready", this.isModelReady);
-		//this.on("options", this.options);
+		this.on("editor.options", this.onEditorOptions);
 		this.on('nodes.add', this.addNode);
 		this.on('node.remove', this.nodeRemove);
 		this.on('connection.add', this.addConnection);
@@ -891,18 +889,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 			this.cmp().config()
 		);
 	},
-	/*
-	options: function(e) {
-		
-		this.cmp().config({
-			options: e.data.options
-		});
-
-		// Render all nodes
-		//this.trigger("editor.options.changed", e.data.options);
-		
-	},
-	*/
+	
 	editorOptionsChanged: function(e) {
 		
 		var options = this.cmp().config().options;
@@ -967,7 +954,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 		}
 
 		this.trigger('editor.save');
-		
+
 	},
 
 	addConnection: function(e) {
@@ -1137,6 +1124,38 @@ jsCow.res.controller.nodeeditor.prototype = {
 
 		this.trigger('editor.save');
 
+	},
+
+	onEditorOptions: function(e) {
+
+		var config = this.cmp().config();
+		var options = e.data.options;
+
+		console.log(">>>", options);
+		
+		// Set repositories with node types
+		if (options.repositories && options.repositories instanceof Array ) {
+			for (var r=0; r < options.repositories.length; r++ ) {
+				this.trigger('editor.repository.add', {
+					repository: options.repositories[r]
+				});
+			}
+		}
+		
+		// Create nodes
+		if (options.nodes && options.nodes instanceof Array ) {
+			this.trigger('nodes.add', {
+				nodes: options.nodes
+			});
+		}
+		
+		// Create connections
+		if (options.connections && options.connections instanceof Array ) {
+			this.trigger('connection.add', {
+				connections: options.connections
+			});
+		}
+		
 	}
 
 };

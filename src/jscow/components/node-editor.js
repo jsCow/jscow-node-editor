@@ -119,6 +119,24 @@ jsCow.res.components.nodeeditor.prototype = {
 
 		return this;
 
+	},
+
+	processId: function(id) {
+
+		if (typeof id === 'string') {
+			
+			this.trigger('editor.process.id', {
+				processId: id
+			});
+
+			return this;
+
+		}else{
+
+			return this.config().processId;
+
+		}
+
 	}
 
 };
@@ -130,6 +148,7 @@ jsCow.res.model.nodeeditor = function() {
 	this.data = {
 		enabled: true,
 		visible: true,
+		processId: "process_" + Math.random().toString(16).slice(2),
 		options: {
 			grid: 20,
 			snapToGrid: true,
@@ -382,7 +401,7 @@ jsCow.res.view.nodeeditor.prototype = {
 			//$('<img src="http://image.shutterstock.com/display_pic_with_logo/2904091/292004621/stock-photo--d-sphere-on-white-background-with-word-cloud-texture-imprint-this-ball-with-tag-cloud-text-are-in-292004621.jpg" alt="" />').appendTo(typePreviewImage);
 		
 		var outputs = $('<div/>').addClass('jsc-node-outputs').appendTo(content);
-		
+
 		// Create all node configuration components
 		if (nodeOptions.config) {
 			var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
@@ -885,7 +904,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 		this.on('editor.repository.add', this.addNodesRepository);
 		this.on('editor.save', this.editorOptionsChanged);
 		this.on('editor.reset.all', this.onEditorResetAll);
-
+		this.on('editor.process.id', this.processId);
 	},
 	
 	isModelReady: function() {
@@ -1104,8 +1123,6 @@ jsCow.res.controller.nodeeditor.prototype = {
 				repositories: repositories
 			});
 
-			this.trigger('editor.node.types.updated', this.cmp().config().repositories);
-
 		}else{
 			
 			repositories[newRepo.group] = newRepo;
@@ -1113,9 +1130,10 @@ jsCow.res.controller.nodeeditor.prototype = {
 				repositories: repositories
 			});
 
-			this.trigger('editor.node.types.updated', this.cmp().config().repositories);
 		}
 
+		this.trigger('editor.node.types.updated', this.cmp().config().repositories);
+		
 	},
 
 	onEditorResetAll: function(e) {
@@ -1126,6 +1144,13 @@ jsCow.res.controller.nodeeditor.prototype = {
 				id: nodes[key].id
 			});
 		}
+
+		this.cmp().config({
+			repositories: [],
+			processId: "process_" + Math.random().toString(16).slice(2)
+		});
+
+		this.trigger('editor.node.types.updated', this.cmp().config().repositories);
 
 		this.trigger('editor.save');
 
@@ -1161,6 +1186,14 @@ jsCow.res.controller.nodeeditor.prototype = {
 			});
 		}
 		
+	},
+
+	processId: function(e) {
+
+		this.cmp().config({
+			processId: e.data.processId
+		});
+
 	}
 
 };

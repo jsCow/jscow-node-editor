@@ -229,6 +229,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.on('editor.node.added', this.editorNodeAdded);
 		this.on('editor.node.updated', this.editorNodeUpdated);
 		this.on('editor.node.types.updated', this.onEditorNodeTypesUpdated);
+		this.on('editor.node.types.reset', this.onEditorNodeTypesReset);
 		this.on('editor.connection.added', this.editorConnectionAdded);
 		this.on('node.remove', this.nodeRemove);
 		this.on('editor.grid.update', this.updateGrid);
@@ -786,8 +787,16 @@ jsCow.res.view.nodeeditor.prototype = {
 				
 		}
 
-	}
+	},
 
+	/*
+	 * Reset all exists nody types
+	 */
+	onEditorNodeTypesReset: function(e) {
+
+		this.dom.nodeselectorresults.find('*').remove();
+
+	}
 
 	/* ================================================================================
 	 * DEPRICATED - Render all node components
@@ -1133,10 +1142,12 @@ jsCow.res.controller.nodeeditor.prototype = {
 		}
 
 		this.trigger('editor.node.types.updated', this.cmp().config().repositories);
-		
+
 	},
 
 	onEditorResetAll: function(e) {
+
+		console.clear();
 
 		var nodes = this.cmp().config().nodes;
 		for (var key in nodes) {
@@ -1145,15 +1156,12 @@ jsCow.res.controller.nodeeditor.prototype = {
 			});
 		}
 
-		this.cmp().config({
-			repositories: [],
-			processId: "process_" + Math.random().toString(16).slice(2)
-		});
-
-		this.trigger('editor.node.types.updated', this.cmp().config().repositories);
-
+		this.cmp().config().repositories = {};
+		this.cmp().config().processId = "process_" + Math.random().toString(16).slice(2);
+		
+		this.trigger('editor.node.types.reset');
 		this.trigger('editor.save');
-
+		
 	},
 
 	onEditorOptions: function(e) {

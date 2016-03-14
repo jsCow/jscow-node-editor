@@ -12,8 +12,8 @@ $(function() {
 			options: {
 				autosave: true
 			},
-			repositories: [
-				{
+			repositories: {
+				muh: {
 					group: 'muh',
 					title: 'Kuh Nodes',
 					description: 'General repository of node types.',
@@ -63,7 +63,7 @@ $(function() {
 						}
 					]
 				}
-			]
+			}
 		}
 	}).on('editor.options.changed', function(e) {
 		console.log(e.sender.id()+" >>> changed >>>", e.data);

@@ -444,15 +444,8 @@ jsCow.res.view.nodeeditor.prototype = {
 					var typeRadioLabel = $('<label/>').appendTo(typeRadio);
 						$('<input type="radio" name="test" value="1" />').appendTo(typeRadioLabel);
 						$('<span/>').text("Aktiv").appendTo(typeRadioLabel);
-				
-				// Standard Checkbo
-				var typeChekbox = $('<div/>').appendTo(config);
-					var typeChekboxLabel = $('<label/>').appendTo(typeChekbox);
-					$('<input type="checkbox" name="test1" value="1" />').appendTo(typeChekboxLabel);
-					$('<span/>').text("Aktiv").appendTo(typeChekboxLabel);
-			
 			*/
-
+			
 		}
 
 
@@ -1161,7 +1154,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 		
 		this.trigger('editor.node.types.reset');
 		this.trigger('editor.save');
-		
+
 	},
 
 	onEditorOptions: function(e) {

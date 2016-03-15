@@ -106,10 +106,11 @@ $(function() {
 						"value": 1
 					},
 					{
-						"type": "jsCow.res.components.nodetypeinput",
+						"type": "jsCow.res.components.nodetypecheckbox",
 						"id": "cfg2",
 						"title": "Config Input 2",
-						"value": 2
+						"value": 2,
+						"selected": true
 					}
 				],
 				inputs: [

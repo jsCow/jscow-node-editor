@@ -186,11 +186,11 @@ $(function() {
 				],
 				outputs: [
 					{
-						"type": "jsCow.res.components.nodetypeinput",
+						"type": "jsCow.res.components.nodetypecheckbox",
 						"id": "out1",
-						"title": "Output Port 1",
-						"value": 1,
-						"placeholder": "321"
+						"title": "Config Output 1",
+						"value": 123,
+						"selected": true
 					},
 					{
 						"type": false,

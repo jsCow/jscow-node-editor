@@ -11,58 +11,6 @@ $(function() {
 		model: {
 			options: {
 				autosave: true
-			},
-			repositories: {
-				muh: {
-					group: 'muh',
-					title: 'Kuh Nodes',
-					description: 'General repository of node types.',
-					types: [
-						{
-							title: 'Node 1/1',
-							inputs: [
-								{
-									"type": false,
-									"id": "in1",
-									"title": "Input Port 1",
-									"value": 1
-								}
-							],
-							outputs: [
-								{
-									"type": false,
-									"id": "out1",
-									"title": "Output Port 1",
-									"value": 1
-								}
-							]
-						},
-						{
-							title: 'Muh Node',
-							inputs: [],
-							outputs: [
-								{
-									"type": false,
-									"id": "out1",
-									"title": "Output Port 1",
-									"value": 1
-								}
-							]
-						},
-						{
-							title: 'Test Node',
-							inputs: [
-								{
-									"type": false,
-									"id": "in1",
-									"title": "Input Port 1",
-									"value": 1
-								}
-							],
-							outputs: []
-						}
-					]
-				}
 			}
 		}
 	}).on('editor.options.changed', function(e) {
@@ -75,6 +23,12 @@ $(function() {
 		console.log(e.sender.id()+" >>> changed >>>", e.data);
 	}).target('#node-editor-2').run();
 
+
+
+	$('<button>Promotion Discount Rule</button>').click(function() {
+		jsCow.find('node-editor-1').options(PromotionDiscountRule);
+	}).appendTo('body');
+	
 
 
 	

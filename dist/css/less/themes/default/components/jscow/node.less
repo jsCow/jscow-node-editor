@@ -71,8 +71,6 @@
 			margin-bottom: @space-default;
 			font-size: 1.2rem;
 			font-weight: 100;
-			padding-bottom: @space-default;
-			.border-bottom();
 		}
 
 		.jsc-node-port {
@@ -82,6 +80,7 @@
 			position: relative;
 			padding: @space-default / 2 / 2 0;
 			margin: 0 -13px @space-default / 2 -13px;
+			min-height: @space-default * 2;
 			.clearfix();
 
 			> div {
@@ -95,31 +94,6 @@
 					& ~ label {
 						margin-top: @space-default / 2 / 2;
 					}
-				}
-				
-				input[type="text"],
-				select {
-					width: 40%;
-					background: darken(@base-color, 10%);
-					.border-all(1px, solid, darken(@base-color, 15%));
-					.round-corner-all(@space-default / 2 / 2);
-					padding: 0 @space-default / 2;
-					font-size: 1.1em;
-					font-weight: 400;
-					margin-top: 0;
-				}
-
-				label {
-					margin: 0;
-					display: block;
-
-					input[type="radio"],
-					input[type="checkbox"] {
-						margin: 0 @space-default / 2;
-						top: 2px;
-						position: relative;
-					}
-
 				}
 				
 			}
@@ -161,42 +135,18 @@
 			.border-bottom(1px, solid, darken(@base-color, (@color-offset-default * 3)));
 			padding: @space-default / 2 @space-default;
 			margin: 0 -13px @space-default;
+			background: darken(@bg, 10%);
+			.text(darken(@text-color-default, (@color-offset-default * 6)));
 
 			> * {
 				display: block;
+				font-size: 1.0rem;
+				font-weight: 400;
 
 				& ~ * {
 					margin-top: @space-default / 2;
 				}
 
-				& {
-					font-size: 1.0rem;
-					font-weight: 400;
-				}
-
-				input[type="text"],
-				select {
-					width: 100%;
-					background: darken(@base-color, 10%);
-					.border-all(1px, solid, darken(@base-color, 15%));
-					.round-corner-all(@space-default / 2 / 2);
-					padding: 2px @space-default / 2;
-					font-size: 1.1rem;
-					font-weight: 400;
-				}
-
-				label {
-					margin: 0;
-
-					input[type="radio"],
-					input[type="checkbox"] {
-						margin: 0 @space-default / 2;
-						top: 2px;
-						position: relative;
-					}
-
-				}
-				
 			}
 
 		}

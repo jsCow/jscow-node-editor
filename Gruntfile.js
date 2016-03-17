@@ -140,6 +140,7 @@ module.exports = function(grunt) {
 				files: [
 					{
 						'dist/js/app/app.min.js': [
+							'src/app/PromotionDiscountRule.js',
 							'src/app/options-exmple-1.js',
 							'src/app/app.js'
 						],

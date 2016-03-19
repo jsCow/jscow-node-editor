@@ -2,9 +2,9 @@ PromotionDiscountRule = {
 	grid: 30,
 	repositories: [
 		{
-			group: 'promotionrules',
-			title: 'Promotion Rules',
-			description: 'Create conditions in order to define, what discount is granted to users of the specified target group.',
+			group: 'promotionconditions',
+			title: 'Promotion Conditions',
+			description: 'Create condition nodes in order to define, what discount is granted to users of the specified target group.',
 			types: [
 				{
 					title: 'Item Condition',
@@ -31,7 +31,14 @@ PromotionDiscountRule = {
 							"value": 1
 						}
 					]
-				},
+				}
+			]
+		},
+		{
+			group: 'promotionactions',
+			title: 'Promotion Actions',
+			description: 'Create actions in order to define, what discount is granted to users of the specified target group.',
+			types: [
 				{
 					title: 'Item Discount',
 					description: 'Item Value Off',
@@ -57,13 +64,7 @@ PromotionDiscountRule = {
 				left: 50,
 				top: 50
 			},
-			config: [
-				{
-					"type": "jsCow.res.components.nodetypeinput",
-					"title": "Discount ($)",
-					"value": "199.99"
-				}
-			],
+			config: [],
 			inputs: [
 				{
 					"type": false,
@@ -82,7 +83,6 @@ PromotionDiscountRule = {
 		{
 			id: 'itemdiscount1',
 			title: 'Item Discount',
-			description: 'Item Value Off',
 			class: 'jsc-node-promotion-action',
 			pos: {
 				left: 500,

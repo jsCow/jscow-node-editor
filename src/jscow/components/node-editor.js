@@ -401,53 +401,8 @@ jsCow.res.view.nodeeditor.prototype = {
 		//var typePreviewImage = $('<div/>').appendTo(preview);
 			//$('<img src="http://image.shutterstock.com/display_pic_with_logo/2904091/292004621/stock-photo--d-sphere-on-white-background-with-word-cloud-texture-imprint-this-ball-with-tag-cloud-text-are-in-292004621.jpg" alt="" />').appendTo(typePreviewImage);
 		
+
 		var outputs = $('<div/>').addClass('jsc-node-outputs').appendTo(content);
-
-		// Create all node configuration components
-		if (nodeOptions.config) {
-			var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
-
-			var onNodeConfigChanged = function(e) {
-				
-				var configs = self.cmp().config().nodes[nodeOptions.id].config;
-				for (var c=0; c < configs.length; c++) {
-					if (configs[c].id === e.data.id) {
-						self.cmp().config().nodes[nodeOptions.id].config[c] = e.data;
-						self.trigger('editor.save');
-					}
-				}
-
-			};
-
-			for (var c=0; c < nodeOptions.config.length; c++) {
-				
-				if (typeof nodeOptions.config[c].id === 'undefined') {
-					nodeOptions.config[c].id = "c" + Math.random().toString(16).slice(2);
-				}
-				
-				jsCow.get(nodeOptions.config[c].type, {
-					model: nodeOptions.config[c]
-				}).on('node.config.changed', onNodeConfigChanged).target(config).run();
-
-			}
-			
-			/*
-				
-				// Standard Dropdown
-				var typeSelect = $('<div/>').appendTo(config);
-					var typeSelectField = $('<select/>').appendTo(typeSelect);
-						typeSelectField.append("<option>Muh</option>");
-						typeSelectField.append("<option>Kuh</option>");
-				
-				// Standard Radio
-				var typeRadio = $('<div/>').appendTo(config);
-					var typeRadioLabel = $('<label/>').appendTo(typeRadio);
-						$('<input type="radio" name="test" value="1" />').appendTo(typeRadioLabel);
-						$('<span/>').text("Aktiv").appendTo(typeRadioLabel);
-			*/
-			
-		}
-
 
 		var inputs = $('<div/>').addClass('jsc-node-inputs').appendTo(content);
 
@@ -555,6 +510,52 @@ jsCow.res.view.nodeeditor.prototype = {
 						
 		});
 		
+		// Create all node configuration components
+		if (nodeOptions.config && nodeOptions.config.length) {
+			var config = $('<div/>').addClass('jsc-node-config').appendTo(content);
+
+			var onNodeConfigChanged = function(e) {
+				
+				var configs = self.cmp().config().nodes[nodeOptions.id].config;
+				for (var c=0; c < configs.length; c++) {
+					if (configs[c].id === e.data.id) {
+						self.cmp().config().nodes[nodeOptions.id].config[c] = e.data;
+						self.trigger('editor.save');
+					}
+				}
+
+			};
+
+			for (var c=0; c < nodeOptions.config.length; c++) {
+				
+				if (typeof nodeOptions.config[c].id === 'undefined') {
+					nodeOptions.config[c].id = "c" + Math.random().toString(16).slice(2);
+				}
+				
+				jsCow.get(nodeOptions.config[c].type, {
+					model: nodeOptions.config[c]
+				}).on('node.config.changed', onNodeConfigChanged).target(config).run();
+
+			}
+			
+			/*
+				
+				// Standard Dropdown
+				var typeSelect = $('<div/>').appendTo(config);
+					var typeSelectField = $('<select/>').appendTo(typeSelect);
+						typeSelectField.append("<option>Muh</option>");
+						typeSelectField.append("<option>Kuh</option>");
+				
+				// Standard Radio
+				var typeRadio = $('<div/>').appendTo(config);
+					var typeRadioLabel = $('<label/>').appendTo(typeRadio);
+						$('<input type="radio" name="test" value="1" />').appendTo(typeRadioLabel);
+						$('<span/>').text("Aktiv").appendTo(typeRadioLabel);
+			*/
+			
+		}
+		
+
 		this.dom.content.append(main);
 
 		this.config.jsPlumbInstance.draggable(this.cmp().id()+'-'+nodeOptions.id, {
@@ -569,6 +570,11 @@ jsCow.res.view.nodeeditor.prototype = {
 		});
 
 		// end ===== Node Structure =====
+		/*
+		window.setTimeout(function() {
+			self.config.jsPlumbInstance.repaintEverything();
+		}, 1000);
+		*/
 
 	},
 
@@ -648,7 +654,17 @@ jsCow.res.view.nodeeditor.prototype = {
 				source: source,
 				target: target
 			}, connectorOptions);
-			
+
+			// node-editor-1-itemcondition1
+			/*
+			window.setTimeout(function() {
+				self.config.jsPlumbInstance.repaint([
+					self.cmp().id()+"-"+c.from.node, 
+					self.cmp().id()+"-"+c.to.node
+				]);
+			}, 1000);
+			*/
+
 			//console.log(con);
 			
 		});

@@ -145,7 +145,13 @@ PromotionDiscountRule = {
 			config: [
 				{
 					"type": "jsCow.res.components.nodeinput",
+					"title": "Value ($)",
 					"value": "19.95"
+				},
+				{
+					"type": "jsCow.res.components.nodeinput",
+					"title": "with min price ($)",
+					"value": "0.00"
 				}
 			],
 			inputs: [

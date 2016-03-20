@@ -55,12 +55,12 @@ $(function() {
 				},
 				config: [
 					{
-						"type": "jsCow.res.components.nodetypeinput",
+						"type": "jsCow.res.components.nodeinput",
 						"title": "Config Input 1",
 						"value": 1
 					},
 					{
-						"type": "jsCow.res.components.nodetypecheckbox",
+						"type": "jsCow.res.components.nodecheckbox",
 						"id": "cfg2",
 						"title": "Config Input 2",
 						"value": 2,
@@ -119,7 +119,7 @@ $(function() {
 				},
 				config: [
 					{
-						"type": "jsCow.res.components.nodetypeinput",
+						"type": "jsCow.res.components.nodeinput",
 						"title": "Config Input 1",
 						"value": 1
 					}
@@ -132,7 +132,7 @@ $(function() {
 						"value": 1
 					},
 					{
-						"type": "jsCow.res.components.nodetypeinput",
+						"type": "jsCow.res.components.nodeinput",
 						"id": "in2",
 						"title": "Input Port 2",
 						"value": 2
@@ -140,7 +140,7 @@ $(function() {
 				],
 				outputs: [
 					{
-						"type": "jsCow.res.components.nodetypecheckbox",
+						"type": "jsCow.res.components.nodecheckbox",
 						"id": "out1",
 						"title": "Config Output 1",
 						"value": 123,

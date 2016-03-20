@@ -12,7 +12,7 @@ PromotionDiscountRule = {
 					class: 'jsc-node-promotion-condition',
 					config: [
 						{
-							"type": "jsCow.res.components.nodetypeinput",
+							"type": "jsCow.res.components.nodeinput",
 							"title": "Config Input 1",
 							"value": 1
 						}
@@ -40,8 +40,7 @@ PromotionDiscountRule = {
 			description: 'Create actions in order to define, what discount is granted to users of the specified target group.',
 			types: [
 				{
-					title: 'Item Discount',
-					description: 'Item Value Off',
+					title: 'Discount - Item Value Off',
 					class: 'jsc-node-promotion-action',
 					inputs: [
 						{
@@ -57,14 +56,19 @@ PromotionDiscountRule = {
 	nodes: [
 		{
 			id: 'itemcondition1',
-			title: 'Item Condition',
-			description: 'Item Inclutions/Exclutions',
+			title: 'Item Inclutions',
 			class: 'jsc-node-promotion-condition',
 			pos: {
 				left: 50,
 				top: 50
 			},
-			config: [],
+			config: [
+				{
+					"type": "jsCow.res.components.nodebuttons",
+					"title": "Inclutions",
+					"value": 1
+				}
+			],
 			inputs: [
 				{
 					"type": false,
@@ -82,7 +86,7 @@ PromotionDiscountRule = {
 		},
 		{
 			id: 'itemdiscount1',
-			title: 'Item Discount',
+			title: 'Discount - Item Value Off',
 			class: 'jsc-node-promotion-action',
 			pos: {
 				left: 500,
@@ -90,8 +94,7 @@ PromotionDiscountRule = {
 			},
 			config: [
 				{
-					"type": "jsCow.res.components.nodetypeinput",
-					"title": "Item Value Off",
+					"type": "jsCow.res.components.nodeinput",
 					"value": "19.95"
 				}
 			],

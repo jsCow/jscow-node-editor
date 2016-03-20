@@ -1,19 +1,19 @@
 
-jsCow.res.components.nodetypecheckbox = function() { };
-jsCow.res.components.nodetypecheckbox.prototype = {
+jsCow.res.components.nodecheckbox = function() { };
+jsCow.res.components.nodecheckbox.prototype = {
 
 	init: function() {
 		
-		this.addController(jsCow.res.controller.nodetypecheckbox);
-		this.addModel(jsCow.res.model.nodetypecheckbox);
-		this.addView(jsCow.res.view.nodetypecheckbox);
+		this.addController(jsCow.res.controller.nodecheckbox);
+		this.addModel(jsCow.res.model.nodecheckbox);
+		this.addView(jsCow.res.view.nodecheckbox);
 		
 		return this;
 	}
 
 };
 
-jsCow.res.model.nodetypecheckbox = function() {
+jsCow.res.model.nodecheckbox = function() {
 	
 	this.data = {
 		enabled: true,
@@ -23,7 +23,7 @@ jsCow.res.model.nodetypecheckbox = function() {
 	};
 	
 };
-jsCow.res.model.nodetypecheckbox.prototype = {
+jsCow.res.model.nodecheckbox.prototype = {
 
 	init: function() {
 		this.trigger("model.ready", this.data);
@@ -31,7 +31,7 @@ jsCow.res.model.nodetypecheckbox.prototype = {
 	
 };
 
-jsCow.res.view.nodetypecheckbox = function() {
+jsCow.res.view.nodecheckbox = function() {
 	
 	this.dom = {};
 	this.dom.main = $('<label/>')
@@ -44,7 +44,7 @@ jsCow.res.view.nodetypecheckbox = function() {
 		.appendTo(this.dom.main);
 
 };
-jsCow.res.view.nodetypecheckbox.prototype = {
+jsCow.res.view.nodecheckbox.prototype = {
 	
 	init: function(e) {
 		var self = this;
@@ -97,8 +97,8 @@ jsCow.res.view.nodetypecheckbox.prototype = {
 	
 };
 
-jsCow.res.controller.nodetypecheckbox = function() {};
-jsCow.res.controller.nodetypecheckbox.prototype = {
+jsCow.res.controller.nodecheckbox = function() {};
+jsCow.res.controller.nodecheckbox.prototype = {
 	
 	init: function() {
 		this.on("model.ready", this.isModelReady);

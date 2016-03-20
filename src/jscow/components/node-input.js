@@ -1,19 +1,19 @@
 
-jsCow.res.components.nodetypeinput = function() { };
-jsCow.res.components.nodetypeinput.prototype = {
+jsCow.res.components.nodeinput = function() { };
+jsCow.res.components.nodeinput.prototype = {
 
 	init: function() {
 		
-		this.addController(jsCow.res.controller.nodetypeinput);
-		this.addModel(jsCow.res.model.nodetypeinput);
-		this.addView(jsCow.res.view.nodetypeinput);
+		this.addController(jsCow.res.controller.nodeinput);
+		this.addModel(jsCow.res.model.nodeinput);
+		this.addView(jsCow.res.view.nodeinput);
 		
 		return this;
 	}
 
 };
 
-jsCow.res.model.nodetypeinput = function() {
+jsCow.res.model.nodeinput = function() {
 	
 	this.data = {
 		enabled: true,
@@ -22,7 +22,7 @@ jsCow.res.model.nodetypeinput = function() {
 	};
 	
 };
-jsCow.res.model.nodetypeinput.prototype = {
+jsCow.res.model.nodeinput.prototype = {
 
 	init: function() {
 		this.trigger("model.ready", this.data);
@@ -30,7 +30,7 @@ jsCow.res.model.nodetypeinput.prototype = {
 	
 };
 
-jsCow.res.view.nodetypeinput = function() {
+jsCow.res.view.nodeinput = function() {
 	
 	this.dom = {};
 	this.dom.main = $('<label/>')
@@ -43,7 +43,7 @@ jsCow.res.view.nodetypeinput = function() {
 		.appendTo(this.dom.main);
 	
 };
-jsCow.res.view.nodetypeinput.prototype = {
+jsCow.res.view.nodeinput.prototype = {
 	
 	init: function(e) {
 		var self = this;
@@ -95,8 +95,8 @@ jsCow.res.view.nodetypeinput.prototype = {
 	
 };
 
-jsCow.res.controller.nodetypeinput = function() {};
-jsCow.res.controller.nodetypeinput.prototype = {
+jsCow.res.controller.nodeinput = function() {};
+jsCow.res.controller.nodeinput.prototype = {
 	
 	init: function() {
 		this.on("model.ready", this.isModelReady);

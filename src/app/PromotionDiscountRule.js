@@ -7,14 +7,36 @@ PromotionDiscountRule = {
 			description: 'Create condition nodes in order to define, what discount is granted to users of the specified target group.',
 			types: [
 				{
-					title: 'Item Condition',
-					description: 'Item Inclutions/Exclutions',
+					title: 'Item Inclutions',
 					class: 'jsc-node-promotion-condition',
 					config: [
 						{
-							"type": "jsCow.res.components.nodeinput",
-							"title": "Config Input 1",
+							"type": "jsCow.res.components.nodebuttons",
+							"title": "Select Inclutions..."
+						}
+					],
+					inputs: [
+						{
+							"type": false,
+							"id": "in1",
 							"value": 1
+						}
+					],
+					outputs: [
+						{
+							"type": false,
+							"id": "out1",
+							"value": 1
+						}
+					]
+				},
+				{
+					title: 'Item Exclusions',
+					class: 'jsc-node-promotion-condition',
+					config: [
+						{
+							"type": "jsCow.res.components.nodebuttons",
+							"title": "Select Exclusions..."
 						}
 					],
 					inputs: [
@@ -65,8 +87,36 @@ PromotionDiscountRule = {
 			config: [
 				{
 					"type": "jsCow.res.components.nodebuttons",
-					"title": "Inclutions",
+					"title": "Select Inclutions..."
+				}
+			],
+			inputs: [
+				{
+					"type": false,
+					"id": "in1",
 					"value": 1
+				}
+			],
+			outputs: [
+				{
+					"type": false,
+					"id": "out1",
+					"value": 1
+				}
+			]
+		},
+		{
+			id: 'itemcondition2',
+			title: 'Item Exclusions',
+			class: 'jsc-node-promotion-condition',
+			pos: {
+				left: 300,
+				top: 50
+			},
+			config: [
+				{
+					"type": "jsCow.res.components.nodebuttons",
+					"title": "Select Exclusions..."
 				}
 			],
 			inputs: [
@@ -89,8 +139,8 @@ PromotionDiscountRule = {
 			title: 'Discount - Item Value Off',
 			class: 'jsc-node-promotion-action',
 			pos: {
-				left: 500,
-				top: 150
+				left: 700,
+				top: 250
 			},
 			config: [
 				{
@@ -111,6 +161,16 @@ PromotionDiscountRule = {
 		{
 			from: {
 				node: 'itemcondition1',
+				out: 'out1'
+			},
+			to: {
+				node: 'itemcondition2',
+				in: 'in1'
+			}
+		},
+		{
+			from: {
+				node: 'itemcondition2',
 				out: 'out1'
 			},
 			to: {

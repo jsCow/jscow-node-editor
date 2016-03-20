@@ -33,11 +33,11 @@ jsCow.res.model.nodebuttons.prototype = {
 jsCow.res.view.nodebuttons = function() {
 	
 	this.dom = {};
-	this.dom.main = $('<input type="button" value="" />')
-		.addClass('jsc-node-type-button');
+	this.dom.main = $('<button/>')
+		.addClass('jsc-node-button');
 	
 	/*this.dom.content = $('<div/>')
-		.addClass('jsc-node-type-button-content')
+		.addClass('jsc-node-button-content')
 		.appendTo(this.dom.main);
 	*/
 
@@ -47,23 +47,15 @@ jsCow.res.view.nodebuttons.prototype = {
 	init: function(e) {
 		var self = this;
 
-		/*
-		this.dom.content
+		this.dom.main
 			.on('click', function(e) {
-				
 				e.stopPropagation();
 				e.preventDefault();
-
-			}).on('change', function(e) {
 				
-				self.cmp().config({
-					value: self.dom.content.val()
-				});
 				self.trigger('node.config.changed');
 
 			});
-		*/
-
+		
 		this.trigger("view.update", e.data);
 		
 	},
@@ -72,10 +64,12 @@ jsCow.res.view.nodebuttons.prototype = {
 		
 		if (e.data.enabled) {
 			
-			this.dom.main.removeClass('jsc-node-type-button-disabled').addClass('jsc-node-type-button');
+			this.dom.main.removeClass('jsc-node-button-disabled').addClass('jsc-node-button');
 			
-			// ...
-			
+			if (e.data.title) {
+				this.dom.main.html(e.data.title);
+			}
+
 			if (e.data.visible) {
 				this.dom.main.show();
 			}else{
@@ -84,7 +78,7 @@ jsCow.res.view.nodebuttons.prototype = {
 			
 		}else{
 			
-			this.dom.main.removeClass('jsc-node-type-button').addClass('jsc-node-type-button-disabled');
+			this.dom.main.removeClass('jsc-node-button').addClass('jsc-node-button-disabled');
 			
 		}
 	}

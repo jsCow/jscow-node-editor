@@ -24,7 +24,6 @@ $(function() {
 	}).target('#node-editor-2').run();
 
 
-
 	$('<button>Promotion Discount Rule</button>').click(function() {
 		jsCow.find('node-editor-1').options(PromotionDiscountRule);
 	}).appendTo('body');

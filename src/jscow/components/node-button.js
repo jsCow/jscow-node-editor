@@ -18,7 +18,8 @@ jsCow.res.model.nodebuttons = function() {
 	this.data = {
 		enabled: true,
 		visible: true,
-		value: null
+		value: null,
+		click: null
 	};
 	
 };
@@ -47,15 +48,26 @@ jsCow.res.view.nodebuttons.prototype = {
 	init: function(e) {
 		var self = this;
 
-		this.dom.main
-			.on('click', function(e) {
-				e.stopPropagation();
-				e.preventDefault();
-				
-				self.trigger('node.config.changed');
+		if (typeof e.data.events === 'object') {
 
-			});
-		
+			for (var event in e.data.events) {
+				
+				if (typeof e.data.events[event] === 'function') {
+					
+					//this.dom.main.on(event, e.data.events[event]);
+					
+					this.dom.main.on(event, (function(self, m){
+						return function() {
+							m.apply( self, arguments);
+						};
+					})(self.cmp(), e.data.events[event]));
+					
+				}
+
+			}
+
+		}
+
 		this.trigger("view.update", e.data);
 		
 	},
@@ -91,6 +103,7 @@ jsCow.res.controller.nodebuttons.prototype = {
 	init: function() {
 		this.on("model.ready", this.isModelReady);
 		this.on("title", this.title);
+		this.on("click", this.click);
 	},
 	
 	isModelReady: function() {

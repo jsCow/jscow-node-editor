@@ -87,7 +87,13 @@ PromotionDiscountRule = {
 			config: [
 				{
 					"type": "jsCow.res.components.nodebuttons",
-					"title": "Select Inclutions..."
+					"title": "Select Inclutions...",
+					"events": {
+						"click": function(e) {
+							alert("click...");
+							//this.trigger('node.config.changed');
+						}
+					}
 				}
 			],
 			inputs: [

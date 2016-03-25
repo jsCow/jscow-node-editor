@@ -13,11 +13,18 @@
 	.round-corner-all(@space-default / 2 / 2);
 	.layout-default(@base-color);
 	.text(darken(@text-color-default, (@color-offset-default * 0)));
+	outline-style: none;
 
 	&:hover {
 		.layout-default(darken(@base-color, @color-offset-default));
 		.text(darken(@text-color-default, (@color-offset-default * 0)));
 	}
+
+	&:active {
+		.layout-default(lighten(@base-color, @color-offset-default));
+		.text(darken(@text-color-default, (@color-offset-default * 0)));
+	}
+
 }
 
 .jsc-node-button-disabled { 

@@ -1178,8 +1178,6 @@ jsCow.res.controller.nodeeditor.prototype = {
 		var config = this.cmp().config();
 		var options = e.data.options;
 
-		console.log(">>>", options);
-		
 		// Set repositories with node types
 		if (options.repositories && options.repositories instanceof Array ) {
 			for (var r=0; r < options.repositories.length; r++ ) {

@@ -606,12 +606,13 @@ jsCow.res.view.nodeeditor.prototype = {
 					cssClass: "jsc-connector-bezier"
 				}],
 				anchor: ['RightMiddle', 'LeftMiddle'],
-				endpoint: ["Dot", {radius: 5}],
+				endpoint: ["Dot", {radius: 5}]
+				/*,
 				overlays: [
 					[ "Label", { 
 						cssClass: "jsc-connector-label",
 						label: "x",
-						location: 0.5,
+						location: 0.5
 						events:{ 
 							click:function(labelOverlay, originalEvent) { 
 								
@@ -634,9 +635,10 @@ jsCow.res.view.nodeeditor.prototype = {
 								
 								console.info('REMOVED CONNECTION', labelOverlay, labelOverlay.component.id, con);
 							} 
-                        } 
+                        }
 					}]
 				]
+                */
 			};
 
 			if (c.color) {
@@ -653,7 +655,32 @@ jsCow.res.view.nodeeditor.prototype = {
 			var con = self.config.jsPlumbInstance.connect({
 				source: source,
 				target: target
-			}, connectorOptions);
+			}, connectorOptions).bind("dblclick", function (connection, e) {
+				e.stopPropagation();
+   				e.preventDefault();
+
+				var from = connection.sourceId.split('-');
+				var to = connection.targetId.split('-');
+				
+				var c = {
+					from: {
+						node: from[from.length - 2],
+						out: from[from.length - 1]
+					},
+					to: {
+						node: to[to.length - 2],
+						in: to[to.length - 1]
+					}
+				};
+				
+				self.config.jsPlumbInstance.detach(connection);
+				self.cmp().removeConnection(c);
+				
+				console.info('REMOVED CONNECTION', c);
+
+				return false;
+
+			});
 
 			// node-editor-1-itemcondition1
 			/*

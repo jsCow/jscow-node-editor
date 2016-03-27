@@ -94,6 +94,12 @@ PromotionDiscountRule = {
 							//this.trigger('node.config.changed');
 						}
 					}
+				},
+				{
+					"type": "jsCow.res.components.nodecheckbox",
+					"title": "Enable",
+					"value": 1,
+					"selected": true
 				}
 			],
 			inputs: [
@@ -101,6 +107,12 @@ PromotionDiscountRule = {
 					"type": false,
 					"id": "in1",
 					"value": 1
+				},
+				{
+					"type": "jsCow.res.components.nodecheckbox",
+					"title": "Enable",
+					"value": 1,
+					"selected": true
 				}
 			],
 			outputs: [
@@ -108,6 +120,12 @@ PromotionDiscountRule = {
 					"type": false,
 					"id": "out1",
 					"value": 1
+				},
+				{
+					"type": "jsCow.res.components.nodecheckbox",
+					"title": "Enable",
+					"value": 1,
+					"selected": true
 				}
 			]
 		},

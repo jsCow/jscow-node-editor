@@ -11,7 +11,7 @@ PromotionDiscountRule = {
 					class: 'jsc-node-promotion-condition',
 					config: [
 						{
-							"type": "jsCow.res.components.nodebuttons",
+							"type": "jsCow.res.components.nodebutton",
 							"title": "Select Inclutions..."
 						}
 					],
@@ -35,7 +35,7 @@ PromotionDiscountRule = {
 					class: 'jsc-node-promotion-condition',
 					config: [
 						{
-							"type": "jsCow.res.components.nodebuttons",
+							"type": "jsCow.res.components.nodebutton",
 							"title": "Select Exclusions..."
 						}
 					],
@@ -86,7 +86,7 @@ PromotionDiscountRule = {
 			},
 			config: [
 				{
-					"type": "jsCow.res.components.nodebuttons",
+					"type": "jsCow.res.components.nodebutton",
 					"title": "Select Inclutions...",
 					"events": {
 						"click": function(e) {
@@ -99,12 +99,13 @@ PromotionDiscountRule = {
 					"type": "jsCow.res.components.nodecheckbox",
 					"title": "Enable",
 					"value": 1,
-					"selected": true
+					"checked": true
 				}
 			],
 			inputs: [
 				{
 					"type": false,
+					"title": "Title",
 					"id": "in1",
 					"value": 1
 				},
@@ -112,7 +113,7 @@ PromotionDiscountRule = {
 					"type": "jsCow.res.components.nodecheckbox",
 					"title": "Enable",
 					"value": 1,
-					"selected": true
+					"checked": false
 				}
 			],
 			outputs: [
@@ -125,7 +126,7 @@ PromotionDiscountRule = {
 					"type": "jsCow.res.components.nodecheckbox",
 					"title": "Enable",
 					"value": 1,
-					"selected": true
+					"checked": true
 				}
 			]
 		},
@@ -139,7 +140,7 @@ PromotionDiscountRule = {
 			},
 			config: [
 				{
-					"type": "jsCow.res.components.nodebuttons",
+					"type": "jsCow.res.components.nodebutton",
 					"title": "Select Exclusions..."
 				}
 			],

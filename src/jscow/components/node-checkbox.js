@@ -19,7 +19,7 @@ jsCow.res.model.nodecheckbox = function() {
 		enabled: true,
 		visible: true,
 		value: null,
-		selected: false
+		checked: false
 	};
 	
 };
@@ -35,12 +35,12 @@ jsCow.res.view.nodecheckbox = function() {
 	
 	this.dom = {};
 	this.dom.main = $('<label/>')
-		.addClass('jsc-node-type-checkbox');
-	this.dom.content = $('<input type="checkbox" value="" />')
-		.addClass('jsc-node-type-checkbox-content')
+		.addClass('jsc-node-checkbox');
+	this.dom.content = $('<i class="fa"></i>')
+		.addClass('jsc-node-checkbox-icon')
 		.appendTo(this.dom.main);
 	this.dom.title = $('<span/>')
-		.addClass('jsc-node-type-checkbox-title')
+		.addClass('jsc-node-checkbox-title')
 		.appendTo(this.dom.main);
 
 };
@@ -48,19 +48,36 @@ jsCow.res.view.nodecheckbox.prototype = {
 	
 	init: function(e) {
 		var self = this;
-
-		this.dom.content
-			.on('dblclick', function(e) {
+		
+		this.on('state', this.state);
+		
+		this.dom.main
+			.on('click', function(e) {
 				e.preventDefault();
-				e.stopPropagation();
-			}).on('change', function(e) {
-				
-				self.cmp().config({
-					selected: $(this).is(':checked')
-				});
+
+				if (self.cmp().config().checked) {
+					
+					self.trigger('state', {
+						checked: false
+					});
+
+				}else{
+					
+					self.trigger('state', {
+						checked: true
+					});
+
+				}
+
 				self.trigger('node.config.changed');
 
 			});
+		
+		console.log(e.data);
+
+		this.trigger('state', {
+			checked: e.data.checked
+		});
 
 		this.trigger("view.update", e.data);
 		
@@ -70,14 +87,12 @@ jsCow.res.view.nodecheckbox.prototype = {
 		
 		if (e.data.enabled) {
 			
-			this.dom.main.removeClass('jsc-node-type-checkbox-disabled').addClass('jsc-node-type-checkbox');
+			this.dom.main.removeClass('jsc-node-checkbox-disabled').addClass('jsc-node-checkbox');
 			
 			if (e.data.value) {
 				this.dom.content.val(e.data.value);
 			}
-			if (e.data.selected) {
-				this.dom.content.prop('checked', e.data.selected);
-			}
+
 			if (e.data.title) {
 				this.dom.title.html(e.data.title);
 			}
@@ -90,8 +105,16 @@ jsCow.res.view.nodecheckbox.prototype = {
 			
 		}else{
 			
-			this.dom.main.removeClass('jsc-node-type-checkbox').addClass('jsc-node-type-checkbox-disabled');
+			this.dom.main.removeClass('jsc-node-checkbox').addClass('jsc-node-checkbox-disabled');
 			
+		}
+	},
+
+	state: function(e) {
+		if (e.data.checked) {
+			this.dom.content.removeClass('fa fa-check-square-o').addClass('fa fa-square-o');
+		}else{
+			this.dom.content.removeClass('fa fa-square-o').addClass('fa fa-check-square-o');
 		}
 	}
 	
@@ -103,10 +126,17 @@ jsCow.res.controller.nodecheckbox.prototype = {
 	init: function() {
 		this.on("model.ready", this.isModelReady);
 		this.on("title", this.title);
+		this.on("state", this.state);
 	},
 	
 	isModelReady: function() {
 		this.trigger("view.init", this.cmp().config());
+	},
+	
+	state: function(e) {
+		this.cmp().config({
+			checked: e.data.checked
+		});
 	}
 
 };

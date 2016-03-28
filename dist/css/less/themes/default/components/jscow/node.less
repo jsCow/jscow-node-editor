@@ -102,11 +102,7 @@
 				.border-left(3px, solid, darken(@base-color, (@color-offset-default * 1))); 
 				
 				&:hover {
-					background: lighten(@bg, 5%);
-					background: -moz-linear-gradient(left, lighten(@bg, 5%) 0%, darken(@bg, (@color-offset-default * 1)) 100%);
-					background: -webkit-linear-gradient(left, lighten(@bg, 5%) 0%,darken(@bg, (@color-offset-default * 1)) 100%);
-					background: linear-gradient(to right, lighten(@bg, 5%) 0%,darken(@bg, (@color-offset-default * 1)) 100%);
-					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='lighten(@bg, 5%)', endColorstr='darken(@bg, (@color-offset-default * 1))',GradientType=1 );
+					.border-left(3px, solid, lighten(@base-color, (@color-offset-default * 2))); 
 				}
 
 			}
@@ -115,11 +111,7 @@
 				.border-right(3px, solid, darken(@base-color, (@color-offset-default * 1)));
 				
 				&:hover {
-					background: lighten(@bg, 5%);
-					background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, lighten(@bg, 5%) 100%);
-					background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,lighten(@bg, 5%) 100%);
-					background: linear-gradient(to right, rgba(0,0,0,0) 0%,lighten(@bg, 5%) 100%);
-					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(0,0,0,0)', endColorstr='lighten(@bg, 5%)',GradientType=1 );
+					.border-right(3px, solid, lighten(@base-color, (@color-offset-default * 2)));
 				}
 
 				div {

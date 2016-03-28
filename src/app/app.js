@@ -62,8 +62,7 @@ $(function() {
 						"type": "jsCow.res.components.nodecheckbox",
 						"id": "cfg2",
 						"title": "Config Input 2",
-						"value": 2,
-						"selected": true
+						"checked": true
 					}
 				],
 				inputs: [
@@ -143,7 +142,7 @@ $(function() {
 						"id": "out1",
 						"title": "Config Output 1",
 						"value": 123,
-						"selected": true
+						"checked": false
 					},
 					{
 						"type": false,

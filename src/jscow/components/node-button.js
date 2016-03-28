@@ -1,19 +1,19 @@
 
-jsCow.res.components.nodebuttons = function() { };
-jsCow.res.components.nodebuttons.prototype = {
+jsCow.res.components.nodebutton = function() { };
+jsCow.res.components.nodebutton.prototype = {
 
 	init: function() {
 		
-		this.addController(jsCow.res.controller.nodebuttons);
-		this.addModel(jsCow.res.model.nodebuttons);
-		this.addView(jsCow.res.view.nodebuttons);
+		this.addController(jsCow.res.controller.nodebutton);
+		this.addModel(jsCow.res.model.nodebutton);
+		this.addView(jsCow.res.view.nodebutton);
 		
 		return this;
 	}
 
 };
 
-jsCow.res.model.nodebuttons = function() {
+jsCow.res.model.nodebutton = function() {
 	
 	this.data = {
 		enabled: true,
@@ -23,7 +23,7 @@ jsCow.res.model.nodebuttons = function() {
 	};
 	
 };
-jsCow.res.model.nodebuttons.prototype = {
+jsCow.res.model.nodebutton.prototype = {
 
 	init: function() {
 		this.trigger("model.ready", this.data);
@@ -31,7 +31,7 @@ jsCow.res.model.nodebuttons.prototype = {
 	
 };
 
-jsCow.res.view.nodebuttons = function() {
+jsCow.res.view.nodebutton = function() {
 	
 	this.dom = {};
 	this.dom.main = $('<button/>')
@@ -43,7 +43,7 @@ jsCow.res.view.nodebuttons = function() {
 	*/
 
 };
-jsCow.res.view.nodebuttons.prototype = {
+jsCow.res.view.nodebutton.prototype = {
 	
 	init: function(e) {
 		var self = this;
@@ -72,7 +72,7 @@ jsCow.res.view.nodebuttons.prototype = {
 		
 	},
 	
-	update: function(e) {	
+	update: function(e) {
 		
 		if (e.data.enabled) {
 			
@@ -97,8 +97,8 @@ jsCow.res.view.nodebuttons.prototype = {
 	
 };
 
-jsCow.res.controller.nodebuttons = function() {};
-jsCow.res.controller.nodebuttons.prototype = {
+jsCow.res.controller.nodebutton = function() {};
+jsCow.res.controller.nodebutton.prototype = {
 	
 	init: function() {
 		this.on("model.ready", this.isModelReady);

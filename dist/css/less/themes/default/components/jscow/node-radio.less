@@ -1,0 +1,64 @@
+
+// 
+// Node - Config - radio
+
+.jsc-node,
+.jsc-node-disabled {
+
+	.jsc-node-radio,
+	.jsc-node-radio-disabled {
+		
+		.jsc-node-radio-buttons {
+			.flex-display();
+			.flex-direction(row);
+			.justify-content(flex-start);
+
+			> * {
+				cursor: pointer;
+				background: darken(@base-color, 10%);
+				padding: 2px @space-default / 2;
+				font-size: 1.1rem;
+				font-weight: 400;
+				.border-all(1px, solid, darken(@base-color, 15%));
+				.round-corner-all(@space-default / 2 / 2);
+				.layout-default(@base-color);
+				.text(darken(@text-color-default, (@color-offset-default * 0)));
+				outline-style: none;
+				white-space: normal;
+				
+				&:hover,
+				&.jsc-node-radio-active {
+					.layout-default(darken(@base-color, (@color-offset-default * 1)));
+					.text(lighten(@text-color-default, (@color-offset-default * 1)));
+				}
+
+			}
+		}
+
+	}
+
+	.jsc-node-radio-disabled { 
+		.disabled();
+	}
+
+	.jsc-node-port {
+
+		&.jsc-node-port-in {
+			
+		}
+
+		&.jsc-node-port-out {
+			
+			.jsc-node-radio-buttons {
+				float: right;
+				
+				> div {
+					text-align: left;
+				}
+			}
+
+		}
+
+	}
+
+}

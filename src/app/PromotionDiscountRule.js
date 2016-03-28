@@ -96,6 +96,15 @@ PromotionDiscountRule = {
 					}
 				},
 				{
+					"type": "jsCow.res.components.noderadio",
+					"title": "Radios",
+					"value": [
+						{ title: 'Radio 1', value: 1},
+						{ title: 'Radio 2', value: 2},
+						{ title: 'Radio 4', value: 4, selected: true}
+					]
+				},
+				{
 					"type": "jsCow.res.components.nodecheckbox",
 					"title": "Enable",
 					"value": 1,
@@ -110,6 +119,15 @@ PromotionDiscountRule = {
 					"value": 1
 				},
 				{
+					"type": "jsCow.res.components.noderadio",
+					"title": "Radios",
+					"value": [
+						{ title: 'Radio 1', value: 1},
+						{ title: 'Radio 2', value: 2, selected: true},
+						{ title: 'Radio 3', value: 3}
+					]
+				},
+				{
 					"type": "jsCow.res.components.nodecheckbox",
 					"title": "Enable",
 					"value": 1,
@@ -121,6 +139,15 @@ PromotionDiscountRule = {
 					"type": false,
 					"id": "out1",
 					"value": 1
+				},
+				{
+					"type": "jsCow.res.components.noderadio",
+					"title": "Radios",
+					"value": [
+						{ title: 'Radio 2', value: 2},
+						{ title: 'Radio 3', value: 3, selected: true},
+						{ title: 'Radio 4', value: 4}
+					]
 				},
 				{
 					"type": "jsCow.res.components.nodecheckbox",

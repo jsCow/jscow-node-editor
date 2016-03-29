@@ -105,6 +105,16 @@ PromotionDiscountRule = {
 					]
 				},
 				{
+					"type": "jsCow.res.components.nodedropdown",
+					"title": "Select Option",
+					"value": [
+						{ title: 'Option 1', value: 1},
+						{ title: 'Option 2', value: 2, selected: true},
+						{ title: 'Option 3', value: 3},
+						{ title: 'Option 4', value: 4}
+					]
+				},
+				{
 					"type": "jsCow.res.components.nodecheckbox",
 					"title": "Enable",
 					"value": 1,

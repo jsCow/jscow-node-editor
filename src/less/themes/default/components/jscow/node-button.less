@@ -5,13 +5,12 @@
 .jsc-node-button,
 .jsc-node-button-disabled {
 	width: 100%;
-	background: darken(@base-color, 10%);
 	padding: 2px @space-default / 2;
 	font-size: 1.1rem;
 	font-weight: 400;
 	.border-all(1px, solid, darken(@base-color, 15%));
 	.round-corner-all(@space-default / 2 / 2);
-	.layout-default(@base-color);
+	.layout-default(darken(@base-color, (@color-offset-default * 1)));
 	.text(darken(@text-color-default, (@color-offset-default * 0)));
 	outline-style: none;
 

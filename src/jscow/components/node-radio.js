@@ -118,10 +118,9 @@ jsCow.res.controller.noderadio.prototype = {
 	
 	state: function(e) {
 		var cfg = this.cmp().config().value;
-		console.log(e.data.index, e.data.selected);
+		
 		cfg[e.data.index].selected = e.data.selected;
-
-		console.log(cfg);
+		
 		this.cmp().config({
 			value: cfg
 		});

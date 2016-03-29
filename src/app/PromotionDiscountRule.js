@@ -146,9 +146,15 @@ PromotionDiscountRule = {
 			],
 			outputs: [
 				{
-					"type": false,
+					"type": "jsCow.res.components.nodedropdown",
 					"id": "out1",
-					"value": 1
+					"title": "Select Option",
+					"value": [
+						{ title: 'Option 1', value: 1},
+						{ title: 'Option 2', value: 2, selected: true},
+						{ title: 'Option 3', value: 3},
+						{ title: 'Option 4', value: 4}
+					]
 				},
 				{
 					"type": "jsCow.res.components.noderadio",

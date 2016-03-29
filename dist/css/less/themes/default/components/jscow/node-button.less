@@ -10,7 +10,7 @@
 	font-weight: 400;
 	.border-all(1px, solid, darken(@base-color, 15%));
 	.round-corner-all(@space-default / 2 / 2);
-	.layout-default(darken(@base-color, (@color-offset-default * 1)));
+	.layout-default(lighten(@base-color, @color-offset-default));
 	.text(darken(@text-color-default, (@color-offset-default * 0)));
 	outline-style: none;
 
@@ -20,7 +20,7 @@
 	}
 
 	&:active {
-		.layout-default(lighten(@base-color, @color-offset-default));
+		.layout-default(darken(@base-color, (@color-offset-default * 1)));
 		.text(darken(@text-color-default, (@color-offset-default * 0)));
 	}
 

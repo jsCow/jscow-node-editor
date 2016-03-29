@@ -102,8 +102,6 @@ jsCow.res.controller.nodebutton.prototype = {
 	
 	init: function() {
 		this.on("model.ready", this.isModelReady);
-		this.on("title", this.title);
-		this.on("click", this.click);
 	},
 	
 	isModelReady: function() {

@@ -18,26 +18,19 @@
 				padding: 2px @space-default / 2;
 				font-size: 0.9rem;
 				font-weight: 400;
-				outline-style: none;
-				white-space: normal;
-				.border-left();
-				.border-right();
-				.border-bottom();
-				.border-top(1px, solid, lighten(@border-color-default, (@color-offset-default * 3)));
+				.border-all(1px, solid, darken(@base-color, 15%));
+				.round-corner-all(@space-default / 2 / 2);
+				.layout-default(lighten(@base-color, @color-offset-default));
 				.text(darken(@text-color-default, (@color-offset-default * 0)));
 				.transition();
 
 				&:hover {
 					.layout-default(darken(@base-color, (@color-offset-default * 0)));
 					.text();
-					.border-bottom();
-					.border-top(1px, solid, lighten(@border-color-default, (@color-offset-default * 3)));
 				}
 				&.jsc-node-radio-active {
 					.layout-default(darken(@base-color, (@color-offset-default * 1)));
 					.text(lighten(@text-color-default, (@color-offset-default * 1)));
-					.border-top();
-					.border-bottom(1px, solid, lighten(@border-color-default, (@color-offset-default * 3)));
 				}
 
 				&:first-child {

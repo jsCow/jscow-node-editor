@@ -2,39 +2,52 @@
 // 
 // Node - Config - dropdown
 
-.jsc-node-dropdown {
+.jsc-node {
 
-	.jsc-node-dropdown-field,
-	.jsc-node-dropdown-disabled {
-		width: 100%;
-		padding: 2px @space-default / 2;
-		font-size: 1.1rem;
-		font-weight: 400;
-		.border-all(1px, solid, darken(@base-color, 15%));
-		.round-corner-all(@space-default / 2 / 2);
-		.layout-default(darken(@base-color, (@color-offset-default * 1)));
-		.text(darken(@text-color-default, (@color-offset-default * 0)));
-		outline-style: none;
+	.jsc-node-dropdown {
 
-		&:hover {
-			.layout-default(darken(@base-color, @color-offset-default));
-			.text(darken(@text-color-default, (@color-offset-default * 0)));
-		}
-
-		&:active {
+		.jsc-node-dropdown-field,
+		.jsc-node-dropdown-disabled {
+			padding: 2px @space-default / 2;
+			font-size: 0.9rem;
+			font-weight: 400;
+			.border-all(1px, solid, darken(@base-color, 15%));
+			.round-corner-all(@space-default / 2 / 2);
 			.layout-default(lighten(@base-color, @color-offset-default));
 			.text(darken(@text-color-default, (@color-offset-default * 0)));
+			outline-style: none;
+			max-width: 100%;
+
+			&:hover {
+				.layout-default(darken(@base-color, @color-offset-default));
+				.text(darken(@text-color-default, (@color-offset-default * 0)));
+			}
+
+			&:active {
+				.layout-default(darken(@base-color, (@color-offset-default * 1)));
+				.text(darken(@text-color-default, (@color-offset-default * 0)));
+			}
+
+			option {
+				background: darken(@base-color, (@color-offset-default * 1));
+				.text(darken(@text-color-default, (@color-offset-default * 0)));
+			}
+			
 		}
 
-		option {
-			background: darken(@base-color, (@color-offset-default * 1));
-			.text(darken(@text-color-default, (@color-offset-default * 0)));
+
+		.jsc-node-dropdown-disabled { 
+			.disabled();
 		}
 		
 	}
-	
-	.jsc-node-dropdown-disabled { 
-		.disabled();
+
+	.jsc-node-config {
+		.jsc-node-dropdown {
+			.jsc-node-dropdown-field {
+				width: 100%;
+			}
+		}
 	}
-	
+
 }

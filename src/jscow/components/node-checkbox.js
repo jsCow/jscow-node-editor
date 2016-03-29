@@ -73,8 +73,6 @@ jsCow.res.view.nodecheckbox.prototype = {
 
 			});
 		
-		console.log(e.data);
-
 		this.trigger('state', {
 			checked: e.data.checked
 		});
@@ -125,7 +123,6 @@ jsCow.res.controller.nodecheckbox.prototype = {
 	
 	init: function() {
 		this.on("model.ready", this.isModelReady);
-		this.on("title", this.title);
 		this.on("state", this.state);
 	},
 	

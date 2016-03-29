@@ -56,17 +56,16 @@ jsCow.res.view.nodedropdown.prototype = {
 
 		for (var o=0; o < e.data.value.length; o++) {
 			var option = $('<option value="'+e.data.value[o].value+'">'+e.data.value[o].title+'</option>');
-			
 			if (e.data.value[o].selected) {
-				option.attr('selected', 'selected');
+				option.prop('selected', true);
 			}
 			
-			this.dom.dropdown.append('<option value="'+e.data.value[o].value+'">'+e.data.value[o].title+'</option>');
+			this.dom.dropdown.append(option);
 		}
 
 		this.dom.dropdown.on('change', function(e) {
 			self.trigger('state', {
-				index: $(this, "option:selected").index()
+				index: $(this).find("option:selected").index()
 			});
 		});
 		
@@ -104,7 +103,6 @@ jsCow.res.controller.nodedropdown.prototype = {
 	
 	init: function() {
 		this.on("model.ready", this.isModelReady);
-		this.on("title", this.title);
 		this.on("state", this.state);
 	},
 	
@@ -113,17 +111,17 @@ jsCow.res.controller.nodedropdown.prototype = {
 	},
 	
 	state: function(e) {
-		var cfg = this.cmp().config().value;
 		
-		for (var o=0; o < cfg.length; o++) {	
+		var cfg = this.cmp().config().value;
+		console.log(e.data.index);
+
+		for (var o=0; o < cfg.length; o++) {
 			if (o === e.data.index) {
 				cfg[o].selected = true;
 			}else{
 				cfg[o].selected = false;
 			}
 		}
-
-		console.log(cfg);
 
 		this.cmp().config({
 			value: cfg

@@ -5,12 +5,12 @@
 .jsc-node,
 .jsc-node-disabled {
 
-	@bg: lighten(@base-color, 30%);
+	@bg: lighten(@base-color, 0%);
 
 	z-index: 5;
 	padding: 0 (@space-default + 3);
 	position: absolute;
-	background: darken(@bg, (@color-offset-default * 1));
+	background: @bg;
 	width: 200px;
 	font-size: 90%;
 	font-weight: 400;
@@ -132,7 +132,7 @@
 				font-weight: 400;
 				
 				& ~ * {
-					margin-top: @space-default / 2;
+					margin-top: @space-default;
 				}
 
 			}
@@ -142,11 +142,11 @@
 		.jsc-node-preview {
 			.clearfix();
 			margin: @space-default / 2 0;
-
+			
 			img {
 				width: 100%;
 			}
-
+			
 		}
 
 	}

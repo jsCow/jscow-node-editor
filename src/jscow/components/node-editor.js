@@ -602,9 +602,13 @@ jsCow.res.view.nodeeditor.prototype = {
 
 			/** connector options */
 			var connectorOptions = {
-				connector:["Bezier", { curviness: 100 }, {
+				connector:["Bezier", { curviness: 70 }, {
 					cssClass: "jsc-connector-bezier"
 				}],
+				/*
+				connector:[ "Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true } ],
+				connector: 'StateMachine',
+				*/
 				anchor: ['RightMiddle', 'LeftMiddle'],
 				endpoint: ["Dot", {radius: 5}]
 				/*,

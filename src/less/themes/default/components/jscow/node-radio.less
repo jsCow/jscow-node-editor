@@ -15,24 +15,40 @@
 
 			> * {
 				cursor: pointer;
-				background: darken(@base-color, 10%);
 				padding: 2px @space-default / 2;
 				font-size: 1.1rem;
 				font-weight: 400;
-				.border-all(1px, solid, darken(@base-color, 15%));
-				.round-corner-all(@space-default / 2 / 2);
-				.layout-default(@base-color);
-				.text(darken(@text-color-default, (@color-offset-default * 0)));
 				outline-style: none;
 				white-space: normal;
-				
-				&:hover,
+				.border-left();
+				.border-right();
+				.border-bottom();
+				.border-top(1px, solid, lighten(@border-color-default, (@color-offset-default * 3)));
+				.text(darken(@text-color-default, (@color-offset-default * 0)));
+				.transition();
+
+				&:hover {
+					.layout-default(darken(@base-color, (@color-offset-default * 0)));
+					.text();
+					.border-bottom();
+					.border-top(1px, solid, lighten(@border-color-default, (@color-offset-default * 3)));
+				}
 				&.jsc-node-radio-active {
 					.layout-default(darken(@base-color, (@color-offset-default * 1)));
 					.text(lighten(@text-color-default, (@color-offset-default * 1)));
+					.border-top();
+					.border-bottom(1px, solid, lighten(@border-color-default, (@color-offset-default * 3)));
+				}
+
+				&:first-child {
+					.round-corner-left(@space-default / 2 / 2);
+				}
+				&:last-child {
+					.round-corner-right(@space-default / 2 / 2);
 				}
 
 			}
+
 		}
 
 	}

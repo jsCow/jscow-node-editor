@@ -8,7 +8,7 @@
 	@bg: lighten(@base-color, 30%);
 
 	z-index: 5;
-	padding: (@space-default / 2) (@space-default + 3);
+	padding: 0 (@space-default + 3);
 	position: absolute;
 	background: darken(@bg, (@color-offset-default * 1));
 	width: 200px;
@@ -122,14 +122,15 @@
 		}
 
 		.jsc-node-config {
-			padding: @space-default / 2 @space-default;
+			padding: @space-default;
 			margin: 0 -13px 0;
+			.border-top();
+			background: rgba(0,0,0,0.3);
 			
 			> * {
-				display: block;
 				font-size: 1.0rem;
 				font-weight: 400;
-
+				
 				& ~ * {
 					margin-top: @space-default / 2;
 				}

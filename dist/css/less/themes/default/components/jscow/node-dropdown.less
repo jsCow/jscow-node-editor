@@ -11,26 +11,25 @@
 			padding: 2px @space-default / 2;
 			font-size: 0.9rem;
 			font-weight: 400;
-			.border-all(1px, solid, darken(@base-color, 15%));
+			.border-all();
 			.round-corner-all(@space-default / 2 / 2);
-			.layout-default(lighten(@base-color, @color-offset-default));
-			.text(darken(@text-color-default, (@color-offset-default * 0)));
-			outline-style: none;
+			.layout-default(lighten(@base-color, (@color-offset-default * 3)));
+			outline: none;
 			max-width: 100%;
 
 			&:hover {
-				.layout-default(darken(@base-color, @color-offset-default));
-				.text(darken(@text-color-default, (@color-offset-default * 0)));
+				.layout-highlighted();
+				.text(lighten(@text-color-default, (@color-offset-default * 100)));
 			}
 
 			&:active {
 				.layout-default(darken(@base-color, (@color-offset-default * 1)));
-				.text(darken(@text-color-default, (@color-offset-default * 0)));
+				.text(lighten(@text-color-default, (@color-offset-default * 100)));
 			}
 
 			option {
 				background: darken(@base-color, (@color-offset-default * 1));
-				.text(darken(@text-color-default, (@color-offset-default * 0)));
+				.text(lighten(@text-color-default, (@color-offset-default * 100)));
 			}
 			
 		}

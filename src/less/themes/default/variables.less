@@ -12,7 +12,7 @@
 //
 // Base Colors
 
-@base-color: #3F4650;
+@base-color: #747B81;
 
 @color-default:	@base-color;	// Default
 
@@ -22,7 +22,7 @@
 @color-warning:	@brand-warning;				// Warning
 @color-danger:	@brand-danger;				// Danger
 
-@color-highlighted:	#EBE1BA;
+@color-highlighted:	#51AFC7;
 
 //
 // Layout Colors
@@ -34,10 +34,10 @@
 // Text
 
 @text-fontFamily: "ProximaNovaLight","Helvetica Neue",Helvetica,Arial,sans-serif;
-@text-fontSize-default: 0.8em;
-@text-lineHeight-default: 1em;
+@text-fontSize-default: 0.9rem;
+@text-lineHeight-default: 1rem;
 
-@text-color-default: lighten(@color-default, (@color-offset-default * 6));
+@text-color-default: darken(@color-default, (@color-offset-default * 6));
 
 @text-color-primary: darken(@color-primary, 0%);
 @text-color-info: darken(@color-info, 50%);
@@ -50,7 +50,7 @@
 // Borders
 
 @border-width-default: 1px;
-@border-color-default: darken(@layout-color-default, @color-offset-default);
+@border-color-default: darken(@layout-color-default, @color-offset-default / 2);
 @border-style-default: solid;
 @round-border-radius-default: 3px;
 
@@ -70,7 +70,7 @@
 // Shadow
 
 @shadow-color-default: rgba(0, 0, 0, .4);
-@shadow-size: 5px;
+@shadow-size: @space-default;
 @shadow-pos-left: 0px;
 @shadow-pos-top: 0px;
 @shadow-weight: 0px;

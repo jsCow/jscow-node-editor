@@ -30,7 +30,7 @@
 	.jsc-nodeeditor-nodeselector {
 		width: 20%;
 		height: 100%;
-		background: darken(@base-color, @color-offset-default);
+		background: darken(@base-color, (@color-offset-default * 3));
 		.text(lighten(@text-color-default, 100%));
 		.border-right();
 		position: absolute;
@@ -48,13 +48,13 @@
 			width: 100%;
 			height: 43px;
 			z-index: 2;
-			background: darken(@base-color, 0%);
+			background: darken(@base-color, (@color-offset-default * 3));
 			overflow: hidden;
 			padding: 3px;
 
 			input[type="text"] {
 				width: 100%;
-				background: darken(@base-color, 10%);
+				background: darken(@base-color, (@color-offset-default * 5));
 				font-size: 1.8rem;
 				font-weight: 100;
 				cursor: text;
@@ -86,7 +86,7 @@
 					padding: @space-default;
 					font-weight: 100;
 					font-size: 1.6rem;
-					background: darken(@base-color, 5%);
+					background: darken(@base-color, (@color-offset-default * 3));
 				}
 
 				div {
@@ -114,8 +114,6 @@
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
-		//background: darken(@base-color, (@color-offset-default * 1)) url(less/themes/default/img/node-editor-background.jpg);
-		background: darken(@base-color, (@color-offset-default * 1));
 		.layout-default();
 	}
 
@@ -124,63 +122,40 @@
 		width: 100%;
 		height: 100%;
 		
-		svg.jsplumb-connector {
+		.jsplumb-connector,
+		.jsc-connector-path {
 			.opacity(0.70);
 			z-index: 3;
 
 			path {
-				stroke-width: 3px;
+				stroke-width: 2px;
 				fill: none;
 				stroke-linecap: round;
-
+				
 				&:hover {
-					stroke: lighten(@base-color, (@color-offset-default * 7));
+					stroke: lighten(@base-color, (@color-offset-default * 3));
 					.opacity(1.0);
 				};
 				
+			}
+
+		}
+
+		.jsc-connector-path {
+			path {
+				stroke: darken(@base-color, (@color-offset-default * 3));
 			}
 		}
 
 		.jsplumb-endpoint{
 			z-index: 4;
-		}
 
-		.jsc-connector-label {
-			font-weight: 400;
-			z-index: 4;
-			background: lighten(@base-color, 20%);
-			padding: 0 @space-default / 2;
-			cursor: pointer;
-			font-size: 90%;
-			.text();
-			.transition(background-color 200ms linear);
-			
-			&:hover {
-				background: lighten(@color-danger, 0%);
+			circle {
+				fill: darken(@base-color, (@color-offset-default * 3));
 			}
-			
+
 		}
 
-		.jsc-connector-color {
-			z-index: 4;
-			background: lighten(@base-color, 20%);
-			padding: 0 @space-default / 2;
-			cursor: pointer;
-			width: @space-default;
-			height: @space-default;
-			.transition(background-color 200ms linear);
-			.round-corner-all(50%);
-			
-			&:hover {
-				background: lighten(@color-default, 0%);
-			}
-			
-		}
-
-		.jsc-connector-path {
-			stroke: lighten(@base-color, (@color-offset-default * 3));
-		}
-		
 	}
 	
 }

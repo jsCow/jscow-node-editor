@@ -18,21 +18,16 @@
 
 .layout(@c) {
 	
-	@c1: darken(@c2, 5%);
-	@c2: darken(@c, 5%);
-	@c3: darken(@c2, 5%);
-	@c4: darken(@c3, 5%);
+	@c1: darken(@c, 0%);
+	@c2: darken(@c, (@color-offset-default * 2));
 	
-	background: @c2;
-	background: -moz-linear-gradient(top, @c1 0%, @c2 2%, @c3 98%, @c4 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@c1), color-stop(2%,@c2), color-stop(98%,@c3), color-stop(100%,@c4));
-	background: -webkit-linear-gradient(top, @c1 0%,@c2 2%,@c3 98%,@c4 100%);
-	background: -o-linear-gradient(top, @c1 0%,@c2 2%,@c3 98%,@c4 100%);
-	background: -ms-linear-gradient(top, @c1 0%,@c2 2%,@c3 98%,@c4 100%);
-	background: linear-gradient(to bottom, @c1 0%,@c2 2%,@c3 98%,@c4 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@c2', endColorstr='@c3',GradientType=0 );
-	color: darken(@c, (@color-offset-default * 2));
-	filter: dropshadow(color=lighten(@c, @color-offset-default), offx=0, offy=1);
+	background: @c1;
+	background: -moz-linear-gradient(-45deg,  @c1 0%, @c2 100%);
+	background: -webkit-linear-gradient(-45deg,  @c1 0%,@c2 100%);
+	background: linear-gradient(135deg,  @c1 0%,@c2 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@c1', endColorstr='@c2',GradientType=1 );
+
+	.text();
 }
 
 .layout-default(@c: @layout-color-default) {

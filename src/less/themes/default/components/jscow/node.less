@@ -4,22 +4,21 @@
 
 .jsc-node,
 .jsc-node-disabled {
-
-	@bg: lighten(@base-color, 0%);
+	
+	@bg: lighten(@base-color, (@color-offset-default * 3));
 
 	z-index: 5;
 	padding: 0 (@space-default + 3);
 	position: absolute;
-	background: @bg;
 	width: 200px;
 	font-size: 90%;
 	font-weight: 400;
-	.text();
+	.layout-default(@bg);
 	.round-corner-all(@space-default);
 	.noelect();
 	.border-all(1px, solid, darken(@base-color, (@color-offset-default * 3)));
 	.shadow();
-	.opacity(0.8);
+	.opacity(0.9);
 
 	&.jsc-focus {
 		border-color: lighten(@bg, (@color-offset-default * 3));
@@ -38,7 +37,8 @@
 		padding: 2px @space-default;
 		margin: -(@space-default / 2) -13px @space-default -13px;
 		.round-corner-top(@space-default);
-		background: darken(@base-color, (@color-offset-default * 3));
+		background: lighten(@bg, (@color-offset-default * 1));
+		.border-top(@border-width-default, @border-style-default, lighten(@bg, (@color-offset-default * 2)));
 
 		.jsc-node-remove {
 			position: absolute;
@@ -68,14 +68,14 @@
 
 		.jsc-node-description {
 			margin-bottom: @space-default;
-			font-size: 1.2rem;
-			font-weight: 100;
+			font-size: @text-fontSize-default * 2;
+			font-weight: 400;
 		}
 
 		.jsc-node-port {
 			color: darken(@text-color-default, 0%);
 			font-size: @text-fontSize-default;
-			font-weight: 400;
+			font-weight: 700;
 			position: relative;
 			padding: @space-default / 2 / 2 0;
 			margin: 0 -13px @space-default / 2 -13px;
@@ -98,19 +98,19 @@
 			}
 			
 			&.jsc-node-port-in {
-				.border-left(3px, solid, darken(@base-color, (@color-offset-default * 1))); 
+				.border-left(3px, solid, darken(@base-color, (@color-offset-default * 3))); 
 				
 				&:hover {
-					.border-left(3px, solid, lighten(@base-color, (@color-offset-default * 2))); 
+					.border-left(3px, solid, lighten(@bg, (@color-offset-default * 3))); 
 				}
 
 			}
 
 			&.jsc-node-port-out {
-				.border-right(3px, solid, darken(@base-color, (@color-offset-default * 1)));
+				.border-right(3px, solid, darken(@base-color, (@color-offset-default * 3)));
 				
 				&:hover {
-					.border-right(3px, solid, lighten(@base-color, (@color-offset-default * 2)));
+					.border-right(3px, solid, lighten(@bg, (@color-offset-default * 3)));
 				}
 
 				div {
@@ -125,7 +125,8 @@
 			padding: @space-default;
 			margin: 0 -13px 0;
 			.border-top();
-			background: rgba(0,0,0,0.3);
+			.layout-default(darken(@bg, (@color-offset-default * 2)));
+			.round-corner-bottom(@space-default);
 			
 			> * {
 				font-size: 1.0rem;
@@ -135,6 +136,10 @@
 					margin-top: @space-default;
 				}
 
+			}
+
+			.jsc-node-radio-buttons {
+				.justify-content(center);
 			}
 
 		}

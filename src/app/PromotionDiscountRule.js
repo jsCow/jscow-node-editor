@@ -70,6 +70,18 @@ PromotionDiscountRule = {
 							"id": "in1",
 							"value": 1
 						}
+					],
+					config: [
+						{
+							"type": "jsCow.res.components.nodeinput",
+							"title": "Value ($)",
+							"value": "19.95"
+						},
+						{
+							"type": "jsCow.res.components.nodeinput",
+							"title": "with min price ($)",
+							"value": "0.00"
+						}
 					]
 				}
 			]
@@ -137,6 +149,11 @@ PromotionDiscountRule = {
 					]
 				},
 				{
+					"type": "jsCow.res.components.nodeinput",
+					"title": "Value",
+					"value": "19.95"
+				},
+				{
 					"type": "jsCow.res.components.nodecheckbox",
 					"title": "Enable",
 					"value": 1,
@@ -153,6 +170,11 @@ PromotionDiscountRule = {
 						{ title: 'Option 3', value: 3},
 						{ title: 'Option 4', value: 4}
 					]
+				},
+				{
+					"type": "jsCow.res.components.nodeinput",
+					"title": "Value",
+					"value": "19.95"
 				},
 				{
 					"type": "jsCow.res.components.noderadio",

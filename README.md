@@ -1,10 +1,6 @@
 # jscow-node-editor
 Provides a jscow application environment to implement your own jscow application.
 
-============================
-===== WORK IN PROGRESS =====
-============================
-
 ## Install
 
 ```sh
@@ -18,16 +14,16 @@ grunt
 ```
 
 ## Watch
-You can the grunt-contrib-watch plugin to call all grunt tasks automatically by change a **js** file or **less** file within the **src/** directory. To refresh your page automatically after calling the watch task you have to install the browser plugin **LiveReload**. 
+You can the grunt-contrib-watch plugin to call all grunt tasks automatically by change a **js** file or **less** file within the **src/** directory. To refresh your page automatically after calling the watch task you have to install the browser plugin **LiveReload**.
 
-For using the watcher run the follow command in your nodejs command client:
+To using the watcher run the follow command in your nodejs command client:
 ```sh
 grunt watch
 ```
 
-## Dependencies
+## Development dependencies
 
-`jscow-node-editor` needs the following node packages:
+For development the `jscow-node-editor` there needs the following node packages:
 All packages will be installed with command **'npm install'**.
 
 * [grunt](https://www.npmjs.com/package/grunt) - The JavaScript Task Runner.

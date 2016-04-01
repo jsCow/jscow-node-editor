@@ -21,6 +21,21 @@ To using the watcher run the follow command in your nodejs command client:
 grunt watch
 ```
 
+## Create an editor instance
+For using an editor you need to create an instance of the node editor.
+You can use the following code snippet to create a new instance.
+```sh
+var editor = jsCow.get(jsCow.res.components.nodeeditor, {
+	model: {
+		options: {
+			autosave: true
+		}
+	}
+}).on('editor.options.changed', function(e) {
+	console.log("Process data changed", e.data);
+}).target('#node-editor-1').run();
+```
+
 ## Describe a node
 To use a node in your `jscow-node-editor` you needs the following json.
 

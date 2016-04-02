@@ -54,6 +54,16 @@ To use a node in your `jscow-node-editor` you needs the following json.
 }
 ```
 
+## Define a node port with only a title
+Use this json snippet within node configurations for `config`, `inputs` or `outputs`. If you need you can set a specific `id` and `value` for these node port. The properties `id` and `value` are optional values for a simple port with only a title.
+```sh
+{
+	"title": "Port Title",
+	"id": "in1",
+	"value": 1
+}
+```
+
 ## Using a dropdown as a configuration field
 Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
 ```sh

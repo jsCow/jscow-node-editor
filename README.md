@@ -53,3 +53,58 @@ To use a node in your `jscow-node-editor` you needs the following json.
 	outputs: []
 }
 ```
+
+## Using a dropdown as a configuration field
+Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
+```sh
+{
+	"type": "jsCow.res.components.nodedropdown",
+	"title": "Select Option",
+	"value": [
+		{ title: 'Option 1', value: 1},
+		{ title: 'Option 2', value: 2, selected: true},
+		{ title: 'Option 3', value: 3},
+		{ title: 'Option 4', value: 4}
+	]
+}
+```
+
+## Using a button as a configuration field
+Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
+```sh
+{
+	"type": "jsCow.res.components.nodebutton",
+	"title": "Button",
+	"events": {
+		"click": function(e) {
+			console.log("button clicked...");
+			// ...
+			this.trigger('node.config.changed');
+		}
+	}
+}
+```
+
+## Using a checkbox as a configuration field
+Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
+```sh
+{
+	"type": "jsCow.res.components.nodecheckbox",
+	"title": "Your field label",
+	"value": [
+		{ title: 'Checkbox 1', value: 1},
+		{ title: 'Checkbox 2', value: 2},
+		{ title: 'Checkbox 3', value: 3, selected: true}
+	]
+}
+```
+
+## Using a textfield as a configuration field
+Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
+```sh
+{
+	"type": "jsCow.res.components.nodeinput",
+	"title": "Value",
+	"value": "19.95"
+}
+```

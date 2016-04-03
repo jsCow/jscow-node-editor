@@ -35,6 +35,9 @@ jsCow.res.view.nodecheckbox = function() {
 	this.dom = {};
 	this.dom.main = $('<div/>')
 		.addClass('jsc-node-checkbox');
+	this.dom.title = $('<div/>')
+		.addClass('jsc-node-checkbox-title')
+		.appendTo(this.dom.main);
 	this.dom.content = $('<div/>')
 		.addClass('jsc-node-checkbox-buttons')
 		.appendTo(this.dom.main);
@@ -89,6 +92,10 @@ jsCow.res.view.nodecheckbox.prototype = {
 			
 			this.dom.main.removeClass('jsc-node-checkbox-disabled').addClass('jsc-node-checkbox');
 			
+			if (e.data.title) {
+				this.dom.title.html(e.data.title);
+			}
+
 			if (e.data.visible) {
 				this.dom.main.show();
 			}else{

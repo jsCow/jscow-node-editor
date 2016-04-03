@@ -149,5 +149,32 @@ editor.addNode([
 		]
 	}
 ]);
+```
 
+## Add a set of connections
+It is possible to set node connections in a seperate step. Additional you can define a color for any connections that you like to set. For a connection color you can use the `color` property.
+```sh
+editor.addConnection([
+	{
+		from: {
+			node: 'node1',
+			out: 'out1'
+		},
+		to: {
+			node: 'node2',
+			in: 'in1'
+		}
+	},
+	{
+		color: '#A52A2A',
+		from: {
+			node: 'node2',
+			out: 'out1'
+		},
+		to: {
+			node: 'node3',
+			in: 'in2'
+		}
+	}
+]);
 ```

@@ -178,3 +178,53 @@ editor.addConnection([
 	}
 ]);
 ```
+
+## Add a group of node definitions that you can add within the editor.
+To have a list of available nodes to add within the editor you can add a group of node definitions. Here you can use the method addNodesRepository(<`object`>).
+```sh
+editor.addNodesRepository({
+	group: 'general',
+	title: 'General Nodes',
+	description: 'General repository of node types.',
+	types: [
+		{
+			title: 'Node 1',
+			inputs: [
+				{
+					"id": "in1",
+					"title": "Input Port 1"
+				}
+			],
+			outputs: [
+				{
+					"id": "out1",
+					"title": "Output Port 1"
+				}
+			]
+		},
+		{
+			title: 'Node 2',
+			inputs: [
+				{
+					"id": "in1",
+					"title": "Input Port 1"
+				},
+				{
+					"id": "in2",
+					"title": "Input Port 2"
+				}
+			],
+			outputs: [
+				{
+					"id": "out1",
+					"title": "Output Port 1"
+				},
+				{
+					"id": "out2",
+					"title": "Output Port 2"
+				}
+			]
+		}
+	]
+});
+```

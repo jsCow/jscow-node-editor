@@ -1,10 +1,6 @@
 # jscow-node-editor
 Provides a jscow application environment to implement your own jscow application.
 
-============================
-===== WORK IN PROGRESS =====
-============================
-
 ## Install
 
 ```sh
@@ -18,40 +14,107 @@ grunt
 ```
 
 ## Watch
-You can the grunt-contrib-watch plugin to call all grunt tasks automatically by change a **js** file or **less** file within the **src/** directory. To refresh your page automatically after calling the watch task you have to install the browser plugin **LiveReload**. 
+You can the grunt-contrib-watch plugin to call all grunt tasks automatically by change a **js** file or **less** file within the **src/** directory. To refresh your page automatically after calling the watch task you have to install the browser plugin **LiveReload**.
 
-For using the watcher run the follow command in your nodejs command client:
+To using the watcher run the follow command in your nodejs command client:
 ```sh
 grunt watch
 ```
 
-## Dependencies
+## Create an editor instance
+For using an editor you need to create an instance of the node editor.
+You can use the following code snippet to create a new instance.
+```sh
+var editor = jsCow.get(jsCow.res.components.nodeeditor, {
+	model: {
+		options: {
+			autosave: true
+		}
+	}
+}).on('editor.options.changed', function(e) {
+	console.log("Process data changed", e.data);
+}).target('#node-editor-1').run();
+```
 
-`jscow-node-editor` needs the following node packages:
-All packages will be installed with command **'npm install'**.
+## Describe a node
+To use a node in your `jscow-node-editor` you needs the following json.
 
-* [grunt](https://www.npmjs.com/package/grunt) - The JavaScript Task Runner.
-* [grunt-cli](https://www.npmjs.com/package/grunt-cli) - The grunt command line interface.
-* [grunt-contrib-clean](https://www.npmjs.com/package/grunt-contrib-clean) - Clean files and folders
-* [grunt-contrib-less](https://www.npmjs.com/package/grunt-contrib-less) - Compile LESS files to CSS
-* [grunt-contrib-copy](https://www.npmjs.com/package/grunt-contrib-copy) - Copy files and folders
-* [grunt-contrib-uglify](https://www.npmjs.com/package/grunt-contrib-uglify) - Minify files with UglifyJS
-* [grunt-contrib-compress](https://www.npmjs.com/package/grunt-contrib-compress) - Compress files and folders
-* [grunt-contrib-concat](https://www.npmjs.com/package/grunt-contrib-concat) - Concatenate files
-* [grunt-contrib-yuidoc](https://www.npmjs.com/package/grunt-contrib-yuidoc) - Compile YUIDoc Documentation 
-* [grunt-contrib-jshint](https://www.npmjs.com/package/grunt-contrib-jshint) - Validate files with JSHint
-* [grunt-contrib-watch](https://www.npmjs.com/package/grunt-contrib-watch) - Run predefined tasks whenever watched file patterns are added, changed or deleted
-* [bootstrap](https://www.npmjs.com/package/bootstrap) - The most popular front-end framework for developing responsive, mobile first projects on the web
-* [font-awesome](https://www.npmjs.com/package/font-awesome) - The iconic font and CSS framework
-* [jquery](JavaScript library for DOM operations) - JavaScript library for DOM operations
-* [jscow](http://www.jscow.de) - **jsCow** - Javascript Component Framework
-* [jscow-theme](https://github.com/jsCow/jscow-theme) - The theming environment for  **jsCow** - Javascript Component Framework
+```sh
+{
+	id: 'node1',
+	title: 'Node Title',
+	class: 'customized-node',
+	pos: {
+		left: 300,
+		top: 50
+	},
+	config: [],
+	inputs: [],
+	outputs: []
+}
+```
 
-*Note: You can install all available jscow components optional like this for example:*
-* [jscow-button](https://github.com/jsCow/jscow-button) - **jsCow** - Javascript Component Framework
-* ...
-* ...
+## Define a node port with only a title
+Use this json snippet within node configurations for `config`, `inputs` or `outputs`. If you need you can set a specific `id` and `value` for these node port. The properties `id` and `value` are optional values for a simple port with only a title.
+```sh
+{
+	"title": "Port Title",
+	"id": "in1",
+	"value": 1
+}
+```
 
-## License
+## Using a dropdown as a configuration field
+Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
+```sh
+{
+	"type": "jsCow.res.components.nodedropdown",
+	"title": "Select Option",
+	"value": [
+		{ title: 'Option 1', value: 1},
+		{ title: 'Option 2', value: 2, selected: true},
+		{ title: 'Option 3', value: 3},
+		{ title: 'Option 4', value: 4}
+	]
+}
+```
 
-`jscow-node-editor` is licensed under the GNU GPL.
+## Using a button as a configuration field
+Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
+```sh
+{
+	"type": "jsCow.res.components.nodebutton",
+	"title": "Button",
+	"events": {
+		"click": function(e) {
+			console.log("button clicked...");
+			// ...
+			this.trigger('node.config.changed');
+		}
+	}
+}
+```
+
+## Using a checkbox as a configuration field
+Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
+```sh
+{
+	"type": "jsCow.res.components.nodecheckbox",
+	"title": "Your field label",
+	"value": [
+		{ title: 'Checkbox 1', value: 1},
+		{ title: 'Checkbox 2', value: 2},
+		{ title: 'Checkbox 3', value: 3, selected: true}
+	]
+}
+```
+
+## Using a textfield as a configuration field
+Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
+```sh
+{
+	"type": "jsCow.res.components.nodeinput",
+	"title": "Value",
+	"value": "19.95"
+}
+```

@@ -32,16 +32,14 @@ $(function() {
 		jsCow.find('node-editor-1').options(CheckoutProcess);
 	}).appendTo('body');
 	
+	$('<button>Connector</button>').click(function() {
+		jsCow.find('node-editor-1').options(Connector);
+	}).appendTo('body');
+	
 
 
 	
-	$('<button>Set Options 1</button>').click(function() {
-		jsCow.find('node-editor-1').options(NodeEditorOptions1);
-	}).appendTo('body');
-	$('<button>Set Options 2</button>').click(function() {
-		jsCow.find('node-editor-2').options(NodeEditorOptions2);
-	}).appendTo('body');
-
+	
 
 
 

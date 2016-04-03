@@ -143,6 +143,7 @@ module.exports = function(grunt) {
 							'src/app/PromotionDiscountRule.js',
 							'src/app/options-exmple-1.js',
 							'src/app/CheckoutProcess.js',
+							'src/app/Connector.js',
 							'src/app/app.js'
 						],
 						'dist/js/jscow/jscow.min.js': ['dist/js/jscow/jscow.min.js']

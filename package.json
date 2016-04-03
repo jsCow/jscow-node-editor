@@ -1,7 +1,7 @@
 {
   "name": "jscow-node-editor",
   "description": "jsCow - Node Editor - Javascript Component Framework",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "GPL-3.0+",
   "readme": "README.md",
   "author": "Mario Linz <jscow@gmx.de>",
@@ -17,7 +17,6 @@
     "jquery": "latest",
     "d3": "latest",
     "jquery.kinetic": "latest",
-    "jquery-contextmenu": "latest",
     "jscow": "latest",
     "jsplumb": "latest"
   },

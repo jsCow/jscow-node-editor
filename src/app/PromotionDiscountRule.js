@@ -8,32 +8,36 @@ PromotionDiscountRule = {
 			types: [
 				{
 					title: 'Item Inclutions',
-					class: 'jsc-node-promotion-condition',
+					description: 'Defines all included items or categories for these condition.',
 					config: [
+						{
+							"type": "jsCow.res.components.nodecheckbox",
+							"value": [
+								{ title: 'Enabled', value: true, selected: true}
+							]
+						},
 						{
 							"type": "jsCow.res.components.nodebutton",
 							"title": "Select Inclutions..."
 						}
 					],
 					inputs: [
-						{
-							"type": false,
-							"id": "in1",
-							"value": 1
-						}
+						{}
 					],
 					outputs: [
-						{
-							"type": false,
-							"id": "out1",
-							"value": 1
-						}
+						{}
 					]
 				},
 				{
 					title: 'Item Exclusions',
-					class: 'jsc-node-promotion-condition',
+					description: 'Defines all included items or categories for these condition.',
 					config: [
+						{
+							"type": "jsCow.res.components.nodecheckbox",
+							"value": [
+								{ title: 'Enabled', value: true, selected: true}
+							]
+						},
 						{
 							"type": "jsCow.res.components.nodebutton",
 							"title": "Select Exclusions..."
@@ -108,7 +112,7 @@ PromotionDiscountRule = {
 					}
 				},
 				{
-					"type": "jsCow.res.components.noderadio",
+					"type": "jsCow.res.components.nodecheckbox",
 					"title": "Radios",
 					"value": [
 						{ title: 'Radio 1', value: 1},
@@ -125,23 +129,16 @@ PromotionDiscountRule = {
 						{ title: 'Option 3', value: 3},
 						{ title: 'Option 4', value: 4}
 					]
-				},
-				{
-					"type": "jsCow.res.components.nodecheckbox",
-					"title": "Enable",
-					"value": 1,
-					"checked": true
 				}
 			],
 			inputs: [
 				{
-					"type": false,
 					"title": "Title",
 					"id": "in1",
 					"value": 1
 				},
 				{
-					"type": "jsCow.res.components.noderadio",
+					"type": "jsCow.res.components.nodecheckbox",
 					"value": [
 						{ title: 'Radio 1', value: 1},
 						{ title: 'Radio 2', value: 2, selected: true},
@@ -152,12 +149,6 @@ PromotionDiscountRule = {
 					"type": "jsCow.res.components.nodeinput",
 					"title": "Value",
 					"value": "19.95"
-				},
-				{
-					"type": "jsCow.res.components.nodecheckbox",
-					"title": "Enable",
-					"value": 1,
-					"checked": false
 				}
 			],
 			outputs: [
@@ -177,19 +168,13 @@ PromotionDiscountRule = {
 					"value": "19.95"
 				},
 				{
-					"type": "jsCow.res.components.noderadio",
+					"type": "jsCow.res.components.nodecheckbox",
 					"title": "Radios",
 					"value": [
 						{ title: 'Radio 2', value: 2},
 						{ title: 'Radio 3', value: 3, selected: true},
 						{ title: 'Radio 4', value: 4}
 					]
-				},
-				{
-					"type": "jsCow.res.components.nodecheckbox",
-					"title": "Enable",
-					"value": 1,
-					"checked": true
 				}
 			]
 		},

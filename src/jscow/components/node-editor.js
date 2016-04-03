@@ -360,7 +360,7 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		nodeOptions.grid = cfg.options.grid;
 		nodeOptions.snapToGrid = cfg.options.snapToGrid;
-		nodeOptions.jsPlumbInstance = this.cfg.jsPlumbInstance;
+		//nodeOptions.jsPlumbInstance = this.cfg.jsPlumbInstance;
 
 		// ===== Node Structure =====
 

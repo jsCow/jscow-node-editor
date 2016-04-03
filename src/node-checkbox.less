@@ -1,0 +1,50 @@
+
+// 
+// Node - Config - Checkbox
+
+.jsc-node,
+.jsc-node-disabled {
+
+	.jsc-node-checkbox,
+	.jsc-node-checkbox-disabled {
+		cursor: pointer;
+		margin: 0;
+		.flex-display();
+		.flex-direction(row);
+
+		.jsc-node-checkbox-icon {
+			font-size: 1.5rem;
+			margin: 0 @space-default / 2;
+		}
+		
+		.jsc-node-checkbox-title {
+			
+			&:hover {
+				.text(lighten(@text-color-default, 100%));
+			}
+		}
+
+	}
+
+	.jsc-node-checkbox-disabled { 
+		.disabled();
+	}
+
+	.jsc-node-port {
+
+		&.jsc-node-port-in {
+			
+		}
+
+		&.jsc-node-port-out {
+			
+			.jsc-node-checkbox,
+			.jsc-node-checkbox-disabled {
+				.flex-direction(row-reverse);
+			}
+
+		}
+
+	}
+
+}

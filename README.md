@@ -180,7 +180,8 @@ editor.addConnection([
 ```
 
 ## Add a group of node definitions that you can add within the editor.
-To have a list of available nodes to add within the editor you can add a group of node definitions. Here you can use the method addNodesRepository(<`object`>).
+To have a list of available nodes to add within the editor you can add a group of node definitions. Here you can use the following method: addNodesRepository(<`object`>); 
+To add available nodes in your editor instance just make a double click in the editor area. A menu with all node repositories will open. Here can choose a available node definitions. 
 ```sh
 editor.addNodesRepository({
 	group: 'general',

@@ -24,8 +24,12 @@ $(function() {
 	}).target('#node-editor-2').run();
 
 
-	$('<button>Promotion Discount Rule</button>').click(function() {
+	$('<button>Promo Rule</button>').click(function() {
 		jsCow.find('node-editor-1').options(PromotionDiscountRule);
+	}).appendTo('body');
+	
+	$('<button>Checkout Process</button>').click(function() {
+		jsCow.find('node-editor-1').options(CheckoutProcess);
 	}).appendTo('body');
 	
 

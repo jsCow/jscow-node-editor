@@ -118,3 +118,36 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 	"value": "19.95"
 }
 ```
+
+## Add one or more nodes per javascript
+To add one or more nodes at runtime you can use the editor method: addNode(<`object`|`array`>) 
+After creating the new node the editor will update the configuration and triggers the event `node.config.changed`. The event data will be the current editor config.
+```sh
+editor.addNode([
+	{
+		id: 'myNode',
+		title: 'Node Title',
+		description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+		class: 'custom-style-class',
+		pos: {
+			left: 50,
+			top: 50
+		},
+		inputs: [
+			{
+				"id": "in1",
+				"title": "Input Port 1",
+				"value": 1
+			}
+		],
+		outputs: [
+			{
+				"id": "out1",
+				"title": "Output Port 1",
+				"value": 1
+			}
+		]
+	}
+]);
+
+```

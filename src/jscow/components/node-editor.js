@@ -363,7 +363,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		//nodeOptions.jsPlumbInstance = this.cfg.jsPlumbInstance;
 
 		// ===== Node Structure =====
-
+		
 		var main = $('<div/>').attr('id', this.cmp().id()+'-'+nodeOptions.id).addClass('jsc-node clearfix').css({
 			top: nodeOptions.pos.top, 
 			left: nodeOptions.pos.left
@@ -982,11 +982,14 @@ jsCow.res.controller.nodeeditor.prototype = {
 			// No nodes available yet
 			for (i=0; i < newNodesList.length; i++) {
 				
+				console.log( newNodesList[i] );
+
 				// ADD
 				nodes[newNodesList[i].id] = newNodesList[i];
+				
 				this.trigger("editor.node.added", newNodesList[i]);
 				
-				console.info("NODE ADDED", newNodesList[i]);
+				console.info("FIRST NODE ADDED", newNodesList[i]);
 
 			}
 			
@@ -995,16 +998,16 @@ jsCow.res.controller.nodeeditor.prototype = {
 			// Nodes are already available in editor
 			for (var nn=0; nn < newNodesList.length; nn++) {
 				
-				nodes = this.cmp().config().nodes;
+				var existingNodes = this.cmp().config().nodes;
 
 				var updateNode = {};
 				updateNode[newNodesList[nn].id] = newNodesList[nn];
-				
-				if (typeof nodes[newNodesList[nn].id] === 'undefined') {
-					
+
+				if (typeof existingNodes[newNodesList[nn].id] === 'undefined') {
+
 					// ADD
-					nodes[newNodesList[nn].id] = {};
-					nodes[newNodesList[nn].id] = updateNode[newNodesList[nn].id];
+					existingNodes[newNodesList[nn].id] = {};
+					existingNodes[newNodesList[nn].id] = updateNode[newNodesList[nn].id];
 					
 					this.trigger("editor.node.added", newNodesList[nn]);
 					
@@ -1013,7 +1016,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 				}else{
 					
 					// UPDATE
-					nodes[newNodesList[nn].id] = $.extend(true, nodes[newNodesList[nn].id], updateNode[newNodesList[nn].id]);
+					existingNodes[newNodesList[nn].id] = $.extend(true, existingNodes[newNodesList[nn].id], updateNode[newNodesList[nn].id]);
 					
 					this.trigger("editor.node.updated", newNodesList[nn]);
 

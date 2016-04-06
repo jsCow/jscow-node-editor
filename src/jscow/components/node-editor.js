@@ -994,17 +994,17 @@ jsCow.res.controller.nodeeditor.prototype = {
 
 			// Nodes are already available in editor
 			for (var nn=0; nn < newNodesList.length; nn++) {
-				
+				//debugger;
 				nodes = this.cmp().config().nodes;
 
-				var updateNode = {};
-				updateNode[newNodesList[nn].id] = newNodesList[nn];
+				//var updateNode = {};
+				//updateNode[newNodesList[nn].id] = newNodesList[nn];
 				
 				if (typeof nodes[newNodesList[nn].id] === 'undefined') {
 					
 					// ADD
 					nodes[newNodesList[nn].id] = {};
-					nodes[newNodesList[nn].id] = updateNode[newNodesList[nn].id];
+					nodes[newNodesList[nn].id] = newNodesList[nn];
 					
 					this.trigger("editor.node.added", newNodesList[nn]);
 					
@@ -1013,7 +1013,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 				}else{
 					
 					// UPDATE
-					nodes[newNodesList[nn].id] = $.extend(true, nodes[newNodesList[nn].id], updateNode[newNodesList[nn].id]);
+					nodes[newNodesList[nn].id] = $.extend(true, nodes[newNodesList[nn].id], newNodesList[nn]);
 					
 					this.trigger("editor.node.updated", newNodesList[nn]);
 

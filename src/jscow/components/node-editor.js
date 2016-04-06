@@ -247,10 +247,11 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.dom.grid.kinetic();
 		
 		// Create the base svg canvas element by "D3.js"
-		this.dom.svggrid = d3.select(this.dom.content[0])
+		/*this.dom.svggrid = d3.select(this.dom.content[0])
 			.append("svg:svg")
 			.attr("width", "100%")
 			.attr("height", "100%");
+		*/
 
 		// Create jsPlumb instance
 		// Set the container
@@ -752,7 +753,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		var typeClickHandler = function(self, type) {
 			return function () {
 		        
-				type.id = ('node'+Math.random()).replace('.', '');
+		        type.id = ('node'+Math.random()).replace('.', '');
 				type.pos = {
 					left: self.config.newNodePos.left,
 					top: self.config.newNodePos.top
@@ -813,16 +814,18 @@ jsCow.res.view.nodeeditor.prototype = {
 			var item = $('<li/>');
 
 			for(var t=0; t < nodeTypeGroups[key].types.length; t++) {
+				
 				var type = nodeTypeGroups[key].types[t];
-				var typeButton = $('<div>'+type.title+'</div>').attr('data-keyboard-focus', '').attr('tabindex', '-1');
-				typeButton
+				
+				var typeButton = $('<div>'+type.title+'</div>').attr('data-keyboard-focus', '').attr('tabindex', '-1')
 					.on('click', typeClickHandler(this, type))
 					.on('keyup', typeKeyHandler(this, type))
 					.on('mouseover', typeHoverHandler(this, type))
 					.appendTo(item);
-			}
-			this.dom.nodeselectorresults.append(item);
 
+			}
+
+			this.dom.nodeselectorresults.append(item);
 			this.dom.nodeselectorresults.find('div').eq(0).focus();
 				
 		}
@@ -982,13 +985,10 @@ jsCow.res.controller.nodeeditor.prototype = {
 			// No nodes available yet
 			for (i=0; i < newNodesList.length; i++) {
 				
-				console.log( newNodesList[i] );
-
 				// ADD
 				nodes[newNodesList[i].id] = newNodesList[i];
 				
 				this.trigger("editor.node.added", newNodesList[i]);
-				
 				console.info("FIRST NODE ADDED", newNodesList[i]);
 
 			}
@@ -998,28 +998,20 @@ jsCow.res.controller.nodeeditor.prototype = {
 			// Nodes are already available in editor
 			for (var nn=0; nn < newNodesList.length; nn++) {
 				
-				var existingNodes = this.cmp().config().nodes;
-
-				//var updateNode = {};
-				//updateNode[newNodesList[nn].id] = newNodesList[nn];
-
-				if (typeof existingNodes[newNodesList[nn].id] === 'undefined') {
+				if (typeof nodes[newNodesList[nn].id] === 'undefined') {
 
 					// ADD
-					existingNodes[newNodesList[nn].id] = {};
-					existingNodes[newNodesList[nn].id] = newNodesList[nn];
+					nodes[newNodesList[nn].id] = newNodesList[nn];
 					
 					this.trigger("editor.node.added", newNodesList[nn]);
-					
 					console.info("NODE ADDED", newNodesList[nn]);
 
 				}else{
 					
 					// UPDATE
-					existingNodes[newNodesList[nn].id] = $.extend(true, existingNodes[newNodesList[nn].id], newNodesList[nn]);
+					$.extend(true, nodes[newNodesList[nn].id], newNodesList[nn]);
 					
 					this.trigger("editor.node.updated", newNodesList[nn]);
-
 					console.info("NODE UPDATED", newNodesList[nn]);
 					
 				}

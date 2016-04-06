@@ -741,8 +741,10 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		var nodeTypeGroups = e.data;
 		
-		this.dom.nodeselectorresults.find('*').remove();
-
+		this.dom.nodeselectorresults
+			.find('*')
+			.remove();
+			
 		var typeHoverHandler = function(self, type) {
 			return function (e) {
 		        this.focus();
@@ -752,7 +754,8 @@ jsCow.res.view.nodeeditor.prototype = {
 		var typeClickHandler = function(self, type) {
 			return function () {
 		        
-				type.id = ('node'+Math.random()).replace('.', '');
+		        type.id = ('node'+Math.random()).replace('.', '');
+				
 				type.pos = {
 					left: self.config.newNodePos.left,
 					top: self.config.newNodePos.top
@@ -808,21 +811,26 @@ jsCow.res.view.nodeeditor.prototype = {
 
 		for (var key in nodeTypeGroups) {
 			
-			this.dom.nodeselectorresults.append('<li class="jsc-nodeeditor-nodegroup">'+nodeTypeGroups[key].title+'</li>');
-
+			this.dom.nodeselectorresults
+				.append('<li class="jsc-nodeeditor-nodegroup">'+nodeTypeGroups[key].title+'</li>');
+				
 			var item = $('<li/>');
 
 			for(var t=0; t < nodeTypeGroups[key].types.length; t++) {
+			
 				var type = nodeTypeGroups[key].types[t];
-				var typeButton = $('<div>'+type.title+'</div>').attr('data-keyboard-focus', '').attr('tabindex', '-1');
-				typeButton
-					.on('click', typeClickHandler(this, type))
+				
+				$('<div>'+type.title+'</div>')
+					.attr('data-keyboard-focus', '')
+					.attr('tabindex', '-1')
 					.on('keyup', typeKeyHandler(this, type))
 					.on('mouseover', typeHoverHandler(this, type))
+					.on('click', typeClickHandler(this, type))
 					.appendTo(item);
-			}
-			this.dom.nodeselectorresults.append(item);
 
+			}
+
+			this.dom.nodeselectorresults.append(item);
 			this.dom.nodeselectorresults.find('div').eq(0).focus();
 				
 		}
@@ -1008,7 +1016,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 					// ADD
 					existingNodes[newNodesList[nn].id] = {};
 					existingNodes[newNodesList[nn].id] = updateNode[newNodesList[nn].id];
-					
+
 					this.trigger("editor.node.added", newNodesList[nn]);
 					
 					console.info("NODE ADDED", newNodesList[nn]);

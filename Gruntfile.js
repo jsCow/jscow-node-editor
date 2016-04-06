@@ -184,7 +184,6 @@ module.exports = function(grunt) {
 					'less',
 					'concat',
 					'uglify'
-					/*,yuidoc'*/
 				],
 			}
 		},
@@ -240,18 +239,15 @@ module.exports = function(grunt) {
 		'less',
 		'concat',
 		'uglify'
-		/*,'yuidoc'*/
 	]);
 
 	// Default task(s).
 	grunt.registerTask('debug', [
 		'clean',
-		//'jshint',
 		'copy',
 		'less',
 		'concat',
 		'uglify'
-		/*,'yuidoc'*/
 	]);
 	
 }

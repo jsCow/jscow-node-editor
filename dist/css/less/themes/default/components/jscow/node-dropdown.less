@@ -1,0 +1,52 @@
+
+// 
+// Node - Config - dropdown
+
+.jsc-node {
+
+	.jsc-node-dropdown {
+
+		.jsc-node-dropdown-field,
+		.jsc-node-dropdown-disabled {
+			padding: 2px @space-default / 2;
+			font-size: 0.9rem;
+			font-weight: 400;
+			.border-all();
+			.round-corner-all(@space-default / 2 / 2);
+			.layout-default(lighten(@base-color, (@color-offset-default * 3)));
+			outline: none;
+			max-width: 100%;
+
+			&:hover {
+				.layout-highlighted();
+				.text(lighten(@text-color-default, (@color-offset-default * 100)));
+			}
+
+			&:active {
+				.layout-default(darken(@base-color, (@color-offset-default * 1)));
+				.text(lighten(@text-color-default, (@color-offset-default * 100)));
+			}
+
+			option {
+				background: darken(@base-color, (@color-offset-default * 1));
+				.text(lighten(@text-color-default, (@color-offset-default * 100)));
+			}
+			
+		}
+
+
+		.jsc-node-dropdown-disabled { 
+			.disabled();
+		}
+		
+	}
+
+	.jsc-node-config {
+		.jsc-node-dropdown {
+			.jsc-node-dropdown-field {
+				width: 100%;
+			}
+		}
+	}
+
+}

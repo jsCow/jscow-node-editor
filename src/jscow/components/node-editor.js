@@ -753,12 +753,12 @@ jsCow.res.view.nodeeditor.prototype = {
 		var typeClickHandler = function(self, type) {
 			return function () {
 		        
-		        type.id = ('node'+Math.random()).replace('.', '');
+	        	//type.id = ('node'+Math.random()).replace('.', '');
 				type.pos = {
 					left: self.config.newNodePos.left,
 					top: self.config.newNodePos.top
 				};
-
+				console.log("id:", type.id);
 				self.cmp().addNode(type);
 	        	//self.dom.nodeselector.fadeOut();
 
@@ -981,10 +981,15 @@ jsCow.res.controller.nodeeditor.prototype = {
 		var nodes = this.cmp().config().nodes;
 		
 		if ($.isEmptyObject(nodes)) {
-				
+			
 			// No nodes available yet
 			for (i=0; i < newNodesList.length; i++) {
 				
+				// Generate unique id
+				if (typeof newNodesList[i].id === 'undefined') {
+					newNodesList[i].id = ('node'+Math.random()).replace('.', '');
+				}
+
 				// ADD
 				nodes[newNodesList[i].id] = newNodesList[i];
 				
@@ -1000,6 +1005,11 @@ jsCow.res.controller.nodeeditor.prototype = {
 				
 				if (typeof nodes[newNodesList[nn].id] === 'undefined') {
 
+					// Generate unique id
+					if (typeof newNodesList[i].id === 'undefined') {
+						newNodesList[i].id = ('node'+Math.random()).replace('.', '');
+					}
+
 					// ADD
 					nodes[newNodesList[nn].id] = newNodesList[nn];
 					
@@ -1008,11 +1018,13 @@ jsCow.res.controller.nodeeditor.prototype = {
 
 				}else{
 					
-					// UPDATE
+					// UPDATE (Not implemented yet)
+					/*
 					$.extend(true, nodes[newNodesList[nn].id], newNodesList[nn]);
 					
 					this.trigger("editor.node.updated", newNodesList[nn]);
 					console.info("NODE UPDATED", newNodesList[nn]);
+					*/
 					
 				}
 				

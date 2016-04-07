@@ -753,14 +753,13 @@ jsCow.res.view.nodeeditor.prototype = {
 		var typeClickHandler = function(self, type) {
 			return function () {
 		        
-	        	//type.id = ('node'+Math.random()).replace('.', '');
 				type.pos = {
 					left: self.config.newNodePos.left,
 					top: self.config.newNodePos.top
 				};
 				console.log("id:", type.id);
 				self.cmp().addNode(type);
-	        	//self.dom.nodeselector.fadeOut();
+	        	self.dom.nodeselector.fadeOut();
 
 		    };
 		};
@@ -1003,12 +1002,12 @@ jsCow.res.controller.nodeeditor.prototype = {
 			// Nodes are already available in editor
 			for (var nn=0; nn < newNodesList.length; nn++) {
 				
-				if (typeof nodes[newNodesList[nn].id] === 'undefined') {
+				// Generate unique id when no id available
+				if (typeof newNodesList[nn].id === 'undefined') {
+					newNodesList[nn].id = ('node'+Math.random()).replace('.', '');
+				}
 
-					// Generate unique id
-					if (typeof newNodesList[i].id === 'undefined') {
-						newNodesList[i].id = ('node'+Math.random()).replace('.', '');
-					}
+				if (typeof nodes[newNodesList[nn].id] === 'undefined') {
 
 					// ADD
 					nodes[newNodesList[nn].id] = newNodesList[nn];

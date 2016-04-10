@@ -234,15 +234,6 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.on('node.remove', this.nodeRemove);
 		this.on('editor.grid.update', this.updateGrid);
 
-		/*$(window).resize((function(self) {
-			return function() {
-				
-				// Update content size
-				self.trigger('update.content.size');
-
-			};
-		})(this));*/
-
 		// Bind the jquery plugin 'kinetic' on the grid area
 		this.dom.grid.kinetic();
 		
@@ -277,7 +268,7 @@ jsCow.res.view.nodeeditor.prototype = {
 							}
 						});
 						
-						console.info("ADD CONNECTION", connection.id);
+						//console.info("ADD CONNECTION", connection.id);
 					}
 
 				});
@@ -588,6 +579,7 @@ jsCow.res.view.nodeeditor.prototype = {
 		var nodeOptions = e.data;
 
 		//console.info("UPDATE", nodeOptions);
+		console.info("Update node not implemented yet!", nodeOptions);
 
 	},
 
@@ -606,44 +598,8 @@ jsCow.res.view.nodeeditor.prototype = {
 				connector:["Bezier", { curviness: 70 }, {
 					cssClass: "jsc-connector-bezier"
 				}],
-				/*
-				connector:[ "Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true } ],
-				connector: 'StateMachine',
-				*/
 				anchor: ['RightMiddle', 'LeftMiddle'],
 				endpoint: ["Dot", {radius: 5}]
-				/*,
-				overlays: [
-					[ "Label", { 
-						cssClass: "jsc-connector-label",
-						label: "x",
-						location: 0.5
-						events:{ 
-							click:function(labelOverlay, originalEvent) { 
-								
-								var from = labelOverlay.component.sourceId.split('-');
-								var to = labelOverlay.component.targetId.split('-');
-								
-								var con = {
-									from: {
-										node: from[from.length - 2],
-										out: from[from.length - 1]
-									},
-									to: {
-										node: to[to.length - 2],
-										in: to[to.length - 1]
-									}
-								};
-								
-								self.config.jsPlumbInstance.detach(labelOverlay.component);
-								self.cmp().removeConnection(con);
-								
-								console.info('REMOVED CONNECTION', labelOverlay, labelOverlay.component.id, con);
-							} 
-                        }
-					}]
-				]
-                */
 			};
 
 			if (c.color) {
@@ -681,23 +637,11 @@ jsCow.res.view.nodeeditor.prototype = {
 				self.config.jsPlumbInstance.detach(connection);
 				self.cmp().removeConnection(c);
 				
-				console.info('REMOVED CONNECTION', c);
+				//console.info('REMOVED CONNECTION', c);
 
 				return false;
 
-			});
-
-			// node-editor-1-itemcondition1
-			/*
-			window.setTimeout(function() {
-				self.config.jsPlumbInstance.repaint([
-					self.cmp().id()+"-"+c.from.node, 
-					self.cmp().id()+"-"+c.to.node
-				]);
-			}, 1000);
-			*/
-
-			//console.log(con);
+			}).repaint();
 			
 		});
 
@@ -758,7 +702,7 @@ jsCow.res.view.nodeeditor.prototype = {
 					left: self.config.newNodePos.left,
 					top: self.config.newNodePos.top
 				};
-
+				
 				self.cmp().addNode(type);
 	        	//self.dom.nodeselector.fadeOut();
 
@@ -806,7 +750,7 @@ jsCow.res.view.nodeeditor.prototype = {
 	        	
 		    };
 		};
-
+		
 		for (var key in nodeTypeGroups) {
 			
 			this.dom.nodeselectorresults.append('<li class="jsc-nodeeditor-nodegroup">'+nodeTypeGroups[key].title+'</li>');
@@ -984,35 +928,35 @@ jsCow.res.controller.nodeeditor.prototype = {
 				
 			// No nodes available yet
 			for (i=0; i < newNodesList.length; i++) {
-				
+
 				// ADD
-				nodes[newNodesList[i].id] = newNodesList[i];
+				nodes[newNodesList[i].id] = $.extend(true, {}, newNodesList[i]);
 				
 				this.trigger("editor.node.added", newNodesList[i]);
-				console.info("FIRST NODE ADDED", newNodesList[i]);
+				//console.info("FIRST NODE ADDED", newNodesList[i]);
 
 			}
 			
 		}else{
-
+			
 			// Nodes are already available in editor
 			for (var nn=0; nn < newNodesList.length; nn++) {
 				
 				if (typeof nodes[newNodesList[nn].id] === 'undefined') {
 
 					// ADD
-					nodes[newNodesList[nn].id] = newNodesList[nn];
+					nodes[newNodesList[nn].id] = $.extend(true, {}, newNodesList[nn]);
 					
 					this.trigger("editor.node.added", newNodesList[nn]);
-					console.info("NODE ADDED", newNodesList[nn]);
+					//console.info("NODE ADDED", newNodesList[nn]);
 
 				}else{
 					
 					// UPDATE
-					$.extend(true, nodes[newNodesList[nn].id], newNodesList[nn]);
+					$.extend(true, nodes[newNodesList[nn].id], $.extend(true, {}, newNodesList[nn]));
 					
 					this.trigger("editor.node.updated", newNodesList[nn]);
-					console.info("NODE UPDATED", newNodesList[nn]);
+					//console.info("NODE UPDATED", newNodesList[nn]);
 					
 				}
 				
@@ -1092,14 +1036,15 @@ jsCow.res.controller.nodeeditor.prototype = {
 			if (!connectionExists && nodeExists) {
 				
 				this.cmp().config({
-					connections: connections.concat(newConnections[i])
+					connections: connections.concat(
+						$.extend(true, {}, newConnections[i])
+					)
 				});
+
+				con = this.cmp().config().connections[i];
+				this.trigger("editor.connection.added", con);
 				
-				this.trigger("editor.connection.added", newConnections[i]);		
-				connections = this.cmp().config().connections;
-
-				console.info("CONNECTION ADDED", newConnections[i]);
-
+				//console.info("CONNECTION ADDED", con);
 				this.trigger('editor.save');
 
 			}
@@ -1127,6 +1072,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 						(connections[c].to.in === removeConnections[i].to.in)
 					) {
 						connections.splice(c,1);
+						
 						this.trigger('editor.save');
 					}
 
@@ -1147,8 +1093,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 
 			delete this.cmp().config().nodes[nodeId];
 			
-			console.info("NODE DELETED", nodeId);
-			
+			//console.info("NODE DELETED", nodeId);
 			this.trigger('editor.save');
 
 		}
@@ -1192,6 +1137,7 @@ jsCow.res.controller.nodeeditor.prototype = {
 		}
 
 		this.cmp().config().repositories = {};
+		//this.cmp().config().connections = {};
 		this.cmp().config().processId = "process_" + Math.random().toString(16).slice(2);
 		
 		this.trigger('editor.node.types.reset');

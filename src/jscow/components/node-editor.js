@@ -699,14 +699,17 @@ jsCow.res.view.nodeeditor.prototype = {
 		var typeClickHandler = function(self, type) {
 			return function () {
 		        
-		        type.id = ('node'+Math.random()).replace('.', '');
 				type.pos = {
 					left: self.config.newNodePos.left,
 					top: self.config.newNodePos.top
 				};
+<<<<<<< HEAD
 				
+=======
+				console.log("id:", type.id);
+>>>>>>> 8fb5f55ca4dba748ce0e01117fb4f16385618125
 				self.cmp().addNode(type);
-	        	//self.dom.nodeselector.fadeOut();
+	        	self.dom.nodeselector.fadeOut();
 
 		    };
 		};
@@ -829,9 +832,17 @@ jsCow.res.controller.nodeeditor.prototype = {
 		var nodes = this.cmp().config().nodes;
 		
 		if ($.isEmptyObject(nodes)) {
-				
+			
 			// No nodes available yet
 			for (i=0; i < newNodesList.length; i++) {
+<<<<<<< HEAD
+=======
+				
+				// Generate unique id
+				if (typeof newNodesList[i].id === 'undefined') {
+					newNodesList[i].id = ('node'+Math.random()).replace('.', '');
+				}
+>>>>>>> 8fb5f55ca4dba748ce0e01117fb4f16385618125
 
 				// ADD
 				nodes[newNodesList[i].id] = $.extend(true, {}, newNodesList[i]);
@@ -846,6 +857,11 @@ jsCow.res.controller.nodeeditor.prototype = {
 			// Nodes are already available in editor
 			for (var nn=0; nn < newNodesList.length; nn++) {
 				
+				// Generate unique id when no id available
+				if (typeof newNodesList[nn].id === 'undefined') {
+					newNodesList[nn].id = ('node'+Math.random()).replace('.', '');
+				}
+
 				if (typeof nodes[newNodesList[nn].id] === 'undefined') {
 
 					// ADD
@@ -856,11 +872,21 @@ jsCow.res.controller.nodeeditor.prototype = {
 
 				}else{
 					
+<<<<<<< HEAD
 					// UPDATE
 					$.extend(true, nodes[newNodesList[nn].id], $.extend(true, {}, newNodesList[nn]));
 					
 					this.trigger("editor.node.updated", newNodesList[nn]);
 					//console.info("NODE UPDATED", newNodesList[nn]);
+=======
+					// UPDATE (Not implemented yet)
+					/*
+					$.extend(true, nodes[newNodesList[nn].id], newNodesList[nn]);
+					
+					this.trigger("editor.node.updated", newNodesList[nn]);
+					console.info("NODE UPDATED", newNodesList[nn]);
+					*/
+>>>>>>> 8fb5f55ca4dba748ce0e01117fb4f16385618125
 					
 				}
 				

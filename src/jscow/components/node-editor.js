@@ -662,13 +662,15 @@ jsCow.res.view.nodeeditor.prototype = {
 		$('#' + nodeElementId).remove();
 
 		// Remove all related node connections from jsPlumb
-		var allJsPlumbConnections = this.config.jsPlumbInstance.getConnections();
+		/*var allJsPlumbConnections = this.config.jsPlumbInstance.getConnections();
 		var searchId = "-" + nodeId + "-";
 		for (var pc=0; pc < allJsPlumbConnections.length; pc++) {
 			if (allJsPlumbConnections[pc].sourceId.indexOf(searchId) !== -1 || allJsPlumbConnections[pc].targetId.indexOf(searchId) !== -1) {
 				this.config.jsPlumbInstance.detach(allJsPlumbConnections[pc]);
 			}
-		}
+		}*/
+
+		this.config.jsPlumbInstance.deleteEveryEndpoint();
 
 		// Remove all related connections data from node editor
 		for (var c=0; c < connections.length; c++) {
@@ -784,104 +786,6 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.dom.nodeselectorresults.find('*').remove();
 
 	}
-
-	/* ================================================================================
-	 * DEPRICATED - Render all node components
-	 * ================================================================================
-	 */
-	/*
-	updateContentSize: function(e) {
-		
-		this.config.contentSize.width = this.dom.main.outerWidth(true);
-		this.config.contentSize.height = this.dom.main.outerHeight(true);
-		
-		var nodes = $(this.dom.content).find('.jsc-node');
-		for (var i=0; i<nodes.length; i++) {
-			
-			var node = $(nodes[i]);
-			var rightPos = node.position().left + node.outerWidth(true);
-			var bottomPos = node.position().top + node.outerHeight(true);
-
-			if (rightPos > this.config.contentSize.width) {
-				this.config.contentSize.width = rightPos;
-			}
-			if (bottomPos > this.config.contentSize.height) {
-				this.config.contentSize.height = bottomPos;
-			}
-
-		}
-
-		this.dom.content.width(this.config.contentSize.width).height(this.config.contentSize.height);
-
-	},
-
-	// Update and draw the grid lines
-	updateGrid: function(e) {
-		
-		if (this.dom.svggrid && this.dom.svggrid.append !== 'undefined') {
-			
-			var width = 0;
-			var height = 0;
-
-			if (this.config.contentSize.width && this.config.contentSize.height) {
-				width = this.config.contentSize.width;
-				height = this.config.contentSize.height;
-			}else{
-				width = $(this.dom.content).outerWidth(true);
-				height = $(this.dom.content).outerHeight(true);
-			}
-
-			this.config.grid = {
-				data: {
-					x: (function() {
-						var lines = [];
-						for (var i=0; (i*e.data.options.grid) < width; i++) {
-							lines.push(i*e.data.options.grid);
-						}
-						
-						return lines;
-					})(),
-					y: (function() {
-						var lines = [];
-						for (var i=0; (i*e.data.options.grid) < height; i++) {
-							lines.push(i*e.data.options.grid);
-						}
-						
-						return lines;
-					})()
-				}
-			};
-			
-			this.dom.svggrid.selectAll('.jsc-nodeeditor-grid-group-x').remove();
-			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-x').remove();
-			this.dom.svggrid.append("g").attr('class', 'jsc-nodeeditor-grid-group-x')
-				.selectAll('line.jsc-nodeeditor-grid-x')
-     			.data(this.config.grid.data.x)
-     			.enter()
-     			.append("line")
-				.attr("x1", function(d) { return d; })
-				.attr("y1", 0)
-				.attr("x2", function(d) { return d; })
-				.attr("y2", "100%")
-				.attr("class", "jsc-nodeeditor-grid-x");
-			
-			this.dom.svggrid.selectAll('.jsc-nodeeditor-grid-group-y').remove();
-			this.dom.svggrid.selectAll('line.jsc-nodeeditor-grid-y').remove();
-			this.dom.svggrid.append("g").attr('class', 'jsc-nodeeditor-grid-group-y')
-				.selectAll('line.jsc-nodeeditor-grid-y')
-     			.data(this.config.grid.data.y)
-     			.enter()
-     			.append("line")
-				.attr("x1", 0)
-				.attr("y1", function(d) { return d; })
-				.attr("x2", "100%")
-				.attr("y2", function(d) { return d; })
-				.attr("class", "jsc-nodeeditor-grid-y");
-			
-		}
-
-	}
-	*/
 
 };
 

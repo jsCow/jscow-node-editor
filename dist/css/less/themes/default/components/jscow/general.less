@@ -1,0 +1,69 @@
+
+//
+// General Styles
+
+.disabled() {
+	opacity: 0.80;
+	-moz-opacity: 0.80;
+	filter:alpha(opacity=80);
+	cursor: default;
+	
+	.noelect();
+}	
+
+
+//
+// Non selectable
+.noelect() {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+//
+// Focus
+.jsc-focus {
+	
+}
+
+//
+// HTML - Base
+
+.jscow-cursor { cursor: pointer; }
+.jscow-hide { display: none !important; }
+.jscow-rel { position: relative; }
+.jscow-overflow-hidden { overflow: hidden; }
+
+.jscow-float-left { float: left; }
+.jscow-float-right { float: right; }
+	
+
+//
+// Layout
+
+.layout-default {
+	.layout-default();
+}
+
+.layout-info {
+	.layout-info();
+}
+
+.layout-success {
+	.layout-success();
+}
+
+.layout-warning {
+	.layout-warning();
+}
+
+.layout-danger {
+	.layout-danger();
+}
+
+.layout-highlighted {
+	.layout-highlighted();
+}

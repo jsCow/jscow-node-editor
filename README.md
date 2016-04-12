@@ -31,9 +31,9 @@ var editor = jsCow.get(jsCow.res.components.nodeeditor, {
 			autosave: true
 		}
 	}
-}).on('editor.options.changed', function(e) {
+}).on("editor.options.changed", function(e) {
 	console.log("Process data changed", e.data);
-}).target('#node-editor-1').run();
+}).target("#node-editor-1").run();
 ```
 
 ## Describe a node
@@ -41,12 +41,12 @@ To use a node in your `jscow-node-editor` you needs the following json.
 
 ```json
 {
-	'id': 'node1',
-	'title': 'Node Title',
-	'class': 'customized-node',
-	'pos': {
-		'left': 300,
-		'top': 50
+	"id": "node1",
+	"title": "Node Title",
+	"class": "customized-node",
+	"pos": {
+		"left": 300,
+		"top": 50
 	},
 	config: [],
 	inputs: [],
@@ -71,10 +71,10 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 	"type": "jsCow.res.components.nodedropdown",
 	"title": "Select Option",
 	"value": [
-		{ title: 'Option 1', value: 1},
-		{ title: 'Option 2', value: 2, selected: true},
-		{ title: 'Option 3', value: 3},
-		{ title: 'Option 4', value: 4}
+		{ title: "Option 1", value: 1},
+		{ title: "Option 2", value: 2, selected: true},
+		{ title: "Option 3", value: 3},
+		{ title: "Option 4", value: 4}
 	]
 }
 ```
@@ -89,7 +89,7 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 		"click": function(e) {
 			console.log("button clicked...");
 			// ...
-			this.trigger('node.config.changed');
+			this.trigger("node.config.changed");
 		}
 	}
 }
@@ -102,9 +102,9 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 	"type": "jsCow.res.components.nodecheckbox",
 	"title": "Your field label",
 	"value": [
-		{ title: 'Checkbox 1', value: 1},
-		{ title: 'Checkbox 2', value: 2},
-		{ title: 'Checkbox 3', value: 3, selected: true}
+		{ title: "Checkbox 1", value: 1},
+		{ title: "Checkbox 2", value: 2},
+		{ title: "Checkbox 3", value: 3, selected: true}
 	]
 }
 ```
@@ -125,10 +125,10 @@ After creating the new node the editor will update the configuration and trigger
 ```javascript
 editor.addNode([
 	{
-		id: 'myNode',
-		title: 'Node Title',
-		description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-		class: 'custom-style-class',
+		id: "myNode",
+		title: "Node Title",
+		description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
+		class: "custom-style-class",
 		pos: {
 			left: 50,
 			top: 50
@@ -157,23 +157,23 @@ It is possible to set node connections in a seperate step. Additional you can de
 editor.addConnection([
 	{
 		from: {
-			node: 'node1',
-			out: 'out1'
+			node: "node1",
+			out: "out1"
 		},
 		to: {
-			node: 'node2',
-			in: 'in1'
+			node: "node2",
+			in: "in1"
 		}
 	},
 	{
-		color: '#A52A2A',
+		color: "#A52A2A",
 		from: {
-			node: 'node2',
-			out: 'out1'
+			node: "node2",
+			out: "out1"
 		},
 		to: {
-			node: 'node3',
-			in: 'in2'
+			node: "node3",
+			in: "in2"
 		}
 	}
 ]);
@@ -184,12 +184,12 @@ To have a list of available nodes to add within the editor you can add a group o
 To add available nodes in your editor instance just make a double click in the editor area. A menu with all node repositories will open. Here can choose a available node definitions. 
 ```javascript
 editor.addNodesRepository({
-	group: 'general',
-	title: 'General Nodes',
-	description: 'General repository of node types.',
+	group: "general",
+	title: "General Nodes",
+	description: "General repository of node types.",
 	types: [
 		{
-			title: 'Node 1',
+			title: "Node 1",
 			inputs: [
 				{
 					"id": "in1",
@@ -204,7 +204,7 @@ editor.addNodesRepository({
 			]
 		},
 		{
-			title: 'Node 2',
+			title: "Node 2",
 			inputs: [
 				{
 					"id": "in1",

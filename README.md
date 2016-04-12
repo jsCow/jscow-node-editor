@@ -39,7 +39,7 @@ var editor = jsCow.get(jsCow.res.components.nodeeditor, {
 ## Describe a node
 To use a node in your `jscow-node-editor` you needs the following json.
 
-```json
+```javascript
 {
 	"id": "node1",
 	"title": "Node Title",
@@ -56,7 +56,7 @@ To use a node in your `jscow-node-editor` you needs the following json.
 
 ## Define a node port with only a title
 Use this json snippet within node configurations for `config`, `inputs` or `outputs`. If you need you can set a specific `id` and `value` for these node port. The properties `id` and `value` are optional values for a simple port with only a title.
-```json
+```javascript
 {
 	"title": "Port Title",
 	"id": "in1",
@@ -66,13 +66,13 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 
 ## Using a dropdown as a configuration field
 Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
-```json
+```javascript
 {
 	"type": "jsCow.res.components.nodedropdown",
 	"title": "Select Option",
 	"value": [
 		{ "title": "Option 1", "value": 1},
-		{ "title": "Option 2", "value": 2, selected: true},
+		{ "title": "Option 2", "value": 2, "selected": true},
 		{ "title": "Option 3", "value": 3},
 		{ "title": "Option 4", "value": 4}
 	]
@@ -81,7 +81,7 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 
 ## Using a button as a configuration field
 Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
-```json
+```javascript
 {
 	"type": "jsCow.res.components.nodebutton",
 	"title": "Button",
@@ -97,7 +97,7 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 
 ## Using a checkbox as a configuration field
 Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
-```json
+```javascript
 {
 	"type": "jsCow.res.components.nodecheckbox",
 	"title": "Your field label",
@@ -111,7 +111,7 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 
 ## Using a textfield as a configuration field
 Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
-```json
+```javascript
 {
 	"type": "jsCow.res.components.nodeinput",
 	"title": "Value",

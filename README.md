@@ -125,7 +125,7 @@ After creating the new node the editor will update the configuration and trigger
 ```javascript
 editor.addNode([
 	{
-		"id: "myNode",
+		"id": "myNode",
 		"title: "Node Title",
 		"description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
 		"class: "custom-style-class",
@@ -140,7 +140,7 @@ editor.addNode([
 				"value": 1
 			}
 		],
-		"outputs: [
+		"outputs": [
 			{
 				"id": "out1",
 				"title": "Output Port 1",

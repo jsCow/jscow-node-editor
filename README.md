@@ -41,12 +41,12 @@ To use a node in your `jscow-node-editor` you needs the following json.
 
 ```json
 {
-	id: 'node1',
-	title: 'Node Title',
-	class: 'customized-node',
-	pos: {
-		left: 300,
-		top: 50
+	'id': 'node1',
+	'title': 'Node Title',
+	'class': 'customized-node',
+	'pos': {
+		'left': 300,
+		'top': 50
 	},
 	config: [],
 	inputs: [],

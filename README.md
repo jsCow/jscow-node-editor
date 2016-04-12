@@ -8,7 +8,7 @@ Provides a jscow application environment to implement your own jscow application
 
 ## Table of Contents
 
-- [Quick example](#user-content-quick-example)
+- [Create an editor instance](#create-an-editor-instance)
 
 
 ## Install

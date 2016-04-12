@@ -24,7 +24,7 @@ grunt watch
 ## Create an editor instance
 For using an editor you need to create an instance of the node editor.
 You can use the following code snippet to create a new instance.
-```sh
+```javascript
 var editor = jsCow.get(jsCow.res.components.nodeeditor, {
 	model: {
 		options: {
@@ -39,7 +39,7 @@ var editor = jsCow.get(jsCow.res.components.nodeeditor, {
 ## Describe a node
 To use a node in your `jscow-node-editor` you needs the following json.
 
-```sh
+```json
 {
 	id: 'node1',
 	title: 'Node Title',
@@ -56,7 +56,7 @@ To use a node in your `jscow-node-editor` you needs the following json.
 
 ## Define a node port with only a title
 Use this json snippet within node configurations for `config`, `inputs` or `outputs`. If you need you can set a specific `id` and `value` for these node port. The properties `id` and `value` are optional values for a simple port with only a title.
-```sh
+```json
 {
 	"title": "Port Title",
 	"id": "in1",
@@ -66,7 +66,7 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 
 ## Using a dropdown as a configuration field
 Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
-```sh
+```json
 {
 	"type": "jsCow.res.components.nodedropdown",
 	"title": "Select Option",
@@ -81,7 +81,7 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 
 ## Using a button as a configuration field
 Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
-```sh
+```json
 {
 	"type": "jsCow.res.components.nodebutton",
 	"title": "Button",
@@ -97,7 +97,7 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 
 ## Using a checkbox as a configuration field
 Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
-```sh
+```json
 {
 	"type": "jsCow.res.components.nodecheckbox",
 	"title": "Your field label",
@@ -111,7 +111,7 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 
 ## Using a textfield as a configuration field
 Use this json snippet within node configurations for `config`, `inputs` or `outputs`.
-```sh
+```json
 {
 	"type": "jsCow.res.components.nodeinput",
 	"title": "Value",
@@ -122,7 +122,7 @@ Use this json snippet within node configurations for `config`, `inputs` or `outp
 ## Add one or more nodes per javascript
 To add one or more nodes at runtime you can use the editor method: addNode(<`object`|`array`>) 
 After creating the new node the editor will update the configuration and triggers the event `node.config.changed`. The event data will be the current editor config.
-```sh
+```javascript
 editor.addNode([
 	{
 		id: 'myNode',
@@ -153,7 +153,7 @@ editor.addNode([
 
 ## Add a set of connections
 It is possible to set node connections in a seperate step. Additional you can define a color for any connections that you like to set. For a connection color you can use the `color` property.
-```sh
+```javascript
 editor.addConnection([
 	{
 		from: {
@@ -182,7 +182,7 @@ editor.addConnection([
 ## Add a group of node definitions that you can add within the editor.
 To have a list of available nodes to add within the editor you can add a group of node definitions. Here you can use the following method: addNodesRepository(<`object`>); 
 To add available nodes in your editor instance just make a double click in the editor area. A menu with all node repositories will open. Here can choose a available node definitions. 
-```sh
+```javascript
 editor.addNodesRepository({
 	group: 'general',
 	title: 'General Nodes',

@@ -126,9 +126,9 @@ After creating the new node the editor will update the configuration and trigger
 editor.addNode([
 	{
 		"id": "myNode",
-		"title: "Node Title",
-		"description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
-		"class: "custom-style-class",
+		"title": "Node Title",
+		"description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
+		"class": "custom-style-class",
 		"pos": {
 			"left": 50,
 			"top": 50

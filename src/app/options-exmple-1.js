@@ -365,3 +365,98 @@ NodeEditorOptions2 = {
 		}
 	]
 };
+
+
+Test = {
+	grid: 20,
+	nodes: [
+		{
+			id: 'node1',
+			title: 'Example - Typical node',
+			description: 'Standard node with an input and output port.',
+			pos: {
+				top: 20,
+				left: 20
+			},
+			inputs: [
+				
+			],
+			outputs: [
+				{
+					"id": "out1",
+					"title": "Output Port 1"
+				}
+			]
+		},
+		{
+			id: 'node2',
+			title: 'Example - Multiple Ports',
+			description: 'Node with more then one input and output port.',
+			pos: {
+				top: 20,
+				left: 400
+			},
+			inputs: [
+				{
+					"id": "in1",
+					"title": "Input Port 1"
+				},
+				{
+					"id": "in2",
+					"type": "jsCow.res.components.nodecheckbox",
+					"value": [
+						{ title: 'Enabled', value: true, selected: true}
+					]
+				},
+				{
+					"id": "in3",
+					"type": "jsCow.res.components.nodecheckbox",
+					"value": [
+						{ title: 'Check 1', value: true},
+						{ title: 'Check 2', value: true, selected: true},
+						{ title: 'Check 3', value: true}
+					]
+				},
+				{
+					"type": "jsCow.res.components.nodecheckbox",
+					"value": [
+						{ title: 'Check 1', value: true},
+						{ title: 'Check 2', value: true, selected: true},
+						{ title: 'Check 3', value: true}
+					]
+				},
+				{
+				    "id": "in4",
+					"type": "jsCow.res.components.nodedropdown",
+				    "title": "Select Page",
+				    "value": [
+				        { title: 'Homepage', value: 1, selected: true},
+				        { title: 'Category 1', value: 2},
+				        { title: 'Category 2', value: 3}
+				    ]
+				},
+				{
+					"id": "in5",
+					"title": "Input Port 1"
+				},
+				{
+					"id": "in6",
+					"title": "Input Port 1"
+				}
+			],
+			outputs: []
+		}
+	],
+	connections: [
+		{
+			from: {
+				node: 'node1_',
+				out: 'out1'
+			},
+			to: {
+				node: 'node2',
+				in: 'in1'
+			}
+		}
+	]
+};

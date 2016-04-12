@@ -116,7 +116,8 @@ $(function() {
 						"title": "Input Port 1"
 					},
 					{
-						"type": "jsCow.res.components.nodecheckbox",
+						"id": "in2",
+					    "type": "jsCow.res.components.nodecheckbox",
 						"value": [
 							{ title: 'Check 1', value: true},
 							{ title: 'Check 2', value: true, selected: true},
@@ -134,7 +135,7 @@ $(function() {
 						"title": "Output Port 1"
 					},
 					{
-					    "type": "jsCow.res.components.nodeinput",
+						"type": "jsCow.res.components.nodeinput",
 					    "title": "Output Port Title",
 					    "value": "19.95"
 					},
@@ -237,6 +238,10 @@ $(function() {
 	}).target('#node-editor-2').run();
 
 
+	$('<button>Test</button>').click(function() {
+		jsCow.find('node-editor-1').options(Test);
+	}).appendTo('body');
+	
 	$('<button>Promo Rule</button>').click(function() {
 		jsCow.find('node-editor-1').options(PromotionDiscountRule);
 	}).appendTo('body');

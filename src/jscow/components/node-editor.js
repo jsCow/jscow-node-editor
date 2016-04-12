@@ -266,7 +266,7 @@ jsCow.res.view.nodeeditor.prototype = {
 						var from = connection.sourceId.split('-');
 						var to = connection.targetId.split('-');
 
-						self.cmp().addConnection({
+						var con = {
 							from: {
 								node: from[from.length - 2],
 								out: from[from.length - 1]
@@ -275,7 +275,9 @@ jsCow.res.view.nodeeditor.prototype = {
 								node: to[to.length - 2],
 								in: to[to.length - 1]
 							}
-						});
+						};
+
+						self.cmp().addConnection(con);
 						
 						console.info("ADD CONNECTION", connection.id);
 					}
@@ -466,46 +468,51 @@ jsCow.res.view.nodeeditor.prototype = {
 			}
 
 			var id = self.cmp().id()+'-'+nodeOptions.id+'-'+input.id;
-			
-			var port = $('<div/>')
-				.addClass('jsc-node-port jsc-node-port-in')
-				.attr("id", id);
-			var portContent = $('<div/>').appendTo(port);
-			if (input.title && !input.type) {
-				portContent.append(
-					$('<span/>').text(input.title)
-				);
-			}
-			
-			// Create all configuration components
-			if (input.type) {
-
-				jsCow.get(input.type, {
-					model: input
-				}).on('node.config.changed', function(e) {
-					
-					var ports = self.cmp().config().nodes[nodeOptions.id].inputs;
-					for (var p=0; p < ports.length; p++) {
-						if (input.id === ports[p].id) {
-							self.cmp().config().nodes[nodeOptions.id].inputs[p] = e.data;
-							self.trigger('editor.save');
-						}
-					}
-
-				})
-				.target(portContent)
-				.run();
-			}
-
-			inputs.append(port);
 
 			window.setTimeout(function() {
+			
+				var port = $('<div/>')
+					.addClass('jsc-node-port jsc-node-port-in')
+					.attr("id", id);
+				var portContent = $('<div/>').appendTo(port);
+				if (input.title && !input.type) {
+					portContent.append(
+						$('<span/>').text(input.title)
+					);
+				}
+				
+				// Create all configuration component
+				if (input.type) {
+					jsCow.get(input.type, {
+						model: input
+					}).on('node.config.changed', function(e) {
+						
+						var ports = self.cmp().config().nodes[nodeOptions.id].inputs;
+						for (var p=0; p < ports.length; p++) {
+							if (input.id === ports[p].id) {
+								self.cmp().config().nodes[nodeOptions.id].inputs[p] = e.data;
+								self.trigger('editor.save');
+							}
+						}
 
+					})
+					.target(portContent)
+					.run();
+				}
+
+				inputs.append(port);
+
+			},0);
+
+			window.setTimeout(function() {
+				console.log('makeTarget for ', id);
 				var endpoint = self.config.jsPlumbInstance.makeTarget(id, {
 					anchor: ['LeftMiddle'],
 					isTarget: true,
 					targetReattach: true
 				});
+
+				console.log(endpoint);
 
 			},0);
 						
@@ -547,11 +554,14 @@ jsCow.res.view.nodeeditor.prototype = {
 		this.config.jsPlumbInstance.draggable(this.cmp().id()+'-'+nodeOptions.id, {
 			grid:[nodeOptions.grid, nodeOptions.grid],
 			stop: function(e) {
+
 				self.cmp().config().nodes[nodeOptions.id].pos = {
 					left: e.pos[0],
 					top: e.pos[1]
 				};
+
 				self.trigger('editor.save');
+
 			}
 		});
 
@@ -633,16 +643,6 @@ jsCow.res.view.nodeeditor.prototype = {
 			});
 
 			// node-editor-1-itemcondition1
-			/*
-			window.setTimeout(function() {
-				self.config.jsPlumbInstance.repaint([
-					self.cmp().id()+"-"+c.from.node, 
-					self.cmp().id()+"-"+c.to.node
-				]);
-			}, 1000);
-			*/
-
-			//console.log(con);
 			
 		});
 

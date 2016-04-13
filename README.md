@@ -19,7 +19,6 @@ This project provides a jscow application for a independend process editor. Inde
 - [Add one or more nodes per javascript](#add-one-or-more-nodes-per-javascript)
 - [Add a set of connections](#add-a-set-of-connections)
 - [Add a group of node definitions that you can add within the editor](#add-a-group-of-node-definitions-that-you-can-add-within-the-editor)
-- 
 
 ## Technical Backgrounds
 A complete process will be describe through a json object.
@@ -27,7 +26,10 @@ By changes on a process the editor will update the process configuration within 
 The editor do not know the context where is is used for.
 
 Used frameworks:
-- 
+- Technical base is only HTML / CSS and Javascript
+- LESS CSS to generate all CSS classes for the complete UI
+- jsPlumb framework is used for rendering the connector lines based on SVG
+- jsCow component framework is used for developing all javascript components which are neccessary for the editor.
 
 
 ## Install

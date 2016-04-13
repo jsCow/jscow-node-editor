@@ -1,14 +1,33 @@
 # jscow-node-editor
-Provides a jscow application environment to implement your own jscow application.
+jsCow application for a independend process editor.
 
 ## Intro
 
-...
+This project provides a jscow application for a independend process editor. Independend means the editor is not dependend to any server side languages. The runtime environment of the editor is just the browser. The complete editor is an interface to edit or manipulate processes with help of nodes.
 
 
 ## Table of Contents
 
+- [Technical Backgrounds](#technical-backgrounds)
 - [Create an editor instance](#create-an-editor-instance)
+- [Describe a node](#describe-a-node)
+- [Define a node port with only a title](#define-a-node-port-with-only-a-title)
+- [Using a dropdown as a configuration field](#using-a-dropdown-as-a-configuration-field)
+- [Using a button as a configuration field](#using-a-button-as-a-configuration-field)
+- [Using a checkbox as a configuration field](#using-a-checkbox-as-a-configuration-field)
+- [Using a textfield as a configuration field](#using-a-textfield-as-a-configuration-field)
+- [Add one or more nodes per javascript](#add-one-or-more-nodes-per-javascript)
+- [Add a set of connections](#add-a-set-of-connections)
+- [Add a group of node definitions that you can add within the editor](#add-a-group-of-node-definitions-that-you-can-add-within-the-editor)
+- 
+
+## Technical Backgrounds
+A complete process will be describe through a json object.
+By changes on a process the editor will update the process configuration within the editor and triggers anthe event `editor.options.changed` to out of the editor.
+The editor do not know the context where is is used for.
+
+Used frameworks:
+- 
 
 
 ## Install

@@ -828,6 +828,31 @@ jsCow.res.controller.nodeeditor.prototype = {
 		var newNodesList = e.data.nodes;
 		var nodes = this.cmp().config().nodes;
 		
+		// Generate id if not exists
+		for (var node=0; node < newNodesList.length; node++) {
+
+			var n = newNodesList[node];
+
+			// Inputs
+			if (typeof n.inputs !== 'undefined') {
+				for (var nodeIn=0; nodeIn < n.inputs.length; nodeIn++) {
+					if (typeof n.inputs[nodeIn].id === 'undefined') {
+						n.inputs[nodeIn].id = "in" + Math.random().toString(16).slice(2);
+					}
+				}
+			}
+			
+			// Outputs
+			if (typeof n.outputs !== 'undefined') {
+				for (var nodeOut=0; nodeOut < n.outputs.length; nodeOut++) {
+					if (typeof n.outputs[nodeOut].id === 'undefined') {
+						n.outputs[nodeOut].id = "out" + Math.random().toString(16).slice(2);
+					}	
+				}
+			}
+	
+		}
+		
 		if ($.isEmptyObject(nodes)) {
 			
 			// No nodes available yet

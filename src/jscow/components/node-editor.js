@@ -468,42 +468,38 @@ jsCow.res.view.nodeeditor.prototype = {
 			}
 
 			var id = self.cmp().id()+'-'+nodeOptions.id+'-'+input.id;
-
-			window.setTimeout(function() {
-			
-				var port = $('<div/>')
-					.addClass('jsc-node-port jsc-node-port-in')
-					.attr("id", id);
-				var portContent = $('<div/>').appendTo(port);
-				if (input.title && !input.type) {
-					portContent.append(
-						$('<span/>').text(input.title)
-					);
-				}
 				
-				// Create all configuration component
-				if (input.type) {
-					jsCow.get(input.type, {
-						model: input
-					}).on('node.config.changed', function(e) {
-						
-						var ports = self.cmp().config().nodes[nodeOptions.id].inputs;
-						for (var p=0; p < ports.length; p++) {
-							if (input.id === ports[p].id) {
-								self.cmp().config().nodes[nodeOptions.id].inputs[p] = e.data;
-								self.trigger('editor.save');
-							}
+			var port = $('<div/>')
+				.addClass('jsc-node-port jsc-node-port-in')
+				.attr("id", id);
+			var portContent = $('<div/>').appendTo(port);
+			if (input.title && !input.type) {
+				portContent.append(
+					$('<span/>').text(input.title)
+				);
+			}
+			
+			// Create all configuration component
+			if (input.type) {
+				jsCow.get(input.type, {
+					model: input
+				}).on('node.config.changed', function(e) {
+					
+					var ports = self.cmp().config().nodes[nodeOptions.id].inputs;
+					for (var p=0; p < ports.length; p++) {
+						if (input.id === ports[p].id) {
+							self.cmp().config().nodes[nodeOptions.id].inputs[p] = e.data;
+							self.trigger('editor.save');
 						}
+					}
 
-					})
-					.target(portContent)
-					.run();
-				}
+				})
+				.target(portContent)
+				.run();
+			}
 
-				inputs.append(port);
-
-			},0);
-
+			inputs.append(port);
+			
 			window.setTimeout(function() {
 				console.log('makeTarget for ', id);
 				var endpoint = self.config.jsPlumbInstance.makeTarget(id, {
@@ -612,6 +608,9 @@ jsCow.res.view.nodeeditor.prototype = {
 			var source = self.cmp().id()+"-"+c.from.node+"-"+c.from.out;
 			var target = self.cmp().id()+"-"+c.to.node+"-"+c.to.in;
 			
+			console.log(source);
+			console.log(target);
+
 			var con = self.config.jsPlumbInstance.connect({
 				source: source,
 				target: target
@@ -967,9 +966,9 @@ jsCow.res.controller.nodeeditor.prototype = {
 				this.cmp().config({
 					connections: connections.concat(newConnections[i])
 				});
-				
+
 				this.trigger("editor.connection.added", newConnections[i]);		
-				connections = this.cmp().config().connections;
+				//connections = this.cmp().config().connections;
 
 				console.info("CONNECTION ADDED", newConnections[i]);
 

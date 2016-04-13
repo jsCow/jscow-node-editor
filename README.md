@@ -27,9 +27,9 @@ The editor do not know the context where is is used for.
 
 Used frameworks:
 - Technical base is only HTML / CSS and Javascript
-- LESS CSS to generate all CSS classes for the complete UI
-- jsPlumb framework is used for rendering the connector lines based on SVG
-- jsCow component framework is used for developing all javascript components which are neccessary for the editor.
+- [LESS CSS](http://www.lesscss.de) to generate all CSS classes for the complete UI
+- [jsPlumb](https://jsplumbtoolkit.com) framework is used for rendering the connector lines based on SVG
+- [jsCow](https://github.com/jsCow/jscow) component framework is used for developing all javascript components which are neccessary for the editor.
 
 
 ## Install

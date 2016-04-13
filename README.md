@@ -33,16 +33,15 @@ Used frameworks:
 
 
 ## Install
+If you implement your own wishes you have to install all npm packages and call the grunt task to generate the `dist/` directory.
 
 ```sh
-npm install
+$ npm install
+$ grunt
 ```
 
-## Build
+To use only the editor in your project please look at the demo application into the `dist/` directory.
 
-```sh
-grunt
-```
 
 ## Watch
 You can the grunt-contrib-watch plugin to call all grunt tasks automatically by change a **js** file or **less** file within the **src/** directory. To refresh your page automatically after calling the watch task you have to install the browser plugin **LiveReload**.

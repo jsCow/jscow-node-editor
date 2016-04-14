@@ -139,10 +139,10 @@
 	-moz-box-shadow: @l @t @s @w @c;
 }
 
-.innerShadow(@l: @shadow-pos-left, @t: @shadow-pos-top, @s: @shadow-size, @w: @shadow-weight, @c: @shadow-color-default) {
-	-webkit-box-shadow: inset @l @t @s @w @c;
-	box-shadow: inset  @l @t @s @w @c;
-	-moz-box-shadow: inset @l @t @s @w @c;
+.innerShadow(@l: @shadow-pos-left, @t: @shadow-pos-top, @s: @shadow-size, @c: @shadow-color-default) {
+	-webkit-box-shadow: inset @l @t @s @c;
+	box-shadow: inset  @l @t @s @c;
+	-moz-box-shadow: inset @l @t @s @c;
 }
 
 

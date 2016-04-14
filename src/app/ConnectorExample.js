@@ -1,4 +1,4 @@
-Connector = {
+ConnectorExample = {
 	grid: 30,
 	repositories: [],
 	nodes: [

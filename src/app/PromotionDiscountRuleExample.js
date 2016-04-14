@@ -1,4 +1,4 @@
-PromotionDiscountRule = {
+PromotionDiscountRuleExample = {
 	grid: 30,
 	repositories: [
 		{

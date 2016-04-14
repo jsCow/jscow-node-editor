@@ -1,4 +1,4 @@
-CheckoutProcess = {
+CheckoutProcessExample = {
 	grid: 30,
 	repositories: [],
 	nodes: [

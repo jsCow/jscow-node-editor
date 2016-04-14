@@ -140,10 +140,11 @@ module.exports = function(grunt) {
 				files: [
 					{
 						'dist/js/app/app.min.js': [
-							'src/app/PromotionDiscountRule.js',
-							'src/app/options-exmple-1.js',
-							'src/app/CheckoutProcess.js',
-							'src/app/Connector.js',
+							'src/app/CheckoutProcessExample.js',
+							'src/app/ConnectorExample.js',
+							'src/app/NodeDefinitionExamples.js',
+							'src/app/NodeEditorOptionsExample.js',
+							'src/app/PromotionDiscountRuleExample.js',
 							'src/app/app.js'
 						],
 						'dist/js/jscow/jscow.min.js': ['dist/js/jscow/jscow.min.js']

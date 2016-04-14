@@ -42,7 +42,7 @@ body, html {
 body {
 	font-family: 'Lato', sans-serif;
 	color: darken(@text-color, 0%);
-	background: @base-color;
+	background: lighten(@base-color, @color-offset-default * 1);
 	
 	@media (min-width: @screen-md-min) {
 		&-img {
@@ -50,19 +50,4 @@ body {
 		}
 	}
 	
-}
-
-body {
-	> button {
-		.transition();
-		.border-all();
-		.text();
-		background: @base-color;
-		margin: @space-default / 2;
-		padding: @space-default / 2;
-
-		&:hover {
-			background: lighten(@base-color, 10%);
-		}
-	}
 }

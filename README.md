@@ -1,6 +1,8 @@
 # jscow-node-editor
 jsCow application for a independend process editor.
 
+![Process Example](/src/img/github-process-example.jpg)
+
 ## Intro
 
 This project provides a jscow application for a independend process editor. Independend means the editor is not dependend to any server side languages. The runtime environment of the editor is just the browser. The complete editor is an interface to edit or manipulate processes with help of nodes.

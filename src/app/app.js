@@ -6,7 +6,7 @@ $(function() {
 	 * Init your editor component instance
 	 */
 	jsCow.get(jsCow.res.components.nodeeditor, {
-		id: 'myEditorInstance',
+		id: 'myEditorInstanceId',
 		options: NodeEditorOptionsExample,
 		model: {
 			options: {
@@ -15,9 +15,8 @@ $(function() {
 		}
 	}).on('editor.options.changed', function(e) {
 		console.log(e.sender.id()+" >>> changed >>>", e.data);
-	}).target('#myEditorInstance').run();
-
-
+	}).target('#myEditor').run();
+	
 	/*
 	 * Actions and Examples
 	 */

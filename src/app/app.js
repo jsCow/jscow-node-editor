@@ -21,23 +21,23 @@ $(function() {
 	 * Actions and Examples
 	 */
 	$('<button>Set Node Definitions</button>').click(function() {
-		jsCow.find('myEditorInstance').addNodesRepository(NodeDefinitionExamples);
+		jsCow.find('myEditorInstanceId').addNodesRepository(NodeDefinitionExamples);
 	}).appendTo('body');
 
 	$('<button>Promo Rule</button>').click(function() {
-		jsCow.find('myEditorInstance').options(PromotionDiscountRuleExample);
+		jsCow.find('myEditorInstanceId').options(PromotionDiscountRuleExample);
 	}).appendTo('body');
 	
 	$('<button>Checkout Process</button>').click(function() {
-		jsCow.find('myEditorInstance').options(CheckoutProcessExample);
+		jsCow.find('myEditorInstanceId').options(CheckoutProcessExample);
 	}).appendTo('body');
 	
 	$('<button>Connector</button>').click(function() {
-		jsCow.find('myEditorInstance').options(ConnectorExample);
+		jsCow.find('myEditorInstanceId').options(ConnectorExample);
 	}).appendTo('body');
 	
 	$('<button>Reset</button>').click(function() {
-		jsCow.find('myEditorInstance').reset();
+		jsCow.find('myEditorInstanceId').reset();
 	}).appendTo('body');
 	
 

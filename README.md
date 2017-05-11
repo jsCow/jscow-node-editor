@@ -1,9 +1,9 @@
 ==============================================================================
 
-# The jsCow framework as base for this node editor is not longer in development and is no longer supported.
-# For questions you can still write a message or an email. I will try to help you but it's not possible for me to fix any bugs.
+#### The jsCow framework as base for this node editor is not longer in development and is no longer supported.
+#### For questions you can still write a message or an email. I will try to help you but it's not possible for me to fix any bugs.
 
-# Feel free to use or change it.
+## Feel free to use or change it.
 
 ==============================================================================
 
@@ -64,17 +64,21 @@ grunt watch
 
 ## Create an editor instance
 For using an editor you need to create an instance of the node editor.
-You can use the following code snippet to create a new instance.
+You can use the following code snippet to create a new instance in your app.js.
 ```javascript
-var editor = jsCow.get(jsCow.res.components.nodeeditor, {
-	model: {
-		options: {
-			autosave: true
+$(function() {
+	jsCow.get(jsCow.res.components.nodeeditor, {
+		id: 'myEditorInstanceId',
+		options: NodeEditorOptionsExample,
+		model: {
+			options: {
+				autosave: true
+			}
 		}
-	}
-}).on("editor.options.changed", function(e) {
-	console.log("Process data changed", e.data);
-}).target("#node-editor-1").run();
+	}).on('editor.options.changed', function(e) {
+		console.log(e.sender.id()+" >>> changed >>>", e.data);
+	}).target('#myEditor').run();
+});
 ```
 
 ## Describe a node

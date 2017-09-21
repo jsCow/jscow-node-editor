@@ -1,10 +1,11 @@
 ==========================================================
 
-### The jsCow framework is not longer in development and is no longer supported.
-### Please use the last stable version 2.0.4 of jsCow.
-### For questions you can still write a message or an email. I will try to help you but it's not possible for me to fix any bugs.
+### Unfortunatelly the "jsCow" framework is not longer in development from my side.
+### Please use the last stable version 2.0.4 of jsCow to use the node editor stable.
+### For questions you can still write an issue or email. 
+### I will try to help you but it's not possible for me to fix any bugs.
 
-## Feel free to use or change it.
+## Feel free to use or fork my project.
 
 ==========================================================
 
